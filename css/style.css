@@ -80,7 +80,7 @@ nav{display:flex; align-items:center; gap:14px}
 .card{position:relative; border:1px solid var(--stroke); border-radius:var(--radius); padding:16px; background:rgba(255,255,255,0.03); overflow:hidden; transition:transform .2s, box-shadow .2s; transform-style:preserve-3d}
 .card:hover{transform:translateY(-2px) rotateX(1deg) rotateY(-1deg); box-shadow:var(--shadow)}
 .card .card-bg{position:absolute; inset:-40%; background:radial-gradient(400px 200px at 50% 20%, rgba(120,170,255,.18), transparent 60%); filter:blur(20px); transform:translateZ(-50px); pointer-events:none}
-.card h4{margin:0 0 8px}
+.card h4{margin:8px 0 8px}
 .card p{margin:0 0 10px; color:var(--muted)}
 .card-tags{display:flex; gap:8px}
 .card-tags span{font-size:12px; border:1px solid var(--stroke); padding:6px 10px; border-radius:999px; color:var(--muted)}
@@ -301,7 +301,7 @@ body{ line-height: 1.58 }
 
 /* Education logos */
 .edu-logo{
-  width:18px; height:18px; vertical-align:-3px; margin-right:8px; filter: invert(1) opacity(.85);
+  height:30px; vertical-align:-10px; margin-right:8px; filter: invert(1) opacity(.85);
 }
 :root[data-theme="light"] .edu-logo{ filter:none; opacity:.9 }
 
