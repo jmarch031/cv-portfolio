@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0a1a"/>
+      <stop offset="1" stop-color="#1a1a2e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6fa8ff"/>
+      <stop offset="0.5" stop-color="#4f88ff"/>
+      <stop offset="1" stop-color="#3366ff"/>
+    </linearGradient>
+    <linearGradient id="secondary" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a8d8ff" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#6fa8ff" stop-opacity="0.7"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6fa8ff" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#a8d8ff" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background with glow effect -->
+  <rect width="64" height="64" rx="16" fill="url(#bg)" stroke="url(#accent)" stroke-width="2"/>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#glow)" opacity="0.4"/>
+
+  <!-- Code lines pattern (top section) -->
+  <rect x="8" y="12" width="16" height="3" rx="1" fill="url(#secondary)"/>
+  <rect x="8" y="18" width="24" height="3" rx="1" fill="url(#accent)"/>
+  <rect x="8" y="24" width="12" height="3" rx="1" fill="url(#secondary)"/>
+
+  <!-- Stylized "JM" initials (larger and more prominent) -->
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <!-- J -->
+    <path d="M12 36 L12 48 Q12 52 16 52 Q20 52 20 48 L20 44"
+          stroke="url(#accent)" stroke-width="3" fill="none"/>
+
+    <!-- M -->
+    <path d="M28 52 L28 36 L32 40 L36 36 L36 52"
+          stroke="url(#accent)" stroke-width="3" fill="none"/>
+  </g>
+
+  <!-- Tech accent elements -->
+  <circle cx="48" cy="16" r="3" fill="url(#accent)" opacity="0.8"/>
+  <circle cx="56" cy="24" r="2" fill="url(#secondary)"/>
+  <circle cx="52" cy="48" r="2.5" fill="url(#accent)" opacity="0.7"/>
+
+  <!-- Additional geometric elements -->
+  <rect x="44" y="32" width="8" height="2" rx="1" fill="url(#secondary)" opacity="0.6"/>
+  <rect x="46" y="36" width="12" height="2" rx="1" fill="url(#accent)" opacity="0.4"/>
+</svg>

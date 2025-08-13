@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Julien Marchand - Portfolio</title>
+  <meta name="description" content="Portfolio / CV by Julien Marchand. Software Engineering Manager, projects, experiences, skills." />
+
+  <!-- Mobile optimizations -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#080812" />
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/avatar.jpg" />
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+
+  <!-- Optimized font loading -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Scripts with optimized loading -->
+  <script defer src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script defer src="js/scene-bg.js"></script>
+  <script defer src="js/three-scene.js"></script>
+  <script defer src="js/app.js"></script>
+</head>
+<body>
+  <canvas id="bg"></canvas>
+  <canvas id="comets" class="bg-layer"></canvas>
+  <header class="glass sticky">
+    <div class="nav-inner">
+      <a href="#hero" class="brand">
+        <img src="assets/logo.svg" alt="Logo JM" width="28" height="28" />
+        <span class="brand-text glow-text">Julien Marchand</span>
+      </a>
+      <nav>
+        <a href="#hero" class="nav-link">Hero</a>
+        <a href="#about" class="nav-link">About</a>
+          <a href="#education" class="nav-link">Education, Training & Certifications</a>
+          <a href="#timeline" class="nav-link">Experiences</a>
+        <a href="#talks" class="nav-link">Projects, Talks & Articles</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#contact" class="nav-link btn-magnetic">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  
+  <section id="hero" class="section hero">
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="eyebrow"><span class="dot"></span> @ Decathlon Digital</div>
+        <h1 class="hero-title glitch-web3" data-text="Software Engineering Manager">Software Engineering Manager</h1>
+        <h2 class="section-subtitle typed" data-rotate='[
+          "Another way to present myself", "Another way to discover me", "Another way to get to know me", "Another way to understand me", "Another way to connect with me", "Another way to see my work", "Another way to explore my skills", "Another way to appreciate my journey"
+        ]'></h2>
+          <div class="hero-meta">
+              <div><strong>10+</strong><span>years in tech</span></div>
+              <div><strong>5</strong><span>roles shaping my journey</span></div>
+              <div><strong>Localisation</strong><span>Lille (France) & remote</span></div>
+              <div><strong>Speaking</strong><span>French (native) & English (professional)</span></div>
+          </div>
+          <div class="hero-badges">
+              <span class="chip">Development 💻</span>
+              <span class="chip">Management 🤝</span>
+              <span class="chip">Leadership 🌟</span>
+          </div>
+        <p class="hero-desc">
+            Pragmatic software engineering manager, I design and deliver reliable systems, foster strong teams, and create meaningful impact through clarity and simplicity.
+        </p>
+        <div class="hero-ctas">
+            <a href="#contact" class="btn primary btn-magnetic">Get in touch</a>
+        </div>
+        <div class="socials hero-socials">
+          <a class="chip" href="https://www.linkedin.com/in/julien-marchand-0256186a" target="_blank" rel="noreferrer">
+            <img class="icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg" alt="LinkedIn" />LinkedIn
+          </a>
+          <a class="chip" href="https://github.com/jmarch031" target="_blank" rel="noreferrer">
+            <img class="icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg" alt="GitHub" />GitHub
+          </a>
+          <a class="chip" href="https://medium.com/@julienmarchand_83183" target="_blank" rel="noreferrer">
+            <img class="icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/medium.svg" alt="Medium" />Medium
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="three-wrap">
+          <div id="three-container" aria-label="3D Animation"></div>
+          <div class="avatar-card glass">
+            <img class="avatar" src="assets/avatar.jpg" alt="Portrait of Julien" />
+            <div class="avatar-info">
+              <span class="green-dot"></span> Open to discuss
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="about" class="section about reveal">
+    <div class="container panel about-pro">
+      <div class="about-header">
+        <figure class="avatar">
+          <img src="assets/avatar.jpg" alt="Portrait" loading="lazy" />
+        </figure>
+        <div class="about-intro">
+          <h3 class="section-title outline">About</h3>
+          <p class="about-text">
+              Software Engineering Manager at Decathlon Digital with 10+ years of experience from hands-on development to team leadership.</br>From Developer, Scrum Master, Tech Lead to Engineering Manager, I bridge technical expertise with leadership to deliver impactful, simple, and business-driven solutions.</br>Currently in the logistics division, leading part of the Warehouse Management System (WMS) transformation with a focus on delivery, team spirit, and measurable impact.
+      </p>
+          <div class="quick-actions">
+            <a class="btn primary" href="#contact">Contact Me</a>
+            <!-- <a class="btn" href="#" onclick="window.print();return false;">PDF Version</a> -->
+          </div>
+        </div>
+      </div>
+      <div class="about-highlights">
+        <article class="mini-card">
+          <h4>Values ✨</h4>
+          <p>Clarity, simplicity, and purpose in every action. Acting with fairness and lasting impact.</p>
+  </article>
+        <article class="mini-card">
+          <h4>Intentions 🎯</h4>
+          <p>Build useful solutions, help teams grow, and always strive to improve.</p>
+        </article>
+        <article class="mini-card">
+          <h4>Ambitions 🚀</h4>
+          <p>Innovate with reason, lead by example, and leave a positive mark on projects and people.</p>
+        </article>
+      </div>
+    </div>
+    </section>
+
+
+  <!-- Education -->
+  <section id="education" class="section education reveal">
+    <div class="container panel">
+      <h3 class="section-title">Education, Training & Certifications</h3>
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="education">Education</button>
+        <button class="filter-btn" data-filter="training">Training</button>
+        <button class="filter-btn" data-filter="certification">Certification</button>
+      </div>
+      <div class="edu-grid" id="eduGrid">
+        <article class="card edu clickable-card" data-tags="education">
+          <div class="edu-head">
+            <span class="badge year">2010 - 2015</span>
+            <h4><img class="edu-logo" src="https://newsroom.ionis-group.com/wp-content/uploads/2023/09/EPI-LOGO-ACCROCHE-2023-QUADRI.png" alt="EPITECH" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+            <span style="display:none;">🎓</span> EPITECH</h4>
+            <span class="place">Master's in Computer Science</span>
+          </div>
+          <p>Leading French school of computer science, known for its project-based learning approach. Epitech develops experts who can innovate, adapt to rapid technological change, and solve real-world problems through autonomy, teamwork, and creativity.</p>
+          <div class="card-tags"><span>Education</span><span>Lille - Paris (France)</span><span>Project</span></div>
+          <div class="click-indicator" onclick="window.open('https://www.epitech.eu/', '_blank')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15,3 21,3 21,9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </div>
+        </article>
+        <article class="card edu clickable-card" data-tags="education">
+          <div class="edu-head">
+            <span class="badge year">2013 - 2014</span>
+            <h4><img class="edu-logo" src="https://www.csusm.edu/communications/images/branding-images/csusmlogo_fullnamehillsabove_blue.jpg" alt="CSUSM" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+            <span style="display:none;">🏫</span> CSUSM</h4>
+            <span class="place">International Year</span>
+          </div>
+          <p>Public university in California recognized for its diverse and inclusive environment, strong academic programs, and emphasis on hands-on learning. CSUSM fosters critical thinking, collaboration, and global perspectives to prepare students for real-world impact.</p>
+          <div class="card-tags"><span>Education</span><span>California (USA)</span><span>CSUSM</span></div>
+          <div class="click-indicator" onclick="window.open('https://www.csusm.edu/', '_blank')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15,3 21,3 21,9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </div>
+        </article>
+        <article class="card edu clickable-card" data-tags="certification">
+          <div class="edu-head">
+            <span class="badge cert">2018</span>
+            <h4><img class="edu-logo" src="https://scrumorg-website-prod.s3.amazonaws.com/drupal/inline-images/2022-09/asset_44psmi_0.png" alt="Scrum.org" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+            <span style="display:none;">📜</span> PSM I</h4>
+            <span class="place">Scrum.org</span>
+          </div>
+          <p>Industry-recognized certification validating a strong understanding of Scrum principles, Agile practices, and servant-leadership. Demonstrates the ability to apply Scrum to deliver value, foster team collaboration, and drive continuous improvement.</p>
+          <div class="card-tags"><span>Certification</span><span>Agile</span><span>Scrum</span></div>
+          <div class="click-indicator"  onclick="window.open('https://www.scrum.org/professional-scrum-certifications/professional-scrum-master-assessments', '_blank')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15,3 21,3 21,9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </div>
+        </article>
+        <article class="card edu clickable-card" data-tags="training">
+          <div class="edu-head">
+            <span class="badge training">2020-2024</span>
+            <h4><span style="display:inline;">💬</span> Nonviolent Communication (NVC)</h4>
+            <span class="place">Leadership Training</span>
+          </div>
+          <p>Training in Nonviolent Communication to develop empathetic listening and authentic expression. This approach helps resolve conflicts and improves interpersonal relationships in team management.</p>
+          <div class="card-tags"><span>Training</span><span>Communication</span><span>Leadership</span></div>
+          <div class="click-indicator" onclick="window.open('https://www.cnvformations.fr/', '_blank')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15,3 21,3 21,9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </div>
+        </article>
+        <article class="card edu clickable-card" data-tags="training">
+          <div class="edu-head">
+            <span class="badge training">2021</span>
+            <h4><span style="display:inline;">👥</span> MBTI (Myers-Briggs Type Indicator)</h4>
+            <span class="place">Personality Assessment Training</span>
+          </div>
+          <p>Training in MBTI personality types to better understand individual differences and adapt management style. Essential tool for optimizing team collaboration and communication.</p>
+          <div class="card-tags"><span>Training</span><span>Management</span><span>Psychology</span></div>
+          <div class="click-indicator" onclick="window.open('https://www.themyersbriggs.com/', '_blank')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15,3 21,3 21,9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </div>
+        </article>
+        <article class="card edu clickable-card" data-tags="training">
+          <div class="edu-head">
+            <span class="badge training">2022</span>
+            <h4><span style="display:inline;">📊</span> DISC Assessment</h4>
+            <span class="place">Behavioral Analysis Training</span>
+          </div>
+          <p>Training in DISC behavioral analysis to identify communication styles and motivations of each person. Allows adapting management approach and improving team effectiveness.</p>
+          <div class="card-tags"><span>Training</span><span>Behavior</span><span>Team Building</span></div>
+          <div class="click-indicator" onclick="window.open('https://www.discprofile.com/', '_blank')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15,3 21,3 21,9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </div>
+        </article>
+        <article class="card edu" data-tags="training">
+          <div class="edu-head">
+            <span class="badge training">2023</span>
+            <h4><span style="display:inline;">🤝</span> Advanced Negotiation</h4>
+            <span class="place">Advanced Negotiation Skills</span>
+          </div>
+          <p>Advanced training in negotiation techniques for managers. Development of strategic negotiation skills, complex conflict management, and finding win-win solutions in professional environments.</p>
+          <div class="card-tags"><span>Training</span><span>Negotiation</span><span>Strategy</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+<section id="timeline" class="section timeline reveal"><div class="container panel timeline-classic">
+    <h3 class="section-title">Experiences</h3>
+    <div class="timeline-list">
+<article class="tl-item">
+          <header class="tl-head">
+            <h4>Software Engineering Manager (Hands-off)</h4>
+              <span class="time">07.2023 - Present</span>
+              <span class="place"><img class="place-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/decathlon.svg" alt="Decathlon" width="14" height="14" loading="lazy" onerror="this.style.display='none'" /> @ Decathlon Digital - Value Chain (Logistics)</span>
+              <span class="expand-icon">+</span>
+          </header>
+          <div class="tl-body">
+            <div class="tl-summary">
+              <p>Supervise 5 feature teams (approximately 30 people) in the logistics sub-domain. Focus on recruitment, talent development, and strategic coherence of Warehouse Management Systems solutions.</p>
+            </div>
+            <div class="tl-details">
+              <h5>Key Responsibilities:</h5>
+              <ul>
+                <li>Supervise 5 feature teams consisting of developers, Tech Leads, and QA (30+ people)</li>
+                <li>Lead recruitment and talent development initiatives</li>
+                <li>Collaborate with other leaders to ensure strategic and technical coherence</li>
+                <li>Optimize Warehouse Management Systems (WMS) with focus on modularization</li>
+                <li>Ensure quality of deployed logistics solutions</li>
+              </ul>
+              <h5>Key Focus Areas:</h5>
+              <ul>
+                <li>Professional growth support for team members</li>
+                <li>Strategic alignment with Decathlon's complex logistics challenges</li>
+                <li>Human expertise alignment to meet business objectives</li>
+                <li>Modularization and quality optimization of WMS systems</li>
+              </ul>
+            </div>
+            <ul class="tags"><li>Logistics</li><li>WMS</li><li>Leadership</li><li>Team Management</li><li>Recruitment</li><li>Strategy</li></ul>
+          </div>
+        </article>
+<article class="tl-item">
+          <header class="tl-head">
+            <h4>Software Engineering Manager (Hands-on)</h4>
+            <span class="time">02.2022 - 07.2023</span>
+              <span class="place"><img class="place-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/decathlon.svg" alt="Decathlon" width="14" height="14" loading="lazy" onerror="this.style.display='none'" /> @ Decathlon Digital - DATA</span>
+              <span class="expand-icon">+</span>
+          </header>
+          <div class="tl-body">
+            <div class="tl-summary">
+              <p>Led internal and external recruitment while managing team budgets. Oversaw back-end development and implemented optimizations through Tableau dashboards for data-driven decision-making.</p>
+            </div>
+            <div class="tl-details">
+              <h5>Key Responsibilities:</h5>
+              <ul>
+                <li>Lead internal and external recruitment within budget constraints</li>
+                <li>Oversee back-end development using Java/SpringBoot</li>
+                <li>Implement performance optimizations through Tableau dashboards</li>
+                <li>Provide hierarchical leadership and close team management</li>
+                <li>Support team members in their professional development</li>
+              </ul>
+              <h5>Key Achievements:</h5>
+              <ul>
+                <li>Enhanced performance through data-driven decision-making tools</li>
+                <li>Ensured alignment with company's strategic objectives</li>
+                <li>Guaranteed availability of necessary technical and human skills</li>
+                <li>Successfully managed team budgets and recruitment processes</li>
+              </ul>
+            </div>
+            <ul class="tags"><li>Data</li><li>Java</li><li>Spring Boot</li><li>Tableau</li><li>Leadership</li><li>Budget Management</li></ul>
+          </div>
+        </article>
+<article class="tl-item">
+          <header class="tl-head">
+            <h4>Technical Lead</h4>
+            <span class="time">01.2021 - 02.2022</span>
+              <span class="place"><img class="place-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/decathlon.svg" alt="Decathlon" width="14" height="14" loading="lazy" onerror="this.style.display='none'" /> @ Decathlon Digital - DATA</span>
+              <span class="expand-icon">+</span>
+          </header>
+          <div class="tl-body">
+            <div class="tl-summary">
+              <p>Collaborated with developers and Product Owner to translate functional requirements into robust technical solutions. Designed and developed BI application for analyzing Decathlon's performance and economic resources.</p>
+            </div>
+            <div class="tl-details">
+              <h5>Technical Leadership:</h5>
+              <ul>
+                <li>Translate functional requirements into robust technical solutions</li>
+                <li>Design and develop BI application for performance analysis</li>
+                <li>Ensure long-term viability and sustainability of applications</li>
+                <li>Lead developer teams within Agile framework</li>
+                <li>Guarantee development quality, stability, and maintainability</li>
+              </ul>
+              <h5>Business Impact:</h5>
+              <ul>
+                <li>Created key tool for driving retail operations through strategic KPIs</li>
+                <li>Developed technical skills of colleagues to enhance collective performance</li>
+                <li>Ensured applications meet strategic business objectives</li>
+                <li>Delivered solutions critical for economic resource analysis</li>
+              </ul>
+            </div>
+            <ul class="tags"><li>BI</li><li>Technical Leadership</li><li>Agile</li><li>KPIs</li><li>Team Development</li></ul>
+          </div>
+        </article>
+<article class="tl-item">
+          <header class="tl-head">
+            <h4>Developer & Scrum Master</h4>
+            <span class="time">02.2019 - 12.2020</span>
+              <span class="place"><img class="place-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/decathlon.svg" alt="Decathlon" width="14" height="14" loading="lazy" onerror="this.style.display='none'" /> @ Decathlon Digital - DATA</span>
+              <span class="expand-icon">+</span>
+          </header>
+          <div class="tl-body">
+            <div class="tl-summary">
+              <p>Contributed to key projects including API for sports communities indicators and BI application for economic performance analysis. Mentored developers and ensured operational maintenance of applications.</p>
+            </div>
+            <div class="tl-details">
+              <h5>Key Projects:</h5>
+              <ul>
+                <li>Developed API providing indicators on sports communities</li>
+                <li>Built BI application for analyzing Decathlon's economic performance</li>
+                <li>Created tools essential for steering retail operations through strategic KPIs</li>
+                <li>Designed and developed features aligned with sprint goals</li>
+              </ul>
+              <h5>Scrum Master Responsibilities:</h5>
+              <ul>
+                <li>Mentored new developers and provided guidance</li>
+                <li>Prioritized technical tasks with partners and Ops teams</li>
+                <li>Ensured operational maintenance of applications</li>
+                <li>Maintained high level of code quality and performance</li>
+                <li>Focused on reliability and performance while meeting user needs</li>
+              </ul>
+            </div>
+            <ul class="tags"><li>API Development</li><li>BI</li><li>Scrum Master</li><li>Mentoring</li><li>KPIs</li></ul>
+          </div>
+        </article>
+<article class="tl-item">
+          <header class="tl-head">
+            <h4>Developer & Scrum Master</h4>
+            <span class="time">02.2016 - 02.2019</span>
+              <span class="place"><img class="place-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/soprasteria.svg" alt="Sopra Steria" width="14" height="14" loading="lazy" onerror="this.style.display='none'" /> @ Sopra Steria</span>
+              <span class="expand-icon">+</span>
+          </header>
+          <div class="tl-body">
+            <div class="tl-summary">
+              <p>Played key role in expertise center as Back-end Developer and Scrum Master. Contributed to applications for major clients including Nexity, SNCF, and Société Générale.</p>
+            </div>
+            <div class="tl-details">
+              <h5>Client Projects:</h5>
+              <ul>
+                <li><strong>Nexity:</strong> Developed application for managing decision-making committees and project files</li>
+                <li><strong>SNCF:</strong> Led team responsible for managing catenary maintenance operations</li>
+                <li><strong>Société Générale:</strong> Created application for monitoring high-risk third parties and redesigned professional credit granting process, including document digitization</li>
+              </ul>
+              <h5>Scrum Master Achievements:</h5>
+              <ul>
+                <li>Managed teams in Agile environment</li>
+                <li>Ensured quality and performance of delivered solutions</li>
+                <li>Aligned business needs with technical solutions</li>
+                <li>Provided efficient project tracking and delivery</li>
+                <li>Facilitated critical process management for major clients</li>
+              </ul>
+            </div>
+            <ul class="tags"><li>Back-end</li><li>Scrum Master</li><li>Banking</li><li>Transport</li><li>Real Estate</li><li>Agile</li></ul>
+          </div>
+        </article>
+<article class="tl-item">
+          <header class="tl-head">
+            <h4>Software Engineer</h4>
+            <span class="time">09.2015 - 02.2016</span>
+              <span class="place">@ ELOSI</span>
+              <span class="expand-icon">+</span>
+          </header>
+          <div class="tl-body">
+            <div class="tl-summary">
+              <p>Worked as software engineer on projects primarily in the insurance sector. Responsible for technical project management, developing new functionalities, and resolving bugs.</p>
+            </div>
+            <div class="tl-details">
+              <h5>Project Responsibilities:</h5>
+              <ul>
+                <li>Technical project management (TPM) for insurance sector projects</li>
+                <li>Developed new functionalities to meet client requirements</li>
+                <li>Resolved bugs and technical issues</li>
+                <li>Utilized ASP.NET to implement technical solutions</li>
+                <li>Worked closely with cross-functional teams</li>
+              </ul>
+              <h5>Key Contributions:</h5>
+              <ul>
+                <li>Delivered high-quality, reliable systems</li>
+                <li>Ensured efficient project delivery</li>
+                <li>Maintained alignment with business needs</li>
+                <li>Contributed to insurance domain solutions</li>
+              </ul>
+            </div>
+            <ul class="tags"><li>ASP.NET</li><li>Insurance</li><li>Technical Project Management</li><li>Bug Resolution</li></ul>
+          </div>
+        </article>
+<article class="tl-item">
+          <header class="tl-head">
+            <h4>Web Developer</h4>
+            <span class="time">09.2014 - 09.2015</span>
+              <span class="place">@ Cassiop</span>
+              <span class="expand-icon">+</span>
+          </header>
+          <div class="tl-body">
+            <div class="tl-summary">
+              <p>Contributed to both back-end and front-end development for a gamification project. Improved platform functionality and enhanced administration section capabilities.</p>
+            </div>
+            <div class="tl-details">
+              <h5>Development Contributions:</h5>
+              <ul>
+                <li>Coded game features for gamification platform</li>
+                <li>Improved overall platform functionality and user experience</li>
+                <li>Added functionalities to administration section</li>
+                <li>Enhanced contract, user, and gift algorithm management</li>
+                <li>Worked with PHP and Laravel framework</li>
+              </ul>
+              <h5>Collaboration & Impact:</h5>
+              <ul>
+                <li>Collaborated closely with development team</li>
+                <li>Ensured seamless integration of features</li>
+                <li>Enhanced overall user experience</li>
+                <li>Contributed to better platform management capabilities</li>
+              </ul>
+            </div>
+            <ul class="tags"><li>PHP</li><li>Laravel</li><li>Gamification</li><li>Full-stack</li><li>Apprenticeship</li></ul>
+          </div>
+        </article>
+<article class="tl-item">
+          <header class="tl-head">
+            <h4>Software Engineer Intern</h4>
+            <span class="time">08.2011 - 12.2011</span>
+              <span class="place">@ MOBIVIA</span>
+              <span class="expand-icon">+</span>
+          </header>
+          <div class="tl-body">
+            <div class="tl-summary">
+              <p>Developed tool for retrieving competitor data and created analysis dashboards to facilitate business decision-making. Automated data retrieval and presented key insights.</p>
+            </div>
+            <div class="tl-details">
+              <h5>Project Scope:</h5>
+              <ul>
+                <li>Developed tool for retrieving competitor data</li>
+                <li>Created analysis dashboards for business decision-making</li>
+                <li>Worked extensively with PHP for data automation</li>
+                <li>Focused on automating data retrieval processes</li>
+                <li>Presented key insights through user-friendly dashboards</li>
+              </ul>
+              <h5>Business Impact:</h5>
+              <ul>
+                <li>Contributed to improved market analysis capabilities</li>
+                <li>Enhanced strategic decision-making for the company</li>
+                <li>Provided valuable competitive intelligence tools</li>
+                <li>Facilitated better business insights through automation</li>
+              </ul>
+            </div>
+            <ul class="tags"><li>PHP</li><li>Data Analysis</li><li>Business Intelligence</li><li>Competitive Intelligence</li><li>Internship</li></ul>
+          </div>
+        </article>
+    </div>
+  </div>
+</section>
+  <!-- Talks & Articles -->
+  <section id="talks" class="section talks reveal">
+    <div class="container panel">
+      <h3 class="section-title">Projects, Talks and Articles</h3>
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="project">Projects</button>
+          <button class="filter-btn" data-filter="talk">Talks</button>
+        <button class="filter-btn" data-filter="article">Articles</button>
+      </div>
+      <div class="card-grid" id="contentGrid">
+          <article class="card clickable-card" data-tags="project">
+              <div class="card-bg" ></div>
+              <div class="content-head">
+                <span class="badge year">2024</span>
+                <h4>Portfolio / CV</h4>
+              </div>
+              <p>This fully animated Web3-style portfolio showcases my professional journey with interactive 3D elements, smooth animations, and dynamic effects. It also served as a testbed for GPT-5 in content creation, design, and code optimization, making it both a showcase and a learning project.</p>
+              <div class="card-tags"><span>AI</span><span>GPT-5</span><span>Web3</span><span>SPA</span></div>
+              <div class="click-indicator" onclick="window.open('https://github.com/jmarch031/Portfolio', '_blank')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15,3 21,3 21,9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </div>
+          </article>
+        <article class="card clickable-card" data-tags="article">
+          <div class="card-bg" ></div>
+          <div class="content-head">
+            <span class="badge cert">2024</span>
+            <h4>Leadership: How to Avoid Burnout by Learning to Listen to Yourself</h4>
+          </div>
+            <p>This Medium article shares lessons from my leadership journey on avoiding burnout by learning to listen to yourself. It combines personal insights with practical strategies, highlighting self-awareness, boundaries, and balancing ambition with well-being for leaders in fast-paced environments.</p>
+            <div class="card-tags"><span>Article</span><span>Leadership</span><span>Burnout</span></div>
+            <div class="click-indicator" onclick="window.open('https://medium.com/@julienmarchand_83183/leadership-how-to-avoid-burnout-by-learning-to-listen-to-yourself-e4cf7b5e96f8', '_blank')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15,3 21,3 21,9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </div>
+        </article>
+          <article class="card" data-tags="project">
+              <div class="card-bg" ></div>
+              <div class="content-head">
+                <span class="badge year">2024</span>
+                <h4>AskIt - Chatbot RAG</h4>
+              </div>
+              <p>AskIt is an internal assistant built with Chainlit and Retrieval-Augmented Generation. It connects to your docs and systems, lets teammates ask natural-language questions, and returns sourced answers they can trust. The goal is autonomy and speed: fewer hand-offs, faster decisions, and cleaner knowledge reuse across squads.</p>
+              <div class="card-tags"><span>Project</span><span>AI</span><span>ChainLit</span><span>RAG</span></div>
+          </article>
+        <article class="card" data-tags="talk">
+          <div class="card-bg"></div>
+          <div class="content-head">
+            <span class="badge training">2023</span>
+            <h4>Use case of strangler pattern</h4>
+          </div>
+          <p>This talk explored the Strangler Pattern and its application in our logistics ecosystem, showing how we're gradually transforming our WMS through step-by-step refactoring. It combined technical insights with real-world lessons from our ongoing migration.</p>
+          <div class="card-tags"><span>Architecture</span><span>KPIs</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section id="skills" class="section skills reveal">
+    <div class="container panel">
+      <h3 class="section-title">Skills</h3>
+      <div class="skills-wrap">
+        <div class="skills-col">
+          <h4>Hard skills</h4>
+          <div class="skill-list">
+            <article class="skill-item">
+              <header class="skill-head">
+                <img class="skill-ico" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                <span class="skill-name">Java</span>
+                <span class="expand-icon">+</span>
+              </header>
+              <div class="skill-body">
+                <div class="skill-details">
+                  <p>In-depth Java expertise for 10+ years through various client missions and enterprise projects.</p>
+                  <ul>
+                    <li>Java 8+ with streams, lambdas and functional programming</li>
+                    <li>Enterprise applications for banking, transport and logistics sectors</li>
+                    <li>Performance optimization and JVM tuning</li>
+                    <li>Unit and integration testing with JUnit, Mockito</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="skill-item">
+              <header class="skill-head">
+                <img class="skill-ico" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring Boot">
+                <span class="skill-name">Spring Boot</span>
+                <span class="expand-icon">+</span>
+              </header>
+              <div class="skill-body">
+                <div class="skill-details">
+                  <p>Complete mastery of the Spring ecosystem for back-end development at Decathlon and consulting clients.</p>
+                  <ul>
+                    <li>Spring Boot, Spring Security, Spring Data</li>
+                    <li>REST APIs for BI applications and data management</li>
+                    <li>Microservices with Spring Cloud</li>
+                    <li>Externalized configuration and environment profiles</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="skill-item">
+              <header class="skill-head">
+                <img class="skill-ico" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP">
+                <span class="skill-name">PHP & Laravel</span>
+                <span class="expand-icon">+</span>
+              </header>
+              <div class="skill-body">
+                <div class="skill-details">
+                  <p>Full-stack web development with PHP and Laravel, acquired during my first professional experiences.</p>
+                  <ul>
+                    <li>Development of gamification platforms</li>
+                    <li>Competitive intelligence tools and dashboards</li>
+                    <li>Laravel for robust web applications</li>
+                    <li>API integration and web scraping</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="skill-item">
+              <header class="skill-head">
+                <span class="skill-name">ASP.NET</span>
+                <span class="expand-icon">+</span>
+              </header>
+              <div class="skill-body">
+                <div class="skill-details">
+                  <p>Development of business applications for the insurance sector with Microsoft stack.</p>
+                  <ul>
+                    <li>Insurance policy management applications</li>
+                    <li>Integration with legacy systems</li>
+                    <li>Technical project management (TPM)</li>
+                    <li>Bug resolution and application maintenance</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="skill-item">
+              <header class="skill-head">
+                <span class="skill-name">📊 Business Intelligence & Data</span>
+                <span class="expand-icon">+</span>
+              </header>
+              <div class="skill-body">
+                <div class="skill-details">
+                  <p>Design and development of BI solutions for performance analysis and decision support.</p>
+                  <ul>
+                    <li>BI applications for Decathlon economic performance analysis</li>
+                    <li>Tableau dashboards for process optimization</li>
+                    <li>Strategic KPIs for retail operations</li>
+                    <li>Indicator APIs for sports communities</li>
+                    <li>Logistics process optimization and WMS</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="skill-item">
+              <header class="skill-head">
+                <span class="skill-name">🤖 AI - LLMs - RAG</span>
+                <span class="expand-icon">+</span>
+              </header>
+              <div class="skill-body">
+                <div class="skill-details">
+                  <p>Applied artificial intelligence and development of internal assistants to improve team autonomy.</p>
+                  <ul>
+                    <li>RAG chatbots with Chainlit for internal documentation</li>
+                    <li>Integration of OpenAI, Claude, Gemini APIs</li>
+                    <li>Automation and content generation</li>
+                    <li>Vector databases and embeddings</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="skill-item">
+              <header class="skill-head">
+                <span class="skill-name">🏗️ Software Architecture</span>
+                <span class="expand-icon">+</span>
+              </header>
+              <div class="skill-body">
+                <div class="skill-details">
+                  <p>Design of sustainable and scalable software architectures, from monolithic applications to microservices.</p>
+                  <ul>
+                    <li>Distributed architecture and microservices</li>
+                    <li>Event-driven architecture and migration patterns</li>
+                    <li>Progressive modularization of legacy systems</li>
+                    <li>SOLID patterns and Clean Architecture</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="skills-col">
+          <h4>Soft skills</h4>
+          <div class="skill-list">
+            <article class="skill-item">
+              <header class="skill-head">
+                <span class="skill-name">👥 Leadership & Management</span>
+                <span class="expand-icon">+</span>
+              </header>
+              <div class="skill-body">
+                <div class="skill-details">
+                  <p>Leading technical teams of various sizes, from hands-on to hands-off management.</p>
+                  <ul>
+                    <li>Managing 30+ people across 5 feature teams</li>
+                    <li>Evolution from technical leadership to organizational management</li>
+                    <li>Talent development and mentoring engineers towards Tech Lead roles</li>
+                    <li>MBTI and DISC training to better understand and adapt approach to each individual</li>
+                    <li>Team culture and engagement in complex environments</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="skill-item">
+              <header class="skill-head">
+                <span class="skill-name">💬 Communication</span>
+                <span class="expand-icon">+</span>
+              </header>
+              <div class="skill-body">
+                <div class="skill-details">
+                  <p>Effective communication at all organizational levels, developed particularly through NVC training.</p>
+                  <ul>
+                    <li>Nonviolent Communication (NVC) training for better listening and expression</li>
+                    <li>Technical presentations for different audiences (teams, management, stakeholders)</li>
+                    <li>Clear and concise documentation to facilitate understanding</li>
+                    <li>Meeting facilitation and collaborative workshops</li>
+                    <li>Crisis communication and conflict management with empathy</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="skill-item">
+              <header class="skill-head">
+                <span class="skill-name">🎯 Strategic Planning & Budget Management</span>
+                <span class="expand-icon">+</span>
+              </header>
+              <div class="skill-body">
+                <div class="skill-details">
+                  <p>Budget management and strategic planning to align technical and business objectives.</p>
+                  <ul>
+                    <li>Annual budget management and cost optimization</li>
+                    <li>Strategic coherence between logistics teams</li>
+                    <li>Prioritization based on business value and user impact</li>
+                    <li>Alignment with Decathlon's complex logistics challenges</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="skill-item">
+              <header class="skill-head">
+                <span class="skill-name">🚀 Vision & Strategic Engineering Leadership</span>
+                <span class="expand-icon">+</span>
+              </header>
+              <div class="skill-body">
+                <div class="skill-details">
+                  <p>Development and implementation of comprehensive engineering strategies to drive collective performance and organizational excellence.</p>
+                  <ul>
+                    <li>Design and deployment of global engineering vision for multi-team collectives</li>
+                    <li>Strategic roadmap definition aligning technical capabilities with business objectives</li>
+                    <li>Establishment of engineering best practices and standards across teams</li>
+                    <li>Cross-functional collaboration to ensure strategic coherence</li>
+                    <li>Innovation strategy and technology stack evolution planning</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="skill-item">
+              <header class="skill-head">
+                <span class="skill-name">🎓 Recruitment & Talent Development</span>
+                <span class="expand-icon">+</span>
+              </header>
+              <div class="skill-body">
+                <div class="skill-details">
+                  <p>Building high-performing teams through strategic recruitment and skill development.</p>
+                  <ul>
+                    <li>Leading internal and external recruitment</li>
+                    <li>Talent development initiatives and growth paths</li>
+                    <li>Mentoring junior developers towards autonomy</li>
+                    <li>Identifying and developing technical potential</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="skill-item">
+              <header class="skill-head">
+                <span class="skill-name">⚡ Scrum Master & Agile Leadership</span>
+                <span class="expand-icon">+</span>
+              </header>
+              <div class="skill-body">
+                <div class="skill-details">
+                  <p>Mastery of agile methodologies with PSM I certification and multi-sector field experience.</p>
+                  <ul>
+                    <li>Certified Scrum Master with experience on major client accounts</li>
+                    <li>Facilitating distributed teams and continuous improvement</li>
+                    <li>Adapting agile methods to sector-specific contexts (banking, transport, retail)</li>
+                    <li>Retrospectives and delivery process optimization</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="skill-item">
+              <header class="skill-head">
+                <span class="skill-name">🏢 Cross-Industry Experience</span>
+                <span class="expand-icon">+</span>
+              </header>
+              <div class="skill-body">
+                <div class="skill-details">
+                  <p>Multi-sector experience enabling rapid adaptation to specific business challenges.</p>
+                  <ul>
+                    <li>Banking sector: Société Générale (risk management, professional credit)</li>
+                    <li>Transport: SNCF (infrastructure maintenance, critical operations)</li>
+                    <li>Real estate: Nexity (CRM, project management and decision committees)</li>
+                    <li>Retail & Logistics: Decathlon (BI, WMS, value chain)</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section contact reveal">
+    <div class="container panel">
+      <h3 class="section-title outline">Contact</h3>
+      <h2 class="section-subtitle typed" data-rotate='["Say hello", "Say hello", "Di ciao", "Di hola", "قل مرحبا", "Sag hallo", "说你好"]'></h2>
+      <p>A project, a mission, a question. I respond quickly. ⚡</p>
+      <div class="contact-grid">
+          <div>
+        <a class="btn primary big btn-magnetic" href="mailto:jmarch031@gmail.com">Send an email</a>
+              <!-- <a class="btn big btn-magnetic" href="">Download resume</a> -->
+              </div>
+              <div class="socials">
+              <a class="chip" href="https://www.linkedin.com/in/julien-marchand-0256186a" target="_blank">
+                <img class="icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg" alt="LinkedIn" />LinkedIn
+              </a>
+              <a class="chip" href="https://github.com/jmarch031" target="_blank">
+                <img class="icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg" alt="GitHub" />GitHub
+              </a>
+              <a class="chip" href="https://medium.com/@julienmarchand_83183" target="_blank">
+                <img class="icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/medium.svg" alt="Medium" />Medium
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer glass">
+        <p>© <span id="y"></span> Julien Marchand. Developed with ❤️ & AI.</p>
+      </footer>
+
+      <div id="ripple"></div>
+
+      <!-- Floating Dock Nav -->
+  <nav id="dockNav" class="dock" aria-label="Quick access"></nav>
+
+  <script defer src="js/comets.js"></script>
+</body>
+</html>
