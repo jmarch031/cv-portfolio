@@ -280,7 +280,29 @@ body{ line-height: 1.58 }
 }
 .avatar{position:static; width:64px; height:64px; object-fit:cover; border-radius:12px; border:1px solid var(--stroke); background:radial-gradient(60% 60% at 40% 40%, rgba(255,255,255,0.12), transparent 70%)}
 .avatar-info{font-size:12px; color:var(--text); opacity:.9}
-.green-dot{width:8px; height:8px; border-radius:50%; background:linear-gradient(180deg,#42ff98,#1ee3a1); display:inline-block; margin-right:6px}
+.green-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:linear-gradient(180deg,#42ff98,#1ee3a1);
+  display:inline-block;
+  margin-right:6px;
+  animation: pulse-online 2s ease-in-out infinite;
+  box-shadow: 0 0 4px rgba(66, 255, 152, 0.4);
+}
+
+@keyframes pulse-online {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 4px rgba(66, 255, 152, 0.4);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.95);
+    box-shadow: 0 0 8px rgba(66, 255, 152, 0.8);
+  }
+}
 
 .hero-socials{margin-top:12px}
 

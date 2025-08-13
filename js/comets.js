@@ -1,4 +1,3 @@
-
 // Comets overlay: guaranteed cross-screen traversal
 (() => {
   const c = document.getElementById('comets');
@@ -30,7 +29,7 @@
   }
 
   function update(now, dt){
-    if(comets.length < 2 && Math.random() < 0.012) spawn();
+    if(comets.length < 1 && Math.random() < 0.006) spawn();
     for(let i=comets.length-1;i>=0;i--){
       const cm = comets[i];
       cm.x += cm.vx * dt;
