@@ -437,22 +437,22 @@ body{ line-height: 1.58 }
 
 /* === ABOUT PRO (clean, no overlap) === */
 .about-pro{ display:grid; gap:20px }
-.about-header{ 
+.about-header{
   position:relative;
-  display:grid; 
-  grid-template-columns: clamp(220px, 28vw, 340px) 1fr; 
-  gap:24px; 
+  display:grid;
+  grid-template-columns: clamp(220px, 28vw, 340px) 1fr;
+  gap:24px;
   align-items:start;
 }
 .about-header *{ box-sizing:border-box }
-.about-header .avatar{ 
-  grid-column:1; grid-row:1; 
+.about-header .avatar{
+  grid-column:1; grid-row:1;
   width:75%; height:auto;
-  aspect-ratio:1/1; 
-  border-radius:24px; overflow:hidden; 
-  border:1px solid var(--stroke); 
-  background:rgba(255,255,255,0.04); 
-  box-shadow:var(--shadow); 
+  aspect-ratio:1/1;
+  border-radius:24px; overflow:hidden;
+  border:1px solid var(--stroke);
+  background:rgba(255,255,255,0.04);
+  box-shadow:var(--shadow);
   z-index:0;
 }
 .about-header .avatar img{ width:100%; height:100%; object-fit:cover; display:block }
@@ -478,7 +478,7 @@ body{ line-height: 1.58 }
   border-radius:2px;
 }
 .timeline-classic .tl-item{
-  position:relative; 
+  position:relative;
   margin-left: 60px; /* leaves room for rail + nodes */
   padding:16px 18px;
   border:1px solid var(--stroke);
@@ -490,9 +490,9 @@ body{ line-height: 1.58 }
   content:""; position:absolute; left:-32px; top:26px; width:10px; height:10px; border-radius:50%;
   background:rgba(120,170,255,0.9); box-shadow:0 0 12px rgba(120,170,255,0.6);
 }
-.timeline-classic .tl-head{ 
-  display:grid; grid-template-columns: 1fr auto; gap:12px; 
-  align-items:baseline; padding:0; margin:0 
+.timeline-classic .tl-head{
+  display:grid; grid-template-columns: 1fr auto; gap:12px;
+  align-items:baseline; padding:0; margin:0
 }
 .timeline-classic .tl-head h4{ margin:0 }
 .timeline-classic .tl-head .place{ color:var(--muted); font-size:13px }
@@ -508,4 +508,59 @@ body{ line-height: 1.58 }
   .timeline-classic .tl-item .node{ left:-26px; top:22px }
   .timeline-classic .tl-head{ grid-template-columns: 1fr; }
   .timeline-classic .tl-head .time{ text-align:left }
+}
+
+/* Hide header and dock completely on mobile */
+@media (max-width: 768px) {
+  /* Hide header completely on mobile */
+  header.sticky {
+    display: none !important;
+  }
+
+  /* Hide dock completely on mobile */
+  .dock {
+    display: none !important;
+  }
+
+  /* Adjust hero section since no header taking space */
+  .hero {
+    min-height: 100vh; /* Full viewport height */
+    padding-top: 20px; /* Reduce top padding since no header */
+  }
+
+  /* Adjust all sections padding */
+  .section {
+    padding: 60px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Ensure header and dock stay hidden on very small screens */
+  header.sticky {
+    display: none !important;
+  }
+
+  .dock {
+    display: none !important;
+  }
+
+  /* Adjust spacing for very small screens */
+  .hero {
+    padding-top: 15px;
+  }
+
+  .section {
+    padding: 50px 12px;
+  }
+}
+
+/* Hide on landscape orientation too */
+@media (max-width: 896px) and (orientation: landscape) {
+  header.sticky {
+    display: none !important;
+  }
+
+  .dock {
+    display: none !important;
+  }
 }
