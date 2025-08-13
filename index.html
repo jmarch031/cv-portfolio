@@ -27,10 +27,9 @@
       </a>
       <nav>
         <a href="#about" class="nav-link">About</a>
-        <a href="#timeline" class="nav-link">Experience</a>
-        <a href="#projects" class="nav-link">Projects</a>
-        <a href="#talks" class="nav-link">Talks</a>
-        <a href="#education" class="nav-link">Education</a>
+          <a href="#education" class="nav-link">Education</a>
+          <a href="#timeline" class="nav-link">Experience</a>
+        <a href="#talks" class="nav-link">Projects, Talks & Articles</a>
         <a href="#skills" class="nav-link">Skills</a>
         <a href="#contact" class="nav-link btn-magnetic">Contact</a>
       </nav>
@@ -62,7 +61,6 @@
         </p>
         <div class="hero-ctas">
             <a href="#contact" class="btn primary btn-magnetic">Get in touch</a>
-            <a href="#timeline" class="btn ghost btn-magnetic">Download resume</a>
         </div>
         <div class="socials hero-socials">
           <a class="chip" href="https://www.linkedin.com/in/julien-marchand-0256186a" target="_blank" rel="noreferrer">
@@ -100,7 +98,6 @@
         </figure>
         <div class="about-intro">
           <h3 class="section-title outline">About</h3>
-          <h2 class="section-subtitle typed" data-rotate='["From passion to profession", "Where passion meets purpose", "Engineer. Leader. Problem solver."]'></h2>
           <p class="about-text">
               Software Engineering Manager at Decathlon Digital with 10+ years of experience from hands-on development to team leadership. Former developer, Scrum Master, and Tech Lead, I bridge technical expertise with leadership to deliver impactful, simple, and business-driven solutions. Currently in the logistics division, leading part of the Warehouse Management System (WMS) transformation with a focus on delivery, team spirit, and measurable impact.
       </p>
@@ -132,7 +129,6 @@
   <section id="education" class="section education reveal">
     <div class="container panel">
       <h3 class="section-title">Education & Certifications</h3>
-      <h2 class="section-subtitle typed" data-rotate='["Where I learned", "What I passed", "Which shaped who I am"]'></h2>
       <div class="edu-grid">
         <article class="card edu">
           <div class="edu-head">
@@ -169,7 +165,6 @@
   </section>
 <section id="timeline" class="section timeline reveal"><div class="container panel timeline-classic">
     <h3 class="section-title">Experiences</h3>
-    <h2 class="section-subtitle typed" data-rotate='["Built through experience", "From developer to engineering manager", "Driven by challenges, powered by teamwork"]'></h2>
     <div class="timeline-list">
 <article class="tl-item">
           <header class="tl-head">
@@ -240,43 +235,23 @@
   </div>
 </div>
 </section>
-
-  <section id="projects" class="section projects reveal">
+  <!-- Talks & Articles -->
+  <section id="talks" class="section talks reveal">
     <div class="container panel">
-      <h3 class="section-title outline">Projects</h3>
-      <h2 class="section-subtitle typed" data-rotate='["From concept to creation", "Shaping ideas into impactful solutions", "Built with passion"]'></h2>
+      <h3 class="section-title">Projects, Talks and Articles</h3>
       <div class="filters">
         <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="mine">Mine</button>
-          <button class="filter-btn" data-filter="work">Work</button>
+          <button class="filter-btn" data-filter="project">Projects</button>
+          <button class="filter-btn" data-filter="talk">Talks</button>
+        <button class="filter-btn" data-filter="article">Articles</button>
       </div>
-      <div class="card-grid" id="projectGrid">
-          <article class="card" data-tags="mine">
-              <div class="card-bg"></div>
+      <div class="card-grid" id="contentGrid">
+          <article class="card" data-tags="project">
+              <div class="card-bg" ></div>
               <h4>Portfolio / CV</h4>
               <p>This fully animated Web3-style portfolio showcases my professional journey with interactive 3D elements, smooth animations, and dynamic effects. It also served as a testbed for GPT-5 in content creation, design, and code optimization, making it both a showcase and a learning project.</p>
               <div class="card-tags"><span>AI</span><span>GPT-5</span><span>Web3</span><span>SPA</span></div>
           </article>
-        <article class="card" data-tags="work">
-          <div class="card-bg"></div>
-          <h4>AskIt - Chatbot RAG</h4>
-          <p>AskIt is an internal assistant built with Chainlit and Retrieval-Augmented Generation. It connects to your docs and systems, lets teammates ask natural-language questions, and returns sourced answers they can trust. The goal is autonomy and speed: fewer hand-offs, faster decisions, and cleaner knowledge reuse across squads.</p>
-          <div class="card-tags"><span>AI</span><span>RAG</span><span>GCP</span><span>ChainLit</span></div>
-        </article>
-      </div>
-    </div>
-  </section>
-  <!-- Talks & Articles -->
-  <section id="talks" class="section talks reveal">
-    <div class="container panel">
-      <h3 class="section-title">Talks and Articles</h3>
-      <h2 class="section-subtitle typed" data-rotate='["Inspiring through words and ideas", "Sharing lessons learned", "Turning experience into insight"]'></h2>
-      <div class="filters">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="talk">Talks</button>
-        <button class="filter-btn" data-filter="article">Articles</button>
-      </div>
-      <div class="card-grid" id="contentGrid">
         <article class="card" data-tags="article">
           <div class="card-bg" ></div>
             <a href="https://medium.com/@julienmarchand_83183/leadership-how-to-avoid-burnout-by-learning-to-listen-to-yourself-e4cf7b5e96f8" target="_blank">
@@ -284,8 +259,13 @@
             </a>
             <p>This Medium article shares lessons from my leadership journey on avoiding burnout by learning to listen to yourself. It combines personal insights with practical strategies, highlighting self-awareness, boundaries, and balancing ambition with well-being for leaders in fast-paced environments.</p>
             <div class="card-tags"><span>Article</span><span>Leadership</span><span>Burnout</span></div>
-
         </article>
+          <article class="card" data-tags="project">
+              <div class="card-bg" ></div>
+                  <h4>AskIt - Chatbot RAG</h4>
+              <p>AskIt is an internal assistant built with Chainlit and Retrieval-Augmented Generation. It connects to your docs and systems, lets teammates ask natural-language questions, and returns sourced answers they can trust. The goal is autonomy and speed: fewer hand-offs, faster decisions, and cleaner knowledge reuse across squads.</p>
+              <div class="card-tags"><span>Project</span><span>AI</span><span>ChainLit</span><span>RAG</span></div>
+          </article>
         <article class="card" data-tags="talks">
           <div class="card-bg"></div>
           <h4>Use case of strangler pattern</h4>
@@ -301,7 +281,6 @@
   <section id="skills" class="section skills reveal">
     <div class="container panel">
       <h3 class="section-title">Skills</h3>
-      <h2 class="section-subtitle typed" data-rotate='["Hard skills are useless without soft skills", "Blending technology and people skills", "Driven by curiosity and precision", "Committed to continuous learning"]'></h2>
       <div class="skills-wrap">
         <div class="skills-col">
           <h4>Hard skills</h4>
@@ -339,8 +318,11 @@
       <h2 class="section-subtitle typed" data-rotate='["Dis bonjour", "Say hello", "Di ciao", "Di hola", "قل مرحبا", "Sag hallo", "说你好"]'></h2>
       <p>A project, a mission, a question. I respond quickly. ⚡</p>
       <div class="contact-grid">
+          <div>
         <a class="btn primary big btn-magnetic" href="mailto:jmarch031@gmail.com">Send an email</a>
-        <div class="socials">
+          <a class="btn primary big btn-magnetic" href="">Download resume</a>
+          </div>
+          <div class="socials">
           <a class="chip" href="https://www.linkedin.com/in/julien-marchand-0256186a" target="_blank">
             <img class="icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg" alt="LinkedIn" />LinkedIn
           </a>

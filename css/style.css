@@ -343,7 +343,7 @@ body{ line-height: 1.58 }
 
 /* === Dock === */
 .dock{ position:fixed; left:50%; bottom:18px; transform:translateX(-50%); z-index:110; display:flex; gap:10px; padding:8px; background:rgba(15,15,25,0.6); border:1px solid var(--stroke); border-radius:20px; backdrop-filter: blur(8px); box-shadow: var(--shadow) }
-.dock a{ display:flex; align-items:center; justify-content:center; padding:8px 12px; border-radius:14px; color:var(--text); text-decoration:none; font-size:13px; border:1px solid transparent; transition: transform .15s, background .15s, border-color .15s; text-align: center }
+.dock a{ min-width: 120px; display:flex; align-items:center; justify-content:center; padding:8px 12px; border-radius:14px; color:var(--text); text-decoration:none; font-size:13px; border:1px solid transparent; transition: transform .15s, background .15s, border-color .15s; text-align: center }
 .dock a span{ text-align: center; width: 100% }
 .dock a:hover{ transform: translateY(-2px); background: rgba(120,170,255,0.12); border-color: rgba(120,170,255,0.35) }
 .dock a.active{ background: rgba(120,170,255,0.16); border-color: rgba(120,170,255,0.5) }
@@ -538,6 +538,10 @@ body{ line-height: 1.58 }
   header.sticky {
     display: none !important;
   }
+
+    .hero-right {
+        display: none !important;
+    }
 
   /* Hide dock completely on mobile */
   .dock {
