@@ -147,6 +147,83 @@ if (!isTouchDevice) {
   }
 })();
 
+// Skills expansion functionality (similar to timeline)
+(function initSkillsExpansion(){
+  const skillItems = document.querySelectorAll('.skill-item');
+  if (!skillItems.length) return;
+
+  skillItems.forEach(item => {
+    const expandIcon = item.querySelector('.expand-icon');
+    if (!expandIcon) return;
+
+    // Enhanced touch support
+    const handleToggle = (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      toggleSkillItem(item, expandIcon);
+    };
+
+    // Use both click and touch events
+    expandIcon.addEventListener('click', handleToggle);
+    item.addEventListener('click', handleToggle);
+
+    if (isTouchDevice) {
+      expandIcon.addEventListener('touchend', handleToggle, { passive: false });
+      item.addEventListener('touchend', handleToggle, { passive: false });
+    }
+  });
+
+  function toggleSkillItem(item, expandIcon) {
+    const isExpanded = item.classList.contains('expanded');
+
+    // Close other expanded items on mobile for better UX
+    if (!isExpanded && isTouchDevice && window.innerWidth <= 768) {
+      document.querySelectorAll('.skill-item.expanded').forEach(expandedItem => {
+        if (expandedItem !== item) {
+          expandedItem.classList.remove('expanded');
+          const otherIcon = expandedItem.querySelector('.expand-icon');
+          if (otherIcon) otherIcon.textContent = '+';
+        }
+      });
+    }
+
+    if (isExpanded) {
+      // Collapse
+      item.classList.remove('expanded');
+      expandIcon.textContent = '+';
+    } else {
+      // Expand
+      item.classList.add('expanded');
+      expandIcon.textContent = '×';
+
+      // Enhanced scroll behavior for mobile
+      setTimeout(() => {
+        const rect = item.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const isPartiallyVisible = rect.bottom > viewportHeight * 0.8;
+
+        if (isPartiallyVisible) {
+          const scrollOptions = {
+            behavior: 'smooth',
+            block: isTouchDevice ? 'start' : 'nearest'
+          };
+
+          // Add offset for mobile to account for virtual keyboards
+          if (isTouchDevice) {
+            const offset = window.innerWidth <= 480 ? 20 : 40;
+            window.scrollTo({
+              top: window.scrollY + rect.top - offset,
+              behavior: 'smooth'
+            });
+          } else {
+            item.scrollIntoView(scrollOptions);
+          }
+        }
+      }, 300); // Increased delay for mobile animations
+    }
+  }
+})();
+
 // Content filter for talks/articles section (mobile optimized)
 (function initContentFilter(){
   const buttons = document.querySelectorAll('#talks .filter-btn');
