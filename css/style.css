@@ -331,7 +331,6 @@ nav{display:flex; align-items:center; gap:14px}
 
 /* Clickable cards styles */
 .clickable-card {
-  cursor: pointer;
   position: relative;
   overflow: visible;
 }
@@ -362,7 +361,8 @@ nav{display:flex; align-items:center; gap:14px}
 
 /* Click indicator styles */
 .click-indicator {
-  position: absolute;
+    cursor: pointer;
+    position: absolute;
   bottom: 12px;
   right: 12px;
   width: 28px;
