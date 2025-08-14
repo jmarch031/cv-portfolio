@@ -1,296 +1,396 @@
 // Footer year
 document.getElementById('y').textContent = new Date().getFullYear();
 
-// Magnetic buttons
-document.querySelectorAll('.btn-magnetic').forEach(btn => {
-  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-  btn.addEventListener('mousemove', e => {
-    const rect = btn.getBoundingClientRect();
-    const mx = clamp((e.clientX - rect.left) / rect.width * 100, 0, 100);
-    const my = clamp((e.clientY - rect.top) / rect.height * 100, 0, 100);
-    btn.style.setProperty('--mx', mx + '%');
-    btn.style.setProperty('--my', my + '%');
-  });
-});
+// Detect touch device
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-// Click ripple
+// Magnetic buttons (desktop only for performance)
+if (!isTouchDevice) {
+  document.querySelectorAll('.btn-magnetic').forEach(btn => {
+    const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const mx = clamp((e.clientX - rect.left) / rect.width * 100, 0, 100);
+      const my = clamp((e.clientY - rect.top) / rect.height * 100, 0, 100);
+      btn.style.setProperty('--mx', mx + '%');
+      btn.style.setProperty('--my', my + '%');
+    });
+  });
+}
+
+// Click ripple effect (optimized for mobile)
 (function(){
   const ripple = document.getElementById('ripple');
-  addEventListener('click', e => {
-    ripple.style.left = e.clientX + 'px';
-    ripple.style.top = e.clientY + 'px';
+  if (!ripple) return;
+
+  const handleClick = (e) => {
+    // Use touch coordinates if available, otherwise mouse coordinates
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+    ripple.style.left = clientX + 'px';
+    ripple.style.top = clientY + 'px';
     ripple.style.opacity = 1;
     ripple.style.transition = 'none';
-    ripple.style.width = '12px'; ripple.style.height = '12px';
-    requestAnimationFrame(()=>{
+    ripple.style.width = '12px';
+    ripple.style.height = '12px';
+
+    requestAnimationFrame(() => {
       ripple.style.transition = 'opacity .6s ease, width .6s ease, height .6s ease';
-      ripple.style.width = '240px'; ripple.style.height = '240px';
+      ripple.style.width = isTouchDevice ? '180px' : '240px';
+      ripple.style.height = isTouchDevice ? '180px' : '240px';
       ripple.style.opacity = 0;
     });
-  });
-})();
+  };
 
-// Reveal on scroll
-(function initReveal(){
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
-  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(n => io.observe(n));
-})();
-
-// Timeline expand
-document.querySelectorAll('.tl-item').forEach(item => {
-  const head = item.querySelector('.tl-head');
-  head.addEventListener('click', () => item.classList.toggle('expanded'));
-});
-
-// Projects filter
-(function initFilter(){
-  const buttons = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('#projectGrid .card');
-  function apply(tag){
-    cards.forEach(c => {
-      if(tag==='all'){ c.style.display = ''; return; }
-      const tags = (c.getAttribute('data-tags') || '').split(/\s+/);
-      c.style.display = tags.includes(tag) ? '' : 'none';
-    });
+  // Use both click and touchstart for better mobile support
+  addEventListener('click', handleClick);
+  if (isTouchDevice) {
+    addEventListener('touchstart', handleClick, { passive: true });
   }
-  buttons.forEach(b => b.addEventListener('click', () => {
-    buttons.forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    apply(b.dataset.filter);
-  }));
 })();
 
-// Theme toggle with persistence
-(function themeToggle(){
-  const btn = document.getElementById('themeToggle');
-  if(!btn) return;
-  const key = 'jm-theme';
-  const saved = localStorage.getItem(key);
-  const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-  const initTheme = saved || (prefersLight ? 'light' : 'dark');
-  document.body.setAttribute('data-theme', initTheme);
+// Reveal elements on scroll (optimized for mobile)
+(function initReveal(){
+  const elements = document.querySelectorAll('.reveal');
+  if (!elements.length) return;
 
-  btn.addEventListener('click', () => {
-    const cur = document.body.getAttribute('data-theme') || 'dark';
-    const next = cur === 'dark' ? 'light' : 'dark';
-    document.body.setAttribute('data-theme', next);
-    localStorage.setItem(key, next);
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {
+    rootMargin: isTouchDevice ? '0px 0px -5% 0px' : '0px 0px -10% 0px',
+    threshold: isTouchDevice ? 0.05 : 0.12
+  });
+
+  elements.forEach(el => io.observe(el));
+})();
+
+// Timeline experience expansion (enhanced for mobile)
+(function initTimelineExpansion(){
+  const timelineItems = document.querySelectorAll('.tl-item');
+  if (!timelineItems.length) return;
+
+  timelineItems.forEach(item => {
+    const expandIcon = item.querySelector('.expand-icon');
+    if (!expandIcon) return;
+
+    // Enhanced touch support
+    const handleToggle = (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      toggleTimelineItem(item, expandIcon);
+    };
+
+    // Use both click and touch events
+    expandIcon.addEventListener('click', handleToggle);
+    item.addEventListener('click', handleToggle);
+
+    if (isTouchDevice) {
+      expandIcon.addEventListener('touchend', handleToggle, { passive: false });
+      item.addEventListener('touchend', handleToggle, { passive: false });
+    }
+  });
+
+  function toggleTimelineItem(item, expandIcon) {
+    const isExpanded = item.classList.contains('expanded');
+
+    // Close other expanded items on mobile for better UX
+    if (!isExpanded && isTouchDevice && window.innerWidth <= 768) {
+      document.querySelectorAll('.tl-item.expanded').forEach(expandedItem => {
+        if (expandedItem !== item) {
+          expandedItem.classList.remove('expanded');
+          const otherIcon = expandedItem.querySelector('.expand-icon');
+          if (otherIcon) otherIcon.textContent = '+';
+        }
+      });
+    }
+
+    if (isExpanded) {
+      // Collapse
+      item.classList.remove('expanded');
+      expandIcon.textContent = '+';
+    } else {
+      // Expand
+      item.classList.add('expanded');
+      expandIcon.textContent = '×';
+
+      // Enhanced scroll behavior for mobile
+      setTimeout(() => {
+        const rect = item.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const isPartiallyVisible = rect.bottom > viewportHeight * 0.8;
+
+        if (isPartiallyVisible) {
+          const scrollOptions = {
+            behavior: 'smooth',
+            block: isTouchDevice ? 'start' : 'nearest'
+          };
+
+          // Add offset for mobile to account for virtual keyboards
+          if (isTouchDevice) {
+            const offset = window.innerWidth <= 480 ? 20 : 40;
+            window.scrollTo({
+              top: window.scrollY + rect.top - offset,
+              behavior: 'smooth'
+            });
+          } else {
+            item.scrollIntoView(scrollOptions);
+          }
+        }
+      }, 300); // Increased delay for mobile animations
+    }
+  }
+})();
+
+// Content filter for talks/articles section (mobile optimized)
+(function initContentFilter(){
+  const buttons = document.querySelectorAll('#talks .filter-btn');
+  const cards = document.querySelectorAll('#contentGrid .card');
+  if (!buttons.length || !cards.length) return;
+
+  function applyFilter(tag) {
+    cards.forEach(card => {
+      if (tag === 'all') {
+        card.style.display = '';
+        return;
+      }
+      const tags = (card.getAttribute('data-tags') || '').split(/\s+/);
+      card.style.display = tags.includes(tag) ? '' : 'none';
+    });
+
+    // Scroll to content on mobile after filtering
+    if (isTouchDevice && window.innerWidth <= 768) {
+      setTimeout(() => {
+        const contentGrid = document.getElementById('contentGrid');
+        if (contentGrid) {
+          contentGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  }
+
+  buttons.forEach(button => {
+    const handleFilter = () => {
+      buttons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      applyFilter(button.dataset.filter);
+    };
+
+    button.addEventListener('click', handleFilter);
+    if (isTouchDevice) {
+      button.addEventListener('touchend', handleFilter, { passive: true });
+    }
   });
 })();
 
-// Typed effect for multiple elements
-(function initTypedAll(){
-  const els = document.querySelectorAll('.typed');
-  if(!els.length) return;
-  els.forEach(el => {
+// Typing animation effect
+(function initTypedEffect(){
+  const elements = document.querySelectorAll('.typed');
+  if (!elements.length) return;
+
+  elements.forEach(el => {
     const items = JSON.parse(el.getAttribute('data-rotate') || '[]');
-    let i=0, j=0, dir=1, text='';
-    const speed = () => 28 + Math.random()*42;
-    (function loop(){
-      const target = items[i] || '';
-      if(dir>0){
-        text = target.slice(0, j++);
-        if(j>target.length + 12){ dir=-1; }
+    if (!items.length) return;
+
+    let currentIndex = 0, charIndex = 0, direction = 1, currentText = '';
+    // Slower animation on mobile for better readability
+    const getSpeed = () => isTouchDevice ? 35 + Math.random() * 50 : 28 + Math.random() * 42;
+
+    (function typeLoop() {
+      const target = items[currentIndex] || '';
+
+      if (direction > 0) {
+        currentText = target.slice(0, charIndex++);
+        if (charIndex > target.length + (isTouchDevice ? 20 : 12)) direction = -1;
       } else {
-        text = target.slice(0, j--);
-        if(j<=0){ dir=1; i=(i+1)%items.length; }
+        currentText = target.slice(0, charIndex--);
+        if (charIndex <= 0) {
+          direction = 1;
+          currentIndex = (currentIndex + 1) % items.length;
+        }
       }
-      el.textContent = text + (Date.now()%800<400 ? '' : ' ');
-      setTimeout(loop, speed());
+
+      el.textContent = currentText + (Date.now() % 800 < 400 ? '' : ' ');
+      setTimeout(typeLoop, getSpeed());
     })();
   });
 })();
 
-// Extra filter for talks/articles section
-(function initContentFilter(){
-  const buttons = document.querySelectorAll('#talks .filter-btn');
-  const cards = document.querySelectorAll('#contentGrid .card');
-  if(!buttons.length) return;
-  function apply(tag){
-    cards.forEach(c => {
-      if(tag==='all'){ c.style.display = ''; return; }
-      const tags = (c.getAttribute('data-tags') || '').split(/\s+/);
-      c.style.display = tags.includes(tag) ? '' : 'none';
-    });
-  }
-  buttons.forEach(b => b.addEventListener('click', () => {
-    buttons.forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    apply(b.dataset.filter);
-  }));
-})();
+// Card tilt effect (disabled on mobile for performance)
+(function initCardTilt(){
+  if (isTouchDevice) return; // Disable on touch devices
 
-// Card tilt and glow following mouse
-(function cardTilt(){
   const cards = document.querySelectorAll('.card');
-  if(!cards.length) return;
+  if (!cards.length) return;
+
   cards.forEach(card => {
-    let raf=0;
-    function onMove(e){
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        card.style.transform = `perspective(700px) rotateY(${x*6}deg) rotateX(${-y*6}deg) translateY(-2px)`;
-        card.style.boxShadow = `0 18px 40px rgba(20,35,80,0.22)`;
+    let rafId = 0;
+
+    function handleMouseMove(e) {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        card.style.transform = `perspective(700px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateY(-2px)`;
+        card.style.boxShadow = '0 18px 40px rgba(20,35,80,0.22)';
       });
     }
-    function reset(){ card.style.transform=''; card.style.boxShadow=''; }
-    card.addEventListener('mousemove', onMove);
-    card.addEventListener('mouseleave', reset);
+
+    function resetCard() {
+      card.style.transform = '';
+      card.style.boxShadow = '';
+    }
+
+    card.addEventListener('mousemove', handleMouseMove);
+    card.addEventListener('mouseleave', resetCard);
   });
 })();
 
-// Parallax on hero and section titles
-(function parallax(){
-  const heroL = document.querySelector('.hero-left');
-  const heroR = document.querySelector('.hero-right');
+// Parallax scrolling effect (reduced on mobile)
+(function initParallax(){
+  const heroLeft = document.querySelector('.hero-left');
+  const heroRight = document.querySelector('.hero-right');
   const titles = document.querySelectorAll('.section-title');
-  function onScroll(){
-    const y = window.scrollY || 0;
-    if(heroL) heroL.style.transform = `translateY(${y*0.02}px)`;
-    if(heroR) heroR.style.transform = `translateY(${y*0.03}px)`;
-    titles.forEach(t => {
-      const rect = t.getBoundingClientRect();
-      const offset = (rect.top - window.innerHeight*0.5)*0.04;
-      t.style.transform = `translateY(${offset}px)`;
-    });
+
+  if (!heroLeft && !heroRight && !titles.length) return;
+
+  // Reduce parallax intensity on mobile for performance
+  const parallaxIntensity = isTouchDevice ? 0.5 : 1;
+
+  let ticking = false;
+  function handleScroll() {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY || 0;
+
+        if (heroLeft) heroLeft.style.transform = `translateY(${scrollY * 0.02 * parallaxIntensity}px)`;
+        if (heroRight) heroRight.style.transform = `translateY(${scrollY * 0.03 * parallaxIntensity}px)`;
+
+        // Reduce title parallax on mobile
+        if (!isTouchDevice || window.innerWidth > 768) {
+          titles.forEach(title => {
+            const rect = title.getBoundingClientRect();
+            const offset = (rect.top - window.innerHeight * 0.5) * 0.04 * parallaxIntensity;
+            title.style.transform = `translateY(${offset}px)`;
+          });
+        }
+
+        ticking = false;
+      });
+      ticking = true;
+    }
   }
-  addEventListener('scroll', onScroll, { passive:true });
-  onScroll();
+
+  addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
 })();
 
-// Dock: build links from sections & hide on footer overlap
-(function dynamicDock(){
+// Dynamic navigation dock (hidden on mobile)
+(function initDynamicDock(){
   const dock = document.getElementById('dockNav');
-  if(!dock) return;
+  if (!dock || (isTouchDevice && window.innerWidth <= 768)) return;
+
   const sections = [...document.querySelectorAll('section[id]')];
-  dock.innerHTML = sections.map(sec => {
-    const label = (sec.querySelector('.section-title')?.textContent || sec.id).trim();
-    return `<a href="#${sec.id}" aria-label="${label}"><span>${label}</span></a>`;
+  if (!sections.length) return;
+
+  // Build dock navigation
+  dock.innerHTML = sections.map(section => {
+    const label = (section.querySelector('.section-title')?.textContent || section.id).trim();
+    return `<a href="#${section.id}" aria-label="${label}"><span>${label}</span></a>`;
   }).join('');
+
   const links = dock.querySelectorAll('a');
-  const onScroll = () => {
-    const y = window.scrollY + window.innerHeight*0.35;
-    let active = 0;
-    sections.forEach((sec, idx)=>{
-      const top = sec.getBoundingClientRect().top + window.scrollY;
-      if(y >= top) active = idx;
-    });
-    links.forEach((a,i)=>a.classList.toggle('active', i===active));
-  };
-  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  // Handle active section highlighting
+  let ticking = false;
+  function updateActiveSection() {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY + window.innerHeight * 0.35;
+        let activeIndex = 0;
+
+        sections.forEach((section, index) => {
+          const top = section.getBoundingClientRect().top + window.scrollY;
+          if (scrollY >= top) activeIndex = index;
+        });
+
+        links.forEach((link, index) => {
+          link.classList.toggle('active', index === activeIndex);
+        });
+
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  addEventListener('scroll', updateActiveSection, { passive: true });
+  updateActiveSection();
+
+  // Hide dock when footer is visible
   const footer = document.querySelector('footer.footer');
-  if(footer && 'IntersectionObserver' in window){
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e => dock.classList.toggle('hide', e.isIntersecting && e.intersectionRatio > 0));
-    }, { threshold:[0,.01,.1] });
-    io.observe(footer);
+  if (footer && 'IntersectionObserver' in window) {
+    const footerObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        dock.classList.toggle('hide', entry.isIntersecting && entry.intersectionRatio > 0);
+      });
+    }, { threshold: [0, 0.01, 0.1] });
+
+    footerObserver.observe(footer);
   }
 })();
 
-// Timeline v3: rebuild meta column and insert sticky year headers
-(function timelineV3(){
-  const container = document.querySelector('.timeline-v3 .timeline-list');
-  if(!container) return;
-  const items = [...container.querySelectorAll('.tl-item')];
-  // Build meta col from head info
-  items.forEach(it => {
-    const head = it.querySelector('.tl-head');
-    const body = it.querySelector('.tl-body');
-    if(!head || !body) return;
-    let inner = body.querySelector('.tl-body-inner');
-    if(!inner){
-      inner = document.createElement('div');
-      inner.className = 'tl-body-inner';
-      while(body.firstChild){ inner.appendChild(body.firstChild); }
-      body.appendChild(inner);
-    }
-    if(!it.querySelector('.tl-meta')){
-      const meta = document.createElement('div');
-      meta.className = 'tl-meta';
-      const place = head.querySelector('.place')?.textContent?.trim() || '';
-      const time = head.querySelector('.time')?.textContent?.trim() || '';
-      meta.innerHTML = `<div>${place}</div><div>${time}</div>`;
-      it.insertBefore(meta, it.firstChild);
-    }
-  });
-  // Sticky year headers
-  const seen = new Set();
-  items.forEach(it => {
-    const yearTxt = it.querySelector('.time')?.textContent || '';
-    const m = yearTxt.match(/(20\d{2}|19\d{2})/);
-    const year = m ? m[1] : null;
-    if(year && !seen.has(year)){
-      const h = document.createElement('div');
-      h.className = 'year-header';
-      h.textContent = year;
-      container.insertBefore(h, it);
-      seen.add(year);
-    }
+// Viewport height fix for mobile browsers
+(function fixMobileViewport(){
+  if (!isTouchDevice) return;
+
+  function setVH() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+
+  setVH();
+  addEventListener('resize', setVH, { passive: true });
+  addEventListener('orientationchange', () => {
+    setTimeout(setVH, 100);
+  }, { passive: true });
+})();
+
+// Optimize images for mobile
+(function optimizeImagesForMobile(){
+  if (!isTouchDevice) return;
+
+  const images = document.querySelectorAll('img[loading="lazy"]');
+  images.forEach(img => {
+    img.loading = 'eager'; // Load images immediately on mobile for better UX
   });
 })();
 
-// Timeline CLEAN: build meta column from header + year separators
-(function timelineClean(){
-  const container = document.querySelector('.timeline-clean .timeline-list');
-  if(!container) return;
-  const items = [...container.querySelectorAll('.tl-item')];
-  // Year separators
-  let lastYear = null;
-  items.forEach(it => {
-    const head = it.querySelector('.tl-head');
-    const body = it.querySelector('.tl-body');
-    if(!head || !body) return;
+// Prevent zoom on input focus (mobile)
+(function preventZoomOnFocus(){
+  if (!isTouchDevice) return;
 
-    // Create body-inner wrapper
-    let inner = body.querySelector('.tl-body-inner');
-    if(!inner){
-      inner = document.createElement('div');
-      inner.className = 'tl-body-inner';
-      while(body.firstChild){ inner.appendChild(body.firstChild); }
-      body.appendChild(inner);
-    }
+  const inputs = document.querySelectorAll('input, textarea, select');
+  inputs.forEach(input => {
+    input.addEventListener('focus', () => {
+      const viewport = document.querySelector('meta[name="viewport"]');
+      if (viewport) {
+        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0');
+      }
+    });
 
-    // Build meta column
-    if(!it.querySelector('.tl-meta')){
-      const meta = document.createElement('div');
-      meta.className = 'tl-meta';
-      const place = head.querySelector('.place')?.textContent?.trim() || '';
-      const time = head.querySelector('.time')?.textContent?.trim() || '';
-      meta.innerHTML = `<div>${place}</div><div>${time}</div>`;
-      it.insertBefore(meta, it.firstChild);
-    }
-
-    const yearTxt = head.querySelector('.time')?.textContent || '';
-    const m = yearTxt.match(/(20\d{2}|19\d{2})/);
-    const year = m ? m[1] : null;
-    if(year && year !== lastYear){
-      const sep = document.createElement('div');
-      sep.className = 'year-sep';
-      sep.textContent = year;
-      container.insertBefore(sep, it);
-      lastYear = year;
-    }
-
-    // Ensure expanded
-    it.setAttribute('aria-expanded','true');
+    input.addEventListener('blur', () => {
+      const viewport = document.querySelector('meta[name="viewport"]');
+      if (viewport) {
+        viewport.setAttribute('content', 'width=device-width, initial-scale=1');
+      }
+    });
   });
 })();
-
-// Ensure timeline nodes exist (for the left rail)
-(function timelineNodes(){
-  const list = document.querySelector('.timeline-classic .timeline-list');
-  if(!list) return;
-  list.querySelectorAll('.tl-item').forEach(it => {
-    if(!it.querySelector('.node')){
-      const n = document.createElement('span');
-      n.className = 'node';
-      it.appendChild(n);
-    }
-  });
-})();
-
