@@ -79,20 +79,18 @@ if (!isTouchDevice) {
     const expandIcon = item.querySelector('.expand-icon');
     if (!expandIcon) return;
 
-    // Enhanced touch support
+    // Enhanced touch support - only on expand icon, not the whole item
     const handleToggle = (e) => {
       e.stopPropagation();
       e.preventDefault();
       toggleTimelineItem(item, expandIcon);
     };
 
-    // Use both click and touch events
+    // Use both click and touch events only on the expand icon
     expandIcon.addEventListener('click', handleToggle);
-    item.addEventListener('click', handleToggle);
 
     if (isTouchDevice) {
       expandIcon.addEventListener('touchend', handleToggle, { passive: false });
-      item.addEventListener('touchend', handleToggle, { passive: false });
     }
   });
 
@@ -156,20 +154,18 @@ if (!isTouchDevice) {
     const expandIcon = item.querySelector('.expand-icon');
     if (!expandIcon) return;
 
-    // Enhanced touch support
+    // Enhanced touch support - only on expand icon, not the whole item
     const handleToggle = (e) => {
       e.stopPropagation();
       e.preventDefault();
       toggleSkillItem(item, expandIcon);
     };
 
-    // Use both click and touch events
+    // Use both click and touch events only on the expand icon
     expandIcon.addEventListener('click', handleToggle);
-    item.addEventListener('click', handleToggle);
 
     if (isTouchDevice) {
       expandIcon.addEventListener('touchend', handleToggle, { passive: false });
-      item.addEventListener('touchend', handleToggle, { passive: false });
     }
   });
 
@@ -471,4 +467,3 @@ if (!isTouchDevice) {
     });
   });
 })();
-
