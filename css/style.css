@@ -211,9 +211,119 @@ nav{display:flex; align-items:center; gap:14px}
 .mini-card{border:1px solid var(--stroke); border-radius:16px; padding:14px; background:rgba(255,255,255,0.03)}
 
 /* Education section */
-.edu-grid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px}
+.edu-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  width: 100%;
+}
+
+.edu {
+  /* Ensure education cards inherit all card styles */
+  position:relative;
+  border:1px solid var(--stroke);
+  border-radius:var(--radius);
+  padding:16px;
+  background:rgba(255,255,255,0.03);
+  overflow:hidden;
+  transition:transform .2s, box-shadow .2s, background .2s;
+  transform-style:preserve-3d;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.edu:hover {
+  /* Same hover effect as other cards */
+  transform:translateY(-2px) rotateX(1deg) rotateY(-1deg);
+  box-shadow:0 16px 36px rgba(20,35,80,0.26);
+  background:rgba(255,255,255,0.06);
+}
+
+/* Education card background effect */
+.edu .card-bg {
+  position:absolute; inset:-40%;
+  background:radial-gradient(400px 200px at 50% 20%, rgba(120,170,255,.18), transparent 60%);
+  filter:blur(20px); transform:translateZ(-50px); pointer-events:none;
+}
+
 .edu .edu-head{display:flex; flex-direction:column; gap:2px; margin-bottom:8px}
 .edu .place{color:var(--muted); font-size:14px}
+
+/* Education cards - clickable card styles */
+.edu.clickable-card {
+  position: relative;
+  overflow: visible;
+}
+
+.edu.clickable-card:hover {
+  transform: translateY(-4px) rotateX(2deg) rotateY(-2deg);
+  box-shadow: 0 20px 40px rgba(20,35,80,0.3);
+  border-color: rgba(120,170,255,0.4);
+}
+
+.edu.clickable-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, rgba(120,170,255,0.3), rgba(168,216,255,0.2));
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.edu.clickable-card:hover::before {
+  opacity: 1;
+}
+
+/* Education cards - Always visible click indicator */
+.edu .click-indicator {
+  cursor: pointer;
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  background: rgba(120,170,255,0.2);
+  border: 1px solid rgba(120,170,255,0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(120,170,255,0.9);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  opacity: 1; /* Always visible */
+  transform: scale(1);
+}
+
+.edu.clickable-card:hover .click-indicator {
+  background: rgba(120,170,255,0.4);
+  border-color: rgba(120,170,255,0.8);
+  color: #78aaff;
+  transform: scale(1.15);
+  box-shadow: 0 0 12px rgba(120,170,255,0.5);
+}
+
+/* Enhanced card animations for education cards */
+.edu.clickable-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.edu.clickable-card:active {
+  transform: translateY(-2px) scale(0.98);
+  transition: all 0.1s ease;
+}
+
+/* Focus styles for accessibility on education cards */
+.edu.clickable-card:focus-visible {
+  outline: 2px solid #84c8ff;
+  outline-offset: 4px;
+}
+
 .badge{
   display:inline-flex; align-items:center; justify-content:center;
   padding:6px 10px; border-radius:999px; border:1px solid var(--stroke);
@@ -367,26 +477,25 @@ nav{display:flex; align-items:center; gap:14px}
   right: 12px;
   width: 28px;
   height: 28px;
-  background: rgba(120,170,255,0.15);
-  border: 1px solid rgba(120,170,255,0.3);
+  background: rgba(120,170,255,0.2);
+  border: 1px solid rgba(120,170,255,0.4);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(120,170,255,0.8);
+  color: rgba(120,170,255,0.9);
   transition: all 0.3s ease;
   backdrop-filter: blur(8px);
-  opacity: 0; /* Cachée par défaut */
-  transform: scale(0.8);
+  opacity: 1; /* Always visible - changed from 0 */
+  transform: scale(1); /* Always at full size - changed from scale(0.8) */
 }
 
 .clickable-card:hover .click-indicator {
-  background: rgba(120,170,255,0.35);
+  background: rgba(120,170,255,0.4);
   border-color: rgba(120,170,255,0.8);
   color: #78aaff;
   transform: scale(1.15);
-  box-shadow: 0 0 12px rgba(120,170,255,0.4);
-  opacity: 1; /* Visible au survol */
+  box-shadow: 0 0 12px rgba(120,170,255,0.5);
 }
 
 /* Enhanced card animations for clickable cards */
@@ -877,4 +986,3 @@ nav{display:flex; align-items:center; gap:14px}
     transform: none !important;
   }
 }
-
