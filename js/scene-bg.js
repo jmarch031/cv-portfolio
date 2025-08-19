@@ -9,6 +9,7 @@
   // Enhanced particle systems with improved depth layers
   let starsNear = [], starsFar = [], starsUltraFar = [], orbs = [], nodes = [];
   let floatingParticles = [], nebulaLayers = [], dustParticles = [];
+  let desktopNebulae = []; // Nouvelles nébuleuses pour desktop
 
   let hueCycle = 200, time = 0;
 
@@ -32,9 +33,10 @@
   };
   let quality = 'high';
 
-  // Device detection for mobile optimization
+  // Device detection for mobile optimization and desktop enhancement
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   const isTouch = 'ontouchstart' in window;
+  const isDesktop = () => window.innerWidth >= 1024 && !isMobile && !isTouch;
 
   // Enhanced color palette with improved desktop link visibility
   const PAL = {
@@ -45,6 +47,17 @@
         'rgba(120,170,255,0.08)',
         'rgba(90,140,220,0.15)',
         'rgba(100,160,240,0.06)'
+      ],
+      // Nouvelles couleurs de nébuleuses pour desktop - réduites et plus subtiles
+      desktopNebula: [
+        'rgba(138,43,226,0.08)',     // Violet intense - réduit
+        'rgba(75,0,130,0.07)',       // Indigo profond - réduit
+        'rgba(255,20,147,0.06)',     // Rose magenta - réduit
+        'rgba(0,191,255,0.08)',      // Bleu cyan - réduit
+        'rgba(50,205,50,0.05)',      // Vert lime - réduit
+        'rgba(255,69,0,0.06)',       // Rouge orangé - réduit
+        'rgba(148,0,211,0.08)',      // Violet foncé - réduit
+        'rgba(64,224,208,0.07)'      // Turquoise - réduit
       ],
       starUltraFar: c => `rgba(130,145,170,${c})`,
       starFar: c => `rgba(150,170,210,${c})`,
@@ -86,6 +99,7 @@
     buildNodes(qualityMod);
     buildFloatingParticles(qualityMod);
     buildNebulaLayers(qualityMod);
+    buildDesktopNebulae(qualityMod); // Ajouter l'appel pour les nébuleuses desktop
     buildDustParticles(qualityMod);
   }
 
@@ -93,8 +107,8 @@
     const area = w * h;
     const baseStarDensity = isMobile ? 80000 : 60000;
 
-    // Ultra far stars (deepest parallax layer)
-    const ultraFarCount = Math.floor(area / (baseStarDensity * 1.5) * qualityMod.stars);
+    // Ultra far stars (deepest parallax layer) - augmenté pour plus d'étoiles scintillantes
+    const ultraFarCount = Math.floor(area / (baseStarDensity * 0.5) * qualityMod.stars); // Réduit de 1.5 à 1.0
     const farCount = Math.floor(area / baseStarDensity * qualityMod.stars);
     const nearCount = Math.floor(area / (baseStarDensity * 1.8) * qualityMod.stars);
 
@@ -102,7 +116,7 @@
     starsFar = [];
     starsNear = [];
 
-    // Ultra far stars - slowest parallax
+    // Ultra far stars - slowest parallax avec plus de variété dans le scintillement
     for (let i = 0; i < ultraFarCount; i++) {
       starsUltraFar.push({
         x: Math.random() * w,
@@ -111,7 +125,7 @@
         baseY: Math.random() * h,
         r: 0.2 + Math.random() * 0.8,
         twinkle: Math.random() * Math.PI * 2,
-        twinkleSpeed: 0.5 + Math.random() * 0.5,
+        twinkleSpeed: 0.3 + Math.random() * 0.8, // Variété accrue dans la vitesse de scintillement
         layer: 0.1 + Math.random() * 0.2,
         hue: 190 + Math.random() * 80
       });
@@ -236,6 +250,33 @@
     }
   }
 
+  function buildDesktopNebulae(qualityMod) {
+    // Réinitialiser le tableau des nébuleuses desktop
+    desktopNebulae = [];
+
+    // Générer les nébuleuses uniquement pour les écrans desktop
+    if (isDesktop()) {
+      // Réduire drastiquement le nombre : 1-2 nébuleuses maximum
+      const count = Math.round(1 + Math.random()); // 1 ou 2 nébuleuses seulement
+
+      for (let i = 0; i < count; i++) {
+        desktopNebulae.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          baseX: Math.random() * w,
+          baseY: Math.random() * h,
+          r: Math.max(w, h) * (0.3 + Math.random() * 0.4), // Taille réduite
+          drift: Math.random() * Math.PI * 2,
+          driftSpeed: 0.00001 + Math.random() * 0.00002, // Mouvement plus lent
+          colorIndex: Math.floor(Math.random() * PAL.dark.desktopNebula.length),
+          depth: i / count,
+          pulsePhase: Math.random() * Math.PI * 2,
+          pulseSpeed: 0.000005 + Math.random() * 0.00001 // Pulsation plus lente
+        });
+      }
+    }
+  }
+
   function buildDustParticles(qualityMod) {
     const count = Math.round((isMobile ? 20 : 35) * qualityMod.particles);
     dustParticles = [];
@@ -318,6 +359,44 @@
       ctx.fillStyle = gradient;
       ctx.globalCompositeOperation = 'lighter';
       ctx.fillRect(0, 0, w, h);
+    }
+
+    // Nouvelles nébuleuses pour les écrans desktop
+    if (isDesktop()) {
+      for (const layer of desktopNebulae) {
+        layer.drift += layer.driftSpeed * dt;
+        layer.pulsePhase += layer.pulseSpeed * dt;
+
+        const pos = calculateParallax(layer, {
+          scroll: PARALLAX_CONFIG.ultraFar.scroll * (1 + layer.depth * 0.5),
+          mouse: PARALLAX_CONFIG.ultraFar.mouse * (1 + layer.depth * 0.3),
+          drift: PARALLAX_CONFIG.ultraFar.drift
+        }, dt);
+
+        const x = pos.x + Math.cos(layer.drift) * 30 * dpr;
+        const y = pos.y + Math.sin(layer.drift) * 22 * dpr;
+
+        // Effet de pulsation pour les nébuleuses desktop
+        const pulseIntensity = 0.8 + 0.3 * Math.sin(layer.pulsePhase);
+        const dynamicRadius = layer.r * pulseIntensity;
+
+        const gradient = ctx.createRadialGradient(x, y, 0, x, y, dynamicRadius);
+
+        // Couleur avec intensité variable
+        const baseColor = PAL.dark.desktopNebula[layer.colorIndex];
+        const enhancedColor = baseColor.replace(/[\d\.]+\)$/g, (match) => {
+          const alpha = parseFloat(match.slice(0, -1));
+          return `${alpha * pulseIntensity})`;
+        });
+
+        gradient.addColorStop(0, enhancedColor);
+        gradient.addColorStop(0.4, baseColor);
+        gradient.addColorStop(1, 'rgba(0,0,0,0)');
+
+        ctx.fillStyle = gradient;
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.fillRect(0, 0, w, h);
+      }
     }
 
     ctx.globalCompositeOperation = 'source-over';
