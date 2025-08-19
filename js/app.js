@@ -226,6 +226,37 @@ if (!isTouchDevice) {
     const cards = document.querySelectorAll('#eduGrid .edu');
     if (!buttons.length || !cards.length) return;
 
+    // Sort education cards by default order
+    function sortEducationCards() {
+        const container = document.getElementById('eduGrid');
+        if (!container) return;
+
+        const cardsArray = Array.from(cards);
+
+        cardsArray.sort((a, b) => {
+            // Sort by year (oldest to newest)
+            const yearA = extractYear(a);
+            const yearB = extractYear(b);
+
+            return yearA - yearB;
+        });
+
+        // Reorder DOM elements
+        cardsArray.forEach(card => container.appendChild(card));
+    }
+
+    function extractYear(card) {
+        const badge = card.querySelector('.badge.year, .badge.cert, .badge.training');
+        if (!badge) return 0;
+
+        const text = badge.textContent.trim();
+        const yearMatch = text.match(/(\d{4})/);
+        return yearMatch ? parseInt(yearMatch[1]) : 0;
+    }
+
+    // Apply default sorting on load
+    sortEducationCards();
+
     function applyFilter(tag) {
         cards.forEach(card => {
             if (tag === 'all') {
@@ -266,6 +297,37 @@ if (!isTouchDevice) {
     const buttons = document.querySelectorAll('#talks .filter-btn');
     const cards = document.querySelectorAll('#contentGrid .card');
     if (!buttons.length || !cards.length) return;
+
+    // Sort content cards by default order
+    function sortContentCards() {
+        const container = document.getElementById('contentGrid');
+        if (!container) return;
+
+        const cardsArray = Array.from(cards);
+
+        cardsArray.sort((a, b) => {
+            // Sort by year (oldest to newest)
+            const yearA = extractContentYear(a);
+            const yearB = extractContentYear(b);
+
+            return yearA - yearB;
+        });
+
+        // Reorder DOM elements
+        cardsArray.forEach(card => container.appendChild(card));
+    }
+
+    function extractContentYear(card) {
+        const badge = card.querySelector('.badge.year, .badge.cert, .badge.training');
+        if (!badge) return 0;
+
+        const text = badge.textContent.trim();
+        const yearMatch = text.match(/(\d{4})/);
+        return yearMatch ? parseInt(yearMatch[1]) : 0;
+    }
+
+    // Apply default sorting on load
+    sortContentCards();
 
     function applyFilter(tag) {
         cards.forEach(card => {
