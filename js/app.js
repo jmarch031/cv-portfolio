@@ -306,11 +306,11 @@ if (!isTouchDevice) {
         const cardsArray = Array.from(cards);
 
         cardsArray.sort((a, b) => {
-            // Sort by year (oldest to newest)
+            // Sort by year (newest to oldest)
             const yearA = extractContentYear(a);
             const yearB = extractContentYear(b);
 
-            return yearA - yearB;
+            return yearB - yearA;
         });
 
         // Reorder DOM elements
