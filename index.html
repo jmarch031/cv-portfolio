@@ -1378,7 +1378,18 @@
       gsap.utils.toArray('.path-narrative').forEach(path => {
         const length = path.getTotalLength() || 300;
         gsap.set(path, { opacity: 1, strokeDasharray: length, strokeDashoffset: length });
-        gsap.to(path, { strokeDashoffset: 0, ease: "power1.inOut", scrollTrigger: { trigger: path.closest('.section'), start: "top 80%", end: "center 50%", scrub: 1.5 } });
+
+        // On cible le titre (.h-section) au lieu de la section entière
+        gsap.to(path, {
+          strokeDashoffset: 0,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: path.closest('.h-section'),
+            start: "top 75%",  // Démarre quand le TITRE arrive à 75% du bas de l'écran
+            end: "bottom 40%", // Finit de se dessiner quand il approche du milieu
+            scrub: 1.5
+          }
+        });
       });
       gsap.utils.toArray('.path-horizontal').forEach(path => {
         const length = path.getTotalLength() || 500;
