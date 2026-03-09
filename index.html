@@ -1287,6 +1287,17 @@
       });
 
       gsap.to('.hero-content', { y: "-20vh", opacity: 0, scale: 0.95, filter: "blur(10px)", ease: "none", scrollTrigger: { trigger: ".main-content", start: "top bottom", end: "top top", scrub: true } });
+      // NOUVEAU : Fondu au noir/transparent de la vidéo au scroll
+            gsap.to('.video-layer', {
+              opacity: 0,
+              ease: "none",
+              scrollTrigger: {
+                trigger: ".main-content",
+                start: "top bottom", // Le fondu démarre dès qu'on quitte le Hero
+                end: "top 20%",      // La vidéo a totalement disparu juste avant d'arriver au premier contenu
+                scrub: true          // L'opacité est liée à la position du scroll
+              }
+            });
       animateDoodlesScroll();
       gsap.from("footer", { yPercent: -30, opacity: 0, ease: "none", scrollTrigger: { trigger: "footer", start: "top bottom", end: "bottom bottom", scrub: true } });
       setTimeout(() => { ScrollTrigger.refresh(); }, 100);
