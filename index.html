@@ -76,13 +76,41 @@
 
     ::selection { background: var(--accent-indigo); color: #fff; }
 
-    /* Typographie d'accent (Mono subtil) */
     .font-accent {
       font-family: 'Space Mono', monospace;
       font-size: 0.85em;
       letter-spacing: -0.05em;
       font-weight: 400;
     }
+
+    /* ==========================================================================
+       MENU OVERLAY SOTY
+       ========================================================================== */
+    .menu-overlay {
+      position: fixed; inset: 0; z-index: 99990; pointer-events: none; visibility: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .menu-overlay.is-open { pointer-events: auto; }
+
+    .menu-bg {
+      position: absolute; inset: 0; background: var(--bg-base); opacity: 0;
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      will-change: opacity; transition: background-color 0.8s;
+    }
+
+    .menu-nav { position: relative; z-index: 10; width: 100%; max-width: var(--max-w); padding: 0 5vw; }
+    .menu-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1.5vh; }
+
+    .menu-link {
+      font-size: clamp(3rem, 7vw, 6.5rem); font-weight: 800; color: var(--text-main);
+      text-decoration: none; letter-spacing: -0.04em; display: inline-flex; align-items: baseline;
+      opacity: 0; transform: translateY(40px); transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: none; line-height: 1.1; text-transform: uppercase;
+    }
+    .menu-link .num { font-size: clamp(1rem, 2vw, 1.5rem); font-family: 'Space Mono', monospace; color: var(--accent-indigo); margin-right: 1.5rem; opacity: 0.8; font-weight: 700;}
+    .menu-link:hover { color: var(--accent-indigo); transform: translateX(30px); font-style: italic; }
+
+    [data-theme="dark"] .menu-link:hover { color: var(--accent-indigo); }
 
     /* ==========================================================================
        PRELOADER QUANTUM
@@ -141,7 +169,6 @@
     .video-blend { position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 0%, var(--bg-base) 100%); opacity: 0.9; transition: background 0.8s ease; z-index: 1;}
     .structural-grid { position: absolute; inset: 0; z-index: 2; background-size: 80px 80px; background-image: linear-gradient(to right, var(--border-grid) 1px, transparent 1px), linear-gradient(to bottom, var(--border-grid) 1px, transparent 1px); mask-image: linear-gradient(to bottom, black 5%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 5%, transparent 100%); transition: background-image 0.8s ease; }
 
-    /* Grain Cinématographique (Discret) */
     .texture {
       position: fixed; inset: -50%; width: 200%; height: 200%; z-index: 3; pointer-events: none;
       opacity: 0.15;
@@ -165,7 +192,6 @@
       100% { transform: translate(0, 0); }
     }
 
-    /* Lampe Torche de la souris */
     .mouse-glow { position: fixed; width: 40vw; height: 40vw; background: radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: -50; transform: translate(-50%, -50%); will-change: transform; mix-blend-mode: multiply; transition: background 0.8s ease; }
     [data-theme="dark"] .mouse-glow { background: radial-gradient(circle, rgba(96,165,250,0.1) 0%, transparent 70%); mix-blend-mode: screen; }
 
@@ -195,7 +221,6 @@
     .text-gradient { background: linear-gradient(135deg, var(--accent-indigo), var(--accent-teal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .dot-accent { color: var(--accent-indigo); display: inline-block; position: relative; z-index: 5; transition: color 0.8s ease; }
 
-    /* Structure SplitText Robuste (Anti-Coupure de Mots) */
     .split-word { display: inline-block; white-space: nowrap; }
     .split-char { display: inline-block; will-change: transform, opacity; transform-origin: bottom center; opacity: 0; transform: translateY(100%) rotateX(-40deg); }
 
@@ -205,7 +230,6 @@
     .path-narrative, .path-horizontal, .path-hero, .path-footer { fill: none; stroke-linecap: round; stroke-linejoin: round; opacity: 1; transition: stroke 0.8s ease;}
     .node-anim { opacity: 0; transition: fill 0.8s ease, stroke 0.8s ease;}
 
-    /* Animations de Flottement SOTD (Variées pour un effet organique) */
     @keyframes floatSOTD {
       0% { transform: translateY(0px) rotate(0deg); }
       50% { transform: translateY(-30px) rotate(3deg); }
@@ -244,7 +268,7 @@
     [data-theme="dark"] #theme-toggle svg { transform: rotate(180deg); }
 
     /* ==========================================================================
-       COMPOSANTS (CARTES, LOGOS, FOCUS LIST, KPIS)
+       COMPOSANTS
        ========================================================================== */
     .container { max-width: var(--max-w); margin: 0 auto; padding: 0 5vw; position: relative; z-index: 10; }
     .section { padding: 12vh 0; position: relative; }
@@ -257,7 +281,7 @@
     .logo-box img { width: 100%; height: 100%; object-fit: contain; padding: 8px; border-radius: 12px; }
     .logo-fallback { font-weight: 800; font-size: 1.1rem; color: var(--accent-indigo); display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
 
-    /* Cartes Glassmorphism Premium */
+    /* Cartes Glassmorphism */
     .glass-card { background: var(--bg-card); border-radius: 32px; border: 1px solid var(--border-glass); padding: 4rem; box-shadow: 0 20px 50px rgba(0,0,0,0.02); position: relative; z-index: 20; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.8s, border-color 0.8s; transform-style: preserve-3d; will-change: transform; }
     .glass-card:hover { box-shadow: 0 30px 60px rgba(0,0,0,0.06); border-color: var(--accent-indigo); }
     [data-theme="dark"] .glass-card { box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 20px 50px rgba(0,0,0,0.2); }
@@ -268,40 +292,11 @@
     .exp-role { font-size: 2.2rem; font-weight: 700; line-height: 1.1; margin-bottom: 0.4rem; letter-spacing: -0.02em; }
     .exp-company { font-size: 1.1rem; color: var(--accent-indigo); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; transition: color 0.8s; display: inline-block; }
 
-    /* Custom Bullet Lists pour l'Expérience (SOTY Style) */
-    .exp-list-ui {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-    .exp-list-ui li {
-      position: relative;
-      padding-left: 1.8rem;
-    }
-    .exp-list-ui li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.75rem;
-      width: 12px;
-      height: 2px;
-      background-color: var(--accent-indigo);
-      border-radius: 2px;
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s;
-    }
-    .exp-list-ui li:hover::before {
-      transform: translateX(4px);
-      background-color: var(--accent-teal);
-    }
-    .exp-list-ui strong {
-      color: var(--text-main);
-      font-weight: 700;
-      margin-right: 0.3rem;
-      transition: color 0.8s;
-    }
+    .exp-list-ui { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1.2rem; }
+    .exp-list-ui li { position: relative; padding-left: 1.8rem; }
+    .exp-list-ui li::before { content: ''; position: absolute; left: 0; top: 0.75rem; width: 12px; height: 2px; background-color: var(--accent-indigo); border-radius: 2px; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s; }
+    .exp-list-ui li:hover::before { transform: translateX(4px); background-color: var(--accent-teal); }
+    .exp-list-ui strong { color: var(--text-main); font-weight: 700; margin-right: 0.3rem; transition: color 0.8s; }
 
     /* KPI Badges */
     .kpi-group { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
@@ -313,76 +308,55 @@
     .tag { padding: 0.4rem 1.2rem; background: transparent; border: 1px solid var(--border-glass); border-radius: 99px; font-size: 0.75rem; font-weight: 700; color: var(--text-soft); text-transform: uppercase; margin-right: 0.5rem; display: inline-block; margin-bottom: 0.5rem; transition: all 0.4s ease; font-variant-numeric: tabular-nums; }
     .tag:hover { background: var(--text-main); color: var(--bg-base); border-color: var(--text-main); cursor: none; }
 
-    /* Horizontal Scroll Section & Sibling Hover Focus */
+    /* ==========================================================================
+       NOUVEAU: EXPERTISE SCROLL FOCUS
+       ========================================================================== */
     .horizontal-wrap { overflow: hidden; width: 100%; background: transparent; position: relative; z-index: 10; transition: border-color 0.8s, background-color 0.8s; }
-
-    /* Agrandissement de la piste de scroll avec un padding-right important */
     .horizontal-content { display: flex; width: max-content; height: 100vh; align-items: center; padding: 0 15vw 0 5vw; position: relative; z-index: 20; }
-
-    /* Sibling Blur Effect */
     .cards-container { display: flex; align-items: center; }
-    .cards-container:hover .skill-card:not(:hover) { opacity: 0.4; filter: blur(4px); transform: scale(0.95); }
 
-    /* Agrandissement des marges des cartes pour allonger le scroll */
-    .skill-card { width: 450px; height: 60vh; background: var(--bg-card); border-radius: 32px; margin-right: 5vw; flex-shrink: 0; padding: 4rem; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--border-glass); z-index: 20; box-shadow: 0 20px 50px rgba(0,0,0,0.02); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); cursor: none;}
-    .skill-card:hover { border-color: var(--accent-indigo); transform: translateY(-10px) scale(1.02); z-index: 30;}
+    .skill-card {
+      width: 450px; height: 60vh; background: var(--bg-card); border-radius: 32px;
+      margin-right: 5vw; flex-shrink: 0; padding: 4rem; display: flex; flex-direction: column;
+      justify-content: center; border: 1px solid var(--border-glass); z-index: 20;
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      cursor: none;
+      opacity: 0.25; filter: blur(6px); transform: scale(0.9);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.6s, box-shadow 0.6s;
+    }
+
+    .skill-card.is-focused {
+      opacity: 1; filter: none; transform: scale(1);
+      border-color: var(--accent-indigo);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.04);
+      z-index: 30;
+    }
+    [data-theme="dark"] .skill-card.is-focused {
+       box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 30px 60px rgba(0,0,0,0.2);
+    }
+
     .skill-card h3 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-main); transition: color 0.8s; }
-    .skill-card:hover h3 { color: var(--accent-indigo); }
+    .skill-card.is-focused h3 { color: var(--accent-indigo); }
 
-    /* Section Editoriale Compétences (Remplace Marquee) */
+    /* Section Core Skills List */
     .core-skills-section { padding: 10vh 5vw 15vh 5vw; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 15; }
     .skills-focus-list { display: flex; flex-direction: column; gap: 1rem; width: 100%; max-width: 1000px; }
 
-    .skill-focus-item {
-      font-size: clamp(2.5rem, 6vw, 5.5rem); /* Légèrement réduit pour accomoder les textes longs */
-      font-weight: 800;
-      line-height: 1.1;
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-      color: var(--text-main);
-      opacity: 0.15;
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-      transform-origin: left center;
-      cursor: none;
-    }
-    .skill-focus-item::before {
-      content: '';
-      width: 0;
-      height: clamp(4px, 1vw, 8px);
-      background: var(--accent-indigo);
-      display: block;
-      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.8s;
-      border-radius: 4px;
-    }
-    .skill-focus-item.is-active {
-      opacity: 1;
-      transform: translateX(4vw);
-      color: var(--text-main);
-    }
+    .skill-focus-item { font-size: clamp(2.5rem, 6vw, 5.5rem); font-weight: 800; line-height: 1.1; text-transform: uppercase; letter-spacing: -0.02em; color: var(--text-main); opacity: 0.15; display: flex; align-items: center; gap: 2rem; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); transform-origin: left center; cursor: none; }
+    .skill-focus-item::before { content: ''; width: 0; height: clamp(4px, 1vw, 8px); background: var(--accent-indigo); display: block; transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.8s; border-radius: 4px; }
+    .skill-focus-item.is-active { opacity: 1; transform: translateX(4vw); color: var(--text-main); }
     .skill-focus-item.is-active::before { width: clamp(40px, 8vw, 100px); }
     [data-theme="dark"] .skill-focus-item.is-active { color: #fff; }
 
-    /* Typographie Alternée Lisible (Remplaçant l'ancien outline-text) */
-    .skill-focus-item.alt-focus {
-      font-size: clamp(2rem, 5vw, 4rem);
-      font-weight: 500; /* Plus fin mais rempli, donc lisible */
-      opacity: 0.25;
-    }
-    .skill-focus-item.alt-focus.is-active {
-      color: var(--accent-teal);
-      opacity: 1;
-    }
-    .skill-focus-item.alt-focus.is-active::before {
-      background: var(--accent-teal);
-    }
-    [data-theme="dark"] .skill-focus-item.alt-focus.is-active {
-      color: var(--accent-teal);
-    }
+    .skill-focus-item.alt-focus { font-size: clamp(2rem, 5vw, 4rem); font-weight: 500; opacity: 0.25; }
+    .skill-focus-item.alt-focus.is-active { color: var(--accent-teal); opacity: 1; }
+    .skill-focus-item.alt-focus.is-active::before { background: var(--accent-teal); }
+    [data-theme="dark"] .skill-focus-item.alt-focus.is-active { color: var(--accent-teal); }
 
-    /* Projets avec Watermark Reveal Subtil (Doux) */
+    /* Projets */
     .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 2rem; margin-top: 4rem; position: relative; z-index: 20; }
     .project-card { background: var(--bg-card); border-radius: 32px; padding: 4rem; border: 1px solid var(--border-glass); text-decoration: none; color: inherit; position: relative; z-index: 20; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, background-color 0.8s; transform-style: preserve-3d; will-change: transform; overflow: hidden; }
 
@@ -408,19 +382,18 @@
     /* ==========================================================================
        HEADER & FOOTER
        ========================================================================== */
-    header { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; padding: 2rem 5vw; display: flex; justify-content: space-between; align-items: center; opacity: 0; }
+    header { position: fixed; top: 0; left: 0; width: 100%; z-index: 100000; padding: 2rem 5vw; display: flex; justify-content: space-between; align-items: center; opacity: 0; }
 
     footer { padding: 10vh 5vw 15vh 5vw; border-top: 1px solid var(--border-glass); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 3rem; position: relative; z-index: 20; background: transparent; will-change: transform, opacity; transition: border-color 0.8s; }
     .footer-brand { font-size: 3rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.05em; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
 
-    /* Curseur Interactif Morphing SOTY */
-    .cursor { position: fixed; top: 0; left: 0; width: 10px; height: 10px; background: var(--text-main); border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s, border 0.4s; }
+    .cursor { position: fixed; top: 0; left: 0; width: 10px; height: 10px; background: var(--text-main); border-radius: 50%; pointer-events: none; z-index: 999999; transform: translate(-50%, -50%); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s, border 0.4s; }
     .cursor.hover-active { width: 60px; height: 60px; background: transparent; border: 1px solid var(--text-main); mix-blend-mode: difference;}
     [data-theme="dark"] .cursor { background: #fff; }
     [data-theme="dark"] .cursor.hover-active { border-color: #fff; }
 
     /* ==========================================================================
-       RESPONSIVE ULTRA-PRÉCIS (MOBILES & TABLETTES)
+       RESPONSIVE
        ========================================================================== */
     @media (max-width: 1024px) {
       .hero-section { position: relative; height: auto; padding: 15vh 5vw 10vh 5vw; display: block; }
@@ -428,13 +401,14 @@
       .curtain-top-edge, .scroll-indicator { display: none; }
       .split-layout { grid-template-columns: 1fr; gap: 4vw;}
       .sticky-sidebar { position: relative; top: 0; margin-bottom: 2rem; }
+
       .horizontal-content { flex-direction: column; height: auto; width: 100%; padding: 10vh 5vw; align-items: stretch;}
       .cards-container { flex-direction: column; width: 100%; gap: 2rem; padding-right: 0;}
-      .skill-card { width: 100%; height: auto; margin-right: 0; padding: 3rem; }
-      .cards-container:hover .skill-card:not(:hover) { opacity: 1; filter: none; transform: none; }
+      .skill-card { width: 100%; height: auto; margin-right: 0; padding: 3rem; opacity: 0.5; filter: blur(3px); transform: scale(0.95); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+      .skill-card.is-focused { opacity: 1; filter: none; transform: scale(1); }
+
       .doodle-anchor { display: none; }
 
-      /* Ajustements Focus Skills pour Tablette */
       .skill-focus-item { font-size: 3rem; gap: 1rem; transform: none; }
       .skill-focus-item.alt-focus { font-size: 2.2rem; }
       .skill-focus-item.is-active { transform: translateX(10px); }
@@ -454,8 +428,9 @@
       .h-section { font-size: clamp(2.2rem, 8vw, 3rem); }
       .glass-card, .project-card, .skill-card { padding: 2rem; border-radius: 24px; }
       .exp-item { padding: 3rem 0; }
+      .menu-link { font-size: 3rem; }
+      .menu-link .num { display: none; }
 
-      /* Ajustements Focus Skills pour Mobile */
       .skill-focus-item { font-size: 2rem; gap: 0.5rem; }
       .skill-focus-item.alt-focus { font-size: 1.5rem; }
 
@@ -463,8 +438,6 @@
       .btn { width: 100%; padding: 1.2rem 2rem; text-align: center; }
       footer { flex-direction: column; text-align: center; gap: 2rem; padding: 6vh 5vw 10vh 5vw; }
       .footer-brand { justify-content: center; }
-      .glass-card > div:last-child { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 1.5rem !important; text-align: center; }
-      .glass-card > div:last-child > div { display: flex; flex-direction: column; align-items: center; }
     }
   </style>
 </head>
@@ -481,7 +454,41 @@
     </div>
   </div>
 
-  <!-- PRELOADER SOTY QUANTUM -->
+  <!-- MENU OVERLAY SOTY -->
+  <div class="menu-overlay" id="menu-overlay">
+    <div class="menu-bg"></div>
+    <nav class="menu-nav">
+      <ul class="menu-list">
+        <li>
+          <a href="#about" class="menu-link nav-hover">
+            <span class="num">01</span><span class="btn-text" data-i18n="menu_about">Philosophie</span>
+          </a>
+        </li>
+        <li>
+          <a href="#expertise-section" class="menu-link nav-hover">
+            <span class="num">02</span><span class="btn-text" data-i18n="menu_exp">Expertise</span>
+          </a>
+        </li>
+        <li>
+          <a href="#experience" class="menu-link nav-hover">
+            <span class="num">03</span><span class="btn-text" data-i18n="menu_path">Parcours</span>
+          </a>
+        </li>
+        <li>
+          <a href="#publications" class="menu-link nav-hover">
+            <span class="num">04</span><span class="btn-text" data-i18n="menu_pub">Publications</span>
+          </a>
+        </li>
+        <li>
+          <a href="#education" class="menu-link nav-hover">
+            <span class="num">05</span><span class="btn-text" data-i18n="menu_edu">Formation</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- PRELOADER -->
   <div class="preloader">
     <div class="preloader-content">
       <div class="preloader-text" id="ascii-loader">01001010</div>
@@ -506,17 +513,19 @@
 
   <!-- HEADER -->
   <header class="fade-reveal-header">
-    <a href="#" class="nav-hover" style="font-size: 1.2rem; font-weight: 800; text-decoration: none; color: var(--text-main); letter-spacing: -0.03em;">JM<span style="color:var(--accent-indigo)">.</span></a>
+    <a href="#" class="nav-hover menu-close-trigger" style="font-size: 1.2rem; font-weight: 800; text-decoration: none; color: var(--text-main); letter-spacing: -0.03em;">JM<span style="color:var(--accent-indigo)">.</span></a>
 
-    <div style="display: flex; align-items: center; gap: 1.5rem;">
-      <div style="font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; display: none; sm:display: block;" class="text-faint" data-i18n="header_sub">© 2026 — EM & Développeur</div>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div style="font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; display: none; sm:display: block; margin-right: 1rem;" class="text-faint" data-i18n="header_sub">© 2026 — EM & Développeur</div>
 
-      <!-- Toggle Langue -->
+      <button id="menu-toggle" class="nav-hover magnetic-btn btn-primary" style="padding: 0.6rem 1.4rem; border-radius: 99px; font-weight: 700; font-size: 0.85rem; border: 1px solid var(--border-glass);">
+        <span class="btn-text" id="menu-toggle-text" data-i18n="menu_btn">Menu</span>
+      </button>
+
       <button id="lang-toggle" class="nav-hover magnetic-btn icon-btn" aria-label="Changer de langue">
         <span class="btn-text">EN</span>
       </button>
 
-      <!-- Toggle Thème -->
       <button id="theme-toggle" class="nav-hover magnetic-btn icon-btn" aria-label="Basculer le thème">
         <span class="btn-text">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -527,11 +536,10 @@
     </div>
   </header>
 
-  <!-- SMOOTH SCROLL WRAPPER -->
   <main id="smooth-wrapper">
     <div id="smooth-content">
 
-      <!-- HERO FIXE -->
+      <!-- HERO -->
       <section class="hero-section">
         <div class="hero-content" style="max-width: var(--max-w); margin: 0 auto; width: 100%; position: relative;">
 
@@ -551,7 +559,6 @@
             </svg>
           </div>
 
-          <!-- KICKER POUR RECRUTEUR : Permet de capter l'attention en 0.1s -->
           <div style="font-weight: 700; color: var(--accent-indigo); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem;" class="fade-reveal" data-i18n="hero_role">Engineering Manager, Tech Lead & Développeur</div>
 
           <h1 class="h-giant text-split" style="max-width: 1200px; position: relative; z-index: 10;" data-i18n="hero_title">Traduire les idées, <span style="font-weight: 400;">élever le collectif</span><span class="dot-accent">.</span></h1>
@@ -562,7 +569,6 @@
 
           <div class="btn-group fade-reveal hero-parallax" data-speed="0.6" style="opacity: 0; transform: translateY(20px);">
             <a href="mailto:jmarch031@gmail.com" class="btn btn-primary nav-hover magnetic-btn"><span class="btn-text" data-i18n="hero_cta">Démarrer une conversation</span></a>
-            <!-- CTA SECONDAIRE CV : Téléchargement du PDF -->
             <a href="https://www.linkedin.com/in/julien-marchand-0256186a/" target="_blank" class="btn btn-secondary nav-hover magnetic-btn"><span class="btn-text" data-i18n="hero_linkedin">Voir mon Linkedin</span></a>
           </div>
         </div>
@@ -598,7 +604,6 @@
                 À l'heure où l'IA bouleverse notre métier, donner du sens à nos actions n'a jamais été aussi vital. J'ai un goût profond pour la technique et le beau code. Je crois qu'il faut savoir prendre le temps de bien faire les choses, de capitaliser intelligemment et de choisir les bonnes méthodologies, en recherchant toujours la simplicité technique et architecturale. Côté humain, j'aspire à un leadership humble et transparent : travailler avec son cœur, refuser le micro-management et laisser le collectif s'exprimer pour construire ensemble.
               </p>
 
-              <!-- SECTION "STORY" (10, 8, 4) -->
               <div style="margin-top: 4rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 2rem; border-top: 1px solid var(--border-glass); padding-top: 3rem;">
                 <div>
                   <div style="font-size: clamp(3rem, 5vw, 4.5rem); font-weight: 800; color: var(--accent-indigo); line-height: 1; margin-bottom: 0.5rem; font-variant-numeric: tabular-nums;">10+</div>
@@ -620,7 +625,7 @@
 
         <div class="container"><div class="section-separator"></div></div>
 
-        <!-- EXPERTISE (HORIZONTAL) -->
+        <!-- EXPERTISE SCROLL FOCUS -->
         <section class="horizontal-wrap" id="expertise-section">
           <div class="horizontal-content">
             <div class="h-intro" style="margin-right: 5vw;">
@@ -653,7 +658,7 @@
               <div class="skill-card nav-hover">
                 <h3 data-i18n="exp_card2_title">Conception & Pragmatisme</h3>
                 <p style="color: var(--text-soft); font-size: 1.1rem; line-height: 1.7;" data-i18n="exp_card2_desc">
-                  Développeur dans l'âme au profil fortement <span class="font-accent text-gradient">Back-End</span>, ma curiosité et mes compétences me confère une compréhension globale (système, produit, utilisateur). Je conçois des solutions techniques en cherchant toujours l'équilibre entre une exigence de <span class="font-accent text-gradient">Code Quality</span> & maintenabilité, et un pragmatisme absolu.
+                  Développeur dans l'âme au profil fortement <span class="font-accent text-gradient">Back-End</span>, ma curiosité et mes compétences me confèrent une compréhension globale. Je conçois des solutions techniques en cherchant toujours l'équilibre entre une exigence de <span class="font-accent text-gradient">Code Quality</span> et un pragmatisme absolu.
                 </p>
               </div>
 
@@ -667,15 +672,15 @@
           </div>
         </section>
 
-        <!-- COMPÉTENCES CLÉS - TECH STACK MISE EN AVANT POUR LES RECRUTEURS -->
+        <!-- CORE SKILLS SECTION (FOCUS TECHNIQUE & LEADERSHIP) -->
         <section class="core-skills-section container">
           <div class="skills-focus-list">
-            <div class="skill-focus-item"><span data-i18n="focus_1">Engineering Management</span></div>
-            <div class="skill-focus-item alt-focus"><span data-i18n="focus_2">Tech Leadership & Conception</span></div>
-            <div class="skill-focus-item"><span data-i18n="focus_3">Écosystème Java / Spring Boot</span></div>
-            <div class="skill-focus-item alt-focus"><span data-i18n="focus_4">Team Scaling & Mentoring</span></div>
-            <div class="skill-focus-item"><span data-i18n="focus_5">Product Delivery</span></div>
-            <div class="skill-focus-item alt-focus"><span data-i18n="focus_6">Stakeholder Management</span></div>
+            <div class="skill-focus-item"><span data-i18n="focus_1">Engineering Management & Strategy</span></div>
+            <div class="skill-focus-item alt-focus"><span data-i18n="focus_2">Software Architecture & Design Patterns</span></div>
+            <div class="skill-focus-item"><span data-i18n="focus_3">Modern Web Development</span></div>
+            <div class="skill-focus-item alt-focus"><span data-i18n="focus_4">Backend Expertise</span></div>
+            <div class="skill-focus-item"><span data-i18n="focus_5">Quality Engineering & Agile Delivery</span></div>
+            <div class="skill-focus-item alt-focus"><span data-i18n="focus_6">Human-Centric Leadership & Mentoring</span></div>
           </div>
         </section>
 
@@ -717,14 +722,13 @@
                   </ul>
                 </div>
 
-                <!-- BADGES KPI -->
                 <div class="kpi-group">
                   <div class="kpi-badge"><span class="kpi-value">1.2M - 3M€</span> <span class="kpi-label" data-i18n="kpi_budget">Budget</span></div>
                   <div class="kpi-badge"><span class="kpi-value">15 à 30</span> <span class="kpi-label" data-i18n="kpi_team">Ingénieurs</span></div>
                   <div class="kpi-badge"><span class="kpi-value">DORA</span> <span class="kpi-label" data-i18n="kpi_dora">Suivi Perf.</span></div>
                 </div>
                 <div>
-                  <span class="tag nav-hover">Strangler Pattern</span>
+                  <span class="tag nav-hover">Software Architecture</span>
                   <span class="tag nav-hover">Quality Engineering</span>
                   <span class="tag nav-hover">DORA Metrics</span>
                   <span class="tag nav-hover">Agile Mindset</span>
@@ -752,23 +756,21 @@
 
                 <div style="color: var(--text-soft); font-size: 1.15rem; line-height: 1.7; margin-bottom: 1.5rem;" data-i18n="path_2_desc">
                   <ul class="exp-list-ui">
-                    <li><strong>Pilotage d'équipe & Produit :</strong> Lead d'une Feature Team (5 ingénieurs) concevant une application BI stratégique diffusant les performances économiques à l'échelle de l'entreprise (du chef de rayon au CEO).</li>
-                    <li><strong>Double casquette EM / Tech Lead :</strong> Management complet (budget, recrutement, animation Agile) couplé à une forte implication technique (développement Java/Spring, architecture, mentorat).</li>
-                    <li><strong>Équilibre & Delivery :</strong> Maintien d'un rythme de livraison fluide en gérant habilement les priorités entre le soutien humain, la vision architecturale et la production de code.</li>
+                    <li><strong>Pilotage d'équipe & Produit :</strong> Lead d'une Feature Team (5 ingénieurs) concevant une application BI stratégique diffusant les performances économiques à l'échelle de l'entreprise.</li>
+                    <li><strong>Double casquette EM / Tech Lead :</strong> Management complet couplé à une forte implication technique (développement Java/Spring, architecture, mentorat).</li>
+                    <li><strong>Équilibre & Delivery :</strong> Maintien d'un rythme de livraison fluide en gérant habilement les priorités techniques et humaines.</li>
                   </ul>
                 </div>
 
-                <!-- BADGES KPI -->
                 <div class="kpi-group">
                   <div class="kpi-badge"><span class="kpi-value">5</span> <span class="kpi-label" data-i18n="kpi_team_size">Ingénieurs</span></div>
-                  <div class="kpi-badge"><span class="kpi-value" data-i18n="kpi_budget_val">~500k€</span> <span class="kpi-label" data-i18n="kpi_budget_status">Budget</span></div>
-                  <div class="kpi-badge"><span class="kpi-value" data-i18n="kpi_scope_val">Globale</span> <span class="kpi-label" data-i18n="kpi_scope">Portée</span></div>
+                  <div class="kpi-badge"><span class="kpi-value">~500k€</span> <span class="kpi-label" data-i18n="kpi_budget_status">Budget</span></div>
+                  <div class="kpi-badge"><span class="kpi-value">Globale</span> <span class="kpi-label" data-i18n="kpi_scope">Portée</span></div>
                 </div>
                 <div>
                   <span class="tag nav-hover">Java / Spring Boot</span>
-                  <span class="tag nav-hover">Reactive Prog.</span>
-                  <span class="tag nav-hover">Kubernetes (K8s)</span>
-                  <span class="tag nav-hover">Scrum</span>
+                  <span class="tag nav-hover">Software Design</span>
+                  <span class="tag nav-hover">Kubernetes</span>
                   <span class="tag nav-hover">Mentoring</span>
                 </div>
               </article>
@@ -814,87 +816,6 @@
                 </div>
               </article>
 
-              <article class="exp-item">
-                <div style="display: flex; gap: 1.5rem; align-items: flex-start; margin-bottom: 1.5rem;">
-                  <div class="logo-box">
-                    <img src="https://www.google.com/s2/favicons?domain=decathlon.com&sz=128" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="Decathlon" />
-                    <div class="logo-fallback" style="display: none;">DEC</div>
-                  </div>
-                  <div>
-                    <span style="font-weight: 800; font-size: 0.85rem; color: var(--accent-teal); text-transform: uppercase; margin-bottom: 0.5rem; display: block; letter-spacing: 0.05em;" data-i18n="path_4_date">Fév 2019 — Déc 2020</span>
-                    <h3 class="exp-role" style="font-size: clamp(1.6rem, 3vw, 2rem); margin-bottom: 0.4rem;" data-i18n="path_4_role">Développeur & Scrum Master</h3>
-                    <div style="display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;">
-                      <span class="exp-company" style="margin-bottom: 0; display: inline-block;">Decathlon Digital</span>
-                      <span style="color: var(--border-glass);">|</span>
-                      <span style="font-size: 0.85rem; font-weight: 800; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.05em;" data-i18n="path_4_bu">Data</span>
-                      <span style="color: var(--text-faint);">•</span>
-                      <span style="font-size: 0.95rem; font-weight: 500; color: var(--text-soft);" data-i18n="path_4_sub">Business Intelligence</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div style="color: var(--text-soft); font-size: 1.15rem; line-height: 1.7; margin-bottom: 1.5rem;" data-i18n="path_4_desc">
-                  <ul class="exp-list-ui">
-                    <li><strong>Acculturation Agile :</strong> Introduction et déploiement du framework Scrum au sein de l'équipe (animation des rituels, rédaction de User Stories, création d'un langage commun).</li>
-                    <li><strong>Développement & Mentorat :</strong> Création de nouvelles fonctionnalités et forte implication dans la montée en compétence technique du collectif via le Pair et le Mob Programming.</li>
-                    <li><strong>Transversalité :</strong> Création d'un pont de communication direct avec une équipe Ops déportée pour débloquer et fluidifier nos mises en production.</li>
-                  </ul>
-                </div>
-
-                <div class="kpi-group">
-                  <div class="kpi-badge"><span class="kpi-value">Scrum</span> <span class="kpi-label" data-i18n="kpi_agile">Méthodologie</span></div>
-                  <div class="kpi-badge"><span class="kpi-value">Pair & Mob</span> <span class="kpi-label" data-i18n="kpi_mentoring">Transmission</span></div>
-                  <div class="kpi-badge"><span class="kpi-value">Sync Ops</span> <span class="kpi-label" data-i18n="kpi_ops">Collaboration</span></div>
-                </div>
-                <div>
-                  <span class="tag nav-hover">Java / Spring / React</span>
-                  <span class="tag nav-hover">Agile Acculturation</span>
-                  <span class="tag nav-hover">Pair / Mob Programming</span>
-                  <span class="tag nav-hover">Requirements Definition</span>
-                  <span class="tag nav-hover">Cross-team Sync</span>
-                </div>
-              </article>
-
-              <article class="exp-item">
-                <div style="display: flex; gap: 1.5rem; align-items: flex-start; margin-bottom: 1.5rem;">
-                  <div class="logo-box">
-                    <img src="https://www.google.com/s2/favicons?domain=soprasteria.com&sz=128" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="Sopra Steria" />
-                    <div class="logo-fallback" style="display: none;">SOP</div>
-                  </div>
-                  <div>
-                    <span style="font-weight: 800; font-size: 0.85rem; color: var(--accent-teal); text-transform: uppercase; margin-bottom: 0.5rem; display: block; letter-spacing: 0.05em;" data-i18n="path_5_date">Fév 2016 — Fév 2019</span>
-                    <h3 class="exp-role" style="font-size: clamp(1.6rem, 3vw, 2rem); margin-bottom: 0.4rem;" data-i18n="path_5_role">Développeur Back-end & Scrum Master</h3>
-                    <div style="display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;">
-                      <span class="exp-company" style="margin-bottom: 0; display: inline-block;">Sopra Steria</span>
-                      <span style="color: var(--border-glass);">|</span>
-                      <span style="font-size: 0.85rem; font-weight: 800; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.05em;" data-i18n="path_5_bu">IT Services</span>
-                      <span style="color: var(--text-faint);">•</span>
-                      <span style="font-size: 0.95rem; font-weight: 500; color: var(--text-soft);" data-i18n="path_5_sub">B2B & Mission-Critical</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div style="color: var(--text-soft); font-size: 1.15rem; line-height: 1.7; margin-bottom: 1.5rem;" data-i18n="path_5_desc">
-                  <ul class="exp-list-ui">
-                    <li><strong>Applications B2B Critiques :</strong> Conception d'applications à fort enjeu métier, forgeant une base solide entre exigence client et développement technique.</li>
-                    <li><strong>Tech Lead (Société Générale) :</strong> Lead sur la codebase du projet d'octroi de crédit pro, assurant un lien technique direct et ultra-efficace entre le client et l'équipe de réalisation.</li>
-                    <li><strong>Scrum Master (SNCF) :</strong> Facilitation à temps plein et animation Agile pour l'équipe en charge de l'application de gestion des interventions sur caténaires.</li>
-                  </ul>
-                </div>
-
-                <div class="kpi-group">
-                  <div class="kpi-badge"><span class="kpi-value" data-i18n="kpi_sg_val">Lead Codebase</span> <span class="kpi-label" data-i18n="kpi_sg">Société Générale</span></div>
-                  <div class="kpi-badge"><span class="kpi-value" data-i18n="kpi_sncf_val">Scrum Master</span> <span class="kpi-label" data-i18n="kpi_sncf">SNCF</span></div>
-                  <div class="kpi-badge"><span class="kpi-value" data-i18n="kpi_b2b_val">Apps Critiques</span> <span class="kpi-label" data-i18n="kpi_b2b">Enjeux</span></div>
-                </div>
-                <div>
-                  <span class="tag nav-hover">Java / Spring / Angular</span>
-                  <span class="tag nav-hover">SQL</span>
-                  <span class="tag nav-hover">Agile / Scrum</span>
-                  <span class="tag nav-hover">Client Liaison</span>
-                </div>
-              </article>
-
               <div style="padding: 2rem 0; text-align: center; opacity: 0.5;">
                 <span style="font-size: 1.5rem; letter-spacing: 0.3em; color: var(--text-faint);">...</span>
                 <p class="font-accent" style="font-size: 1.2rem; margin-top: 0.5rem; color: var(--text-soft);" data-i18n="path_more">Et d'autres fondations posées précédemment</p>
@@ -906,7 +827,7 @@
 
         <div class="container"><div class="section-separator"></div></div>
 
-        <!-- ÉCRITS & RÉFLEXIONS -->
+        <!-- PUBLICATIONS -->
         <section id="publications" class="section container" style="text-align: center;">
           <h2 class="h-section" style="margin-bottom: 5rem;">
             <span data-i18n="pub_title">Écrits & Réflexions</span><span class="dot-accent">.
@@ -915,7 +836,6 @@
                   <path class="path-narrative" style="stroke: var(--accent-indigo);" d="M 0 0 C 50 0, 50 -10, 100 -10" />
                   <path class="path-narrative" style="stroke: var(--text-main);" d="M 85 -30 H 115 M 90 -20 H 110 M 95 -10 H 105" />
                   <path class="path-narrative" style="stroke: var(--accent-rose);" d="M 100 -30 C 60 -30, 40 -80, 60 -120 C 80 -160, 120 -160, 140 -120 C 160 -80, 140 -30, 100 -30 Z" />
-                  <path class="path-narrative" style="stroke: var(--accent-teal);" d="M 100 -170 L 100 -190 M 40 -150 L 20 -165 M 160 -150 L 180 -165 M 30 -90 L 10 -90 M 170 -90 L 190 -90" />
                 </svg>
               </div>
             </span>
@@ -926,8 +846,8 @@
               <div class="project-img-reveal"></div>
               <span class="tag nav-hover" style="margin-bottom: 1rem; display: inline-block;" data-i18n="pub_1_tag">Projet IA / Python</span>
               <h3 class="exp-role" style="font-size: 2rem;" data-i18n="pub_1_title">Trading Bot NSGA-II</h3>
-              <p class="text-soft" style="color: var(--text-soft); margin-top: 1rem; transition: color 0.3s; font-size: 1.1rem;" data-i18n="pub_1_desc">Optimisation multi-objectif de portefeuilles crypto via algorithmes génétiques. Interface Streamlit pour le monitoring de l'entraînement.</p>
-              <div style="margin-top: 1.5rem;"><span class="tag nav-hover">Python</span><span class="tag nav-hover">Streamlit</span><span class="tag nav-hover">NSGA-II</span></div>
+              <p class="text-soft" style="color: var(--text-soft); margin-top: 1rem; transition: color 0.3s; font-size: 1.1rem;" data-i18n="pub_1_desc">Optimisation multi-objectif de portefeuilles crypto via algorithmes génétiques. Interface Streamlit pour le monitoring.</p>
+              <div style="margin-top: 1.5rem;"><span class="tag nav-hover">Python</span><span class="tag nav-hover">NSGA-II</span></div>
               <div class="project-arrow">➜</div>
             </a>
 
@@ -935,7 +855,7 @@
               <div class="project-img-reveal"></div>
               <span class="tag nav-hover" style="margin-bottom: 1rem; display: inline-block;" data-i18n="pub_article_tag">Article Medium</span>
               <h3 class="exp-role" style="font-size: 2rem;" data-i18n="pub_2_title">Le Burnout en Tech</h3>
-              <p class="text-soft" style="color: var(--text-soft); margin-top: 1rem; transition: color 0.3s; font-size: 1.1rem;" data-i18n="pub_2_desc">Savoir reconnaître les signaux, protéger la santé mentale des équipes et bâtir un rythme de livraison réellement soutenable.</p>
+              <p class="text-soft" style="color: var(--text-soft); margin-top: 1rem; transition: color 0.3s; font-size: 1.1rem;" data-i18n="pub_2_desc">Savoir reconnaître les signaux, protéger la santé mentale des équipes et bâtir un rythme soutenable.</p>
               <div class="project-arrow">➜</div>
             </a>
 
@@ -956,8 +876,6 @@
             </a>
           </div>
         </section>
-
-        <div class="container"><div class="section-separator"></div></div>
 
         <!-- FORMATION -->
         <section id="education" class="section container">
@@ -1033,54 +951,56 @@
         </section>
 
         <!-- FOOTER -->
-        <footer class="container" style="padding-bottom: 10vh;">
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 3rem;">
-            <h2 class="footer-brand text-gradient">
-              Julien Marchand
-              <!-- Golden Retriever & Baby Doodle SÉCURISÉ -->
-              <svg width="100" height="40" viewBox="0 0 100 40" style="overflow: visible; opacity: 1; display: inline-block; vertical-align: middle;">
-                <path class="path-footer" style="stroke: var(--accent-teal);" d="M 15 10 Q 25 5 30 15 Q 40 15 45 20 Q 45 25 35 25 L 30 25 Q 25 35 15 35" />
-                <path class="path-footer" style="stroke: var(--accent-teal);" d="M 15 10 Q 5 15 10 25 Q 15 35 25 25 Q 25 15 15 10" />
-                <circle class="node-anim" cx="35" cy="18" r="1.5" fill="var(--accent-teal)" />
-                <path class="path-footer" style="stroke: var(--accent-rose);" d="M 70 5 A 5 5 0 1 1 69.9 5 Z" />
-                <path class="path-footer" style="stroke: var(--accent-rose);" d="M 66 14 C 55 20 60 35 70 35 C 80 35 85 20 74 14" />
-                <path class="path-footer" style="stroke: var(--accent-rose);" d="M 68 9 Q 69 11 70 9 M 72 9 Q 73 11 74 9" />
-              </svg>
-            </h2>
-            <div style="display: flex; gap: 2.5rem; justify-content: flex-end;">
-              <a href="mailto:jmarch031@gmail.com" class="nav-hover magnetic-btn" style="color:var(--text-soft); text-decoration: none; font-weight: 800; padding: 10px;"><span class="btn-text">Email</span></a>
-              <a href="https://www.linkedin.com/in/julien-marchand-0256186a" target="_blank" class="nav-hover magnetic-btn" style="color:var(--text-soft); text-decoration: none; font-weight: 800; padding: 10px;"><span class="btn-text">LinkedIn</span></a>
-            </div>
-          </div>
-        </footer>
+       <footer class="container" style="padding-bottom: 10vh;">
+         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 3rem;">
+           <h2 class="footer-brand text-gradient">
+             Julien Marchand
+             <!-- Golden Retriever & Baby Doodle SÉCURISÉ -->
+             <svg width="100" height="40" viewBox="0 0 100 40" style="overflow: visible; opacity: 1; display: inline-block; vertical-align: middle;">
+               <path class="path-footer" style="stroke: var(--accent-teal);" d="M 15 10 Q 25 5 30 15 Q 40 15 45 20 Q 45 25 35 25 L 30 25 Q 25 35 15 35" />
+               <path class="path-footer" style="stroke: var(--accent-teal);" d="M 15 10 Q 5 15 10 25 Q 15 35 25 25 Q 25 15 15 10" />
+               <circle class="node-anim" cx="35" cy="18" r="1.5" fill="var(--accent-teal)" />
+               <path class="path-footer" style="stroke: var(--accent-rose);" d="M 70 5 A 5 5 0 1 1 69.9 5 Z" />
+               <path class="path-footer" style="stroke: var(--accent-rose);" d="M 66 14 C 55 20 60 35 70 35 C 80 35 85 20 74 14" />
+               <path class="path-footer" style="stroke: var(--accent-rose);" d="M 68 9 Q 69 11 70 9 M 72 9 Q 73 11 74 9" />
+             </svg>
+           </h2>
+           <div style="display: flex; gap: 2.5rem; justify-content: flex-end;">
+             <a href="mailto:jmarch031@gmail.com" class="nav-hover magnetic-btn" style="color:var(--text-soft); text-decoration: none; font-weight: 800; padding: 10px;"><span class="btn-text">Email</span></a>
+             <a href="https://www.linkedin.com/in/julien-marchand-0256186a" target="_blank" class="nav-hover magnetic-btn" style="color:var(--text-soft); text-decoration: none; font-weight: 800; padding: 10px;"><span class="btn-text">LinkedIn</span></a>
+           </div>
+         </div>
+       </footer>
 
-      </div> <!-- Fin Content Wrapper -->
+      </div>
     </div>
   </main>
 
   <script>
-    // Easter Egg Console Log
-    console.log("%c    __  __ \n   / / / /_  ______  ____ _____  ____ \n  / /_/ / / / / __ \\/ __ `/ __ \\/ __ \\\n / __  / /_/ / /_/ / / / / /_/ /\n/_/ /_/\\__,_/ .___/\\__,_/_/ /_/\\____/\n           /_/                        ", "font-family: monospace; color: #2563EB;");
-    console.log("%c👋 Si tu voulais en savoir plus sur ce portfolio, alors tu vas en apprendre plus sur moi.\n%cTu as remarqué le chien et le bébé dans le footer ? Le chien se nomme Arrow, ma fille Louise.", "font-size: 16px; font-weight: bold; color: #2563EB;", "font-size: 14px; color: #EA580C; margin-top: 5px;");
-    // PS: Mon code de parrainage EKNIEZP4 fonctionne toujours si besoin 😉
-
     // ==========================================================================
-    // I18N - DICTIONNAIRE MULTILINGUE
+    // I18N - DICTIONNAIRE MULTILINGUE (MAJ Skills Technique)
     // ==========================================================================
     let currentLang = 'fr';
     const translations = {
       fr: {
         meta_desc: "Engineering Manager, Tech Lead & Développeur. L'alliance de l'excellence technique et du leadership humain.",
         header_sub: "© 2026 — EM & Développeur",
+        menu_btn: "Menu",
+        menu_close: "Fermer",
+        menu_about: "Philosophie",
+        menu_exp: "Expertise",
+        menu_path: "Parcours",
+        menu_pub: "Écrits",
+        menu_edu: "Formation",
         hero_role: "Engineering Manager, Tech Lead & Développeur",
         hero_title: "Traduire les idées, <span style=\"font-weight: 400;\">élever le collectif</span><span class=\"dot-accent\">.</span>",
         hero_desc: "Développeur dans l'âme, je vois le code comme la traduction directe de nos besoins. Aujourd'hui Engineering Manager, je suis convaincu que l'excellence technique naît d'un savant mélange de pragmatisme architectural, d'une méthodologie rigoureuse et d'un management profondément bienveillant.",
         hero_cta: "Démarrer une conversation",
-        hero_cv: "Voir mon Linkedin",
+        hero_linkedin: "Voir mon Linkedin",
         philo_title: "Philosophie",
         philo_subtitle: "Ma Vision",
         philo_quote: "\"L'ingénierie, ce n'est pas qu'une affaire de code.. Mon approche : <span style=\"font-weight: 600;\" class=\"text-gradient\">comprendre le pourquoi, soigner le comment</span>.\"",
-        philo_desc: "À l'heure où l'IA bouleverse notre métier, donner du sens à nos actions n'a jamais été aussi vital. J'ai un goût profond pour la technique et le beau code. Je crois qu'il faut savoir prendre le temps de bien faire les choses, de capitaliser intelligemment et de choisir les bonnes méthodologies, en recherchant toujours la simplicité technique et architecturale. Côté humain, j'aspire à un leadership humble et transparent : travailler avec son cœur, refuser le micro-management et laisser le collectif s'exprimer pour construire ensemble.",
+        philo_desc: "À l'heure où llicence d'IA bouleverse notre métier, donner du sens à nos actions n'a jamais été aussi vital. J'ai un goût profond pour la technique et le beau code. Je crois qu'il faut savoir prendre le temps de bien faire les choses, de capitaliser intelligemment et de choisir les bonnes méthodologies. Côté humain, j'aspire à un leadership humble et transparent : travailler avec son cœur, refuser le micro-management et laisser le collectif s'exprimer.",
         philo_stat1: "Années d'expérience",
         philo_stat2: "Expériences pro.",
         philo_stat3: "Rôles explorés",
@@ -1088,23 +1008,23 @@
         exp_title: "Expertise",
         exp_intro: "Identifier les priorités, réduire la complexité.",
         exp_card1_title: "Leadership & Proximité",
-        exp_card1_desc: "Manager humble et à l'écoute, je fuis la directivité. Ma mission est de créer un cadre de confiance, transparent et bienveillant, permettant au <span class=\"font-accent\">collectif</span> de s'exprimer, de grandir et de livrer la meilleure valeur possible en toute autonomie.",
+        exp_card1_desc: "Manager humble et à l'écoute, je fuis la directivité. Ma mission est de créer un cadre de confiance permettant au <span class=\"font-accent\">collectif</span> de s'exprimer et de grandir en toute autonomie.",
         exp_card2_title: "Conception & Pragmatisme",
-        exp_card2_desc: "Développeur dans l'âme au profil fortement <span class=\"font-accent\">Back-End</span>, ma curiosité me confère une compréhension globale (système, produit, utilisateur). Je conçois des solutions techniques en cherchant toujours l'équilibre entre une exigence de <span class=\"text-gradient\">Code Quality</span> & maintenabilité, et un pragmatisme absolu.",
+        exp_card2_desc: "Développeur au profil fortement <span class=\"font-accent\">Back-End</span>, ma curiosité me confère une compréhension globale. Je conçois des solutions techniques avec une exigence de <span class=\"text-gradient\">Code Quality</span> et de maintenabilité.",
         exp_card3_title: "Cadrage & Delivery",
-        exp_card3_desc: "Une ingénierie saine commence par un cadrage précis de nos idées. J'aligne les besoins utilisateurs avec nos réalités techniques. Un savant mélange de <span class=\"font-accent\">hard skills et soft skills</span> au service d'une concrétisation fluide et impactante.",
-        focus_1: "Engineering Management",
-        focus_2: "Tech Leadership & Conception",
-        focus_3: "Écosystème Java / Spring Boot",
-        focus_4: "Team Scaling & Mentoring",
-        focus_5: "Product Delivery",
-        focus_6: "Stakeholder Management",
+        exp_card3_desc: "Une ingénierie saine commence par un cadrage précis. J'aligne les besoins utilisateurs avec nos réalités techniques. Un mélange de <span class=\"font-accent\">hard skills et soft skills</span> au service du produit.",
+        focus_1: "Engineering Management & Stratégie",
+        focus_2: "Architecture Logicielle & Design Patterns",
+        focus_3: "Développement Web Moderne",
+        focus_4: "Backend Expertise",
+        focus_5: "Quality Engineering & Delivery Agile",
+        focus_6: "Leadership Humain & Mentorat",
         path_title: "Parcours <br> <span style=\"white-space: nowrap;\">Stratégique<span class=\"dot-accent\">.</span></span>",
         path_present: "Juil 2023 — Présent",
         path_1_role: "Engineering Manager",
         path_1_bu: "Supply",
         path_1_sub: "Logistics",
-        path_1_desc: "<ul class=\"exp-list-ui\"><li><strong>Modernisation & Architecture :</strong> Pilotage de la transition d'un WMS legacy (AS400) vers une plateforme moderne via le <em>Strangler Pattern</em>.</li><li><strong>Réorganisation à l'échelle :</strong> Restructuration de ~30 prestataires en Feature Teams (orientées métier) soutenues par une équipe Ops & QE transverse.</li><li><strong>Culture de la Performance :</strong> Transition de la QA vers la Quality Engineering (automatisation) et pilotage du <em>lead time</em> via les métriques DORA.</li><li><strong>Pilotage Stratégique :</strong> Gestion d'un budget fluctuant (1.2M - 3M€) et redimensionnement des effectifs selon les enjeux.</li></ul>",
+        path_1_desc: "<ul class=\"exp-list-ui\"><li><strong>Modernisation & Architecture :</strong> Pilotage de la transition legacy vers une plateforme moderne (Strangler Pattern).</li><li><strong>Réorganisation à l'échelle :</strong> Restructuration de ~30 prestataires en Feature Teams autonomes.</li><li><strong>Culture Performance :</strong> Pilotage du lead time via les métriques DORA et Quality Engineering.</li></ul>",
         kpi_budget: "Budget",
         kpi_team: "Ingénieurs",
         kpi_dora: "Suivi Perf.",
@@ -1112,78 +1032,47 @@
         path_2_role: "Engineering Manager",
         path_2_bu: "Data",
         path_2_sub: "Business Intelligence",
-        path_2_desc: "<ul class=\"exp-list-ui\"><li><strong>Pilotage d'équipe & Produit :</strong> Lead d'une Feature Team (5 ingénieurs) concevant une application BI stratégique diffusant les performances économiques à l'échelle de l'entreprise (du chef de rayon au CEO).</li><li><strong>Double casquette EM / Tech Lead :</strong> Management complet (budget, recrutement, animation Agile) couplé à une forte implication technique (développement Java/Spring, architecture, mentorat).</li><li><strong>Équilibre & Delivery :</strong> Maintien d'un rythme de livraison fluide en gérant habilement les priorités entre le soutien humain, la vision architecturale et la production de code.</li></ul>",
+        path_2_desc: "<ul class=\"exp-list-ui\"><li><strong>Pilotage Produit :</strong> Lead d'une Feature Team concevant une application BI stratégique à l'échelle globale.</li><li><strong>Double casquette EM / Tech Lead :</strong> Management complet couplé au développement Java/Spring et à l'architecture.</li></ul>",
         kpi_team_size: "Ingénieurs",
         kpi_budget_status: "Budget",
         kpi_scope: "Portée",
-        kpi_budget_val: "~500k€",
-        kpi_scope_val: "Globale",
-        path_3_date: "Jan 2021 — Fév 2022",
-        path_3_role: "Tech Lead",
-        path_3_bu: "Data",
-        path_3_sub: "Business Intelligence",
-        path_3_desc: "<ul class=\"exp-list-ui\"><li><strong>Alignement Produit/Tech :</strong> Pilotage technique de la plateforme BI et garantie de l'adéquation besoin/solution par l'agilité et via la mise en place des « 3 Amigos » (compréhension, affinage des US et pré-conception).</li><li><strong>Qualité & Performance :</strong> Refactoring majeur de la base de code doublant les performances de calcul/affichage et sécurisation du delivery avec 80% de couverture de tests.</li><li><strong>Infrastructure & Ops :</strong> Optimisation des pipelines CI/CD et orchestration de la migration de Rancher vers Kubernetes (K8s) en étroite collaboration avec les équipes Ops.</li></ul>",
-        kpi_perf: "Perf. Calcul",
-        kpi_coverage: "Couverture Tests",
-        kpi_infra: "Infrastructure",
-        path_4_date: "Fév 2019 — Déc 2020",
-        path_4_role: "Développeur & Scrum Master",
-        path_4_bu: "Data",
-        path_4_sub: "Business Intelligence",
-        path_4_desc: "<ul class=\"exp-list-ui\"><li><strong>Acculturation Agile :</strong> Introduction et déploiement du framework Scrum au sein de l'équipe (animation des rituels, rédaction de User Stories, création d'un langage commun).</li><li><strong>Développement & Mentorat :</strong> Création de nouvelles fonctionnalités et forte implication dans la montée en compétence technique du collectif via le Pair et le Mob Programming.</li><li><strong>Transversalité :</strong> Création d'un pont de communication direct avec une équipe Ops déportée pour débloquer et fluidifier nos mises en production.</li></ul>",
-        kpi_agile: "Méthodologie",
-        kpi_mentoring: "Transmission",
-        kpi_ops: "Collaboration",
-        path_5_date: "Fév 2016 — Fév 2019",
-        path_5_role: "Développeur Back-end & Scrum Master",
-        path_5_bu: "IT Services",
-        path_5_sub: "B2B & Mission-Critical",
-        path_5_desc: "<ul class=\"exp-list-ui\"><li><strong>Applications B2B Critiques :</strong> Conception d'applications à fort enjeu métier, forgeant une base solide entre exigence client et développement technique.</li><li><strong>Tech Lead (Société Générale) :</strong> Lead sur la codebase du projet d'octroi de crédit pro, assurant un lien technique direct et ultra-efficace entre le client et l'équipe de réalisation.</li><li><strong>Scrum Master (SNCF) :</strong> Facilitation à temps plein et animation Agile pour l'équipe en charge de l'application de gestion des interventions sur caténaires.</li></ul>",
-        kpi_sg: "Société Générale",
-        kpi_sncf: "SNCF",
-        kpi_b2b: "Enjeux",
-        kpi_sg_val: "Lead Codebase",
-        kpi_sncf_val: "Scrum Master",
-        kpi_b2b_val: "Apps Critiques",
         path_more: "Et d'autres fondations posées précédemment",
-        tag_team: "Team Scaling", tag_debt: "Tech Debt", tag_wms: "WMS Modernization", tag_people: "People Management", tag_back: "Back-end Dev", tag_mentor: "Mentoring", tag_archi: "Software Architecture", tag_bi: "BI Platform", tag_agile: "Agile Delivery", tag_api: "API Development", tag_scrum: "Scrum Facilitation", tag_ops: "Ops Coordination", tag_java: "Java / Spring", tag_apps: "Mission-Critical Apps", tag_agile_leader: "Agile Leader",
         pub_title: "Écrits & Réflexions",
         pub_1_tag: "Projet IA / Python",
         pub_1_title: "Trading Bot NSGA-II",
-        pub_1_desc: "Optimisation multi-objectif de portefeuilles crypto via algorithmes génétiques. Interface Streamlit pour le monitoring de l'entraînement.",
+        pub_1_desc: "Optimisation multi-objectif de portefeuilles crypto via algorithmes génétiques. Interface Streamlit.",
         pub_article_tag: "Article Medium",
         pub_2_title: "Le Burnout en Tech",
-        pub_2_desc: "Savoir reconnaître les signaux, protéger la santé mentale des équipes et bâtir un rythme de livraison réellement soutenable.",
-        pub_3_title: "De la QA à la QE : L'enjeu",
+        pub_2_desc: "Savoir reconnaître les signaux, protéger la santé mentale et bâtir un rythme soutenable.",
+        pub_3_title: "De la QA à la QE",
         pub_3_desc: "Transition culturelle : pourquoi la qualité est le socle de toute vélocité produit.",
-        pub_4_title: "Dette Technique",
-        pub_4_desc: "Apprendre à ne plus négocier avec demain pour protéger l'avenir du code.",
         edu_title: "Formation",
         edu_1_sub: "Informatique (Lille - Paris)",
-        edu_1_desc: "Pédagogie par projet intensive (C/C++, Architecture logicielle). Développement d'une forte autonomie et de capacités de résolution de problèmes complexes.",
+        edu_1_desc: "Pédagogie par projet intensive, forte autonomie et capacités de résolution de problèmes.",
         edu_2_sub: "Informatique (Année Int.)",
-        edu_2_desc: "California State University San Marcos. Immersion totale. Développement de compétences interculturelles et d'une perspective globale de l'ingénierie.",
-        edu_3_sub: "Informatique",
-        edu_3_desc: "Acquisition des fondamentaux techniques et approche structurée du développement logiciel.",
-        edu_4_tag: "Formation Continue",
-        edu_4_title: "Certifications & Soft Skills",
-        edu_4_skills: "PSM I / MBTI / DISC / CNV",
-        edu_4_desc: "Certification Professional Scrum Master I. Investissement fort dans le leadership humain avec des formations en Communication Non Violente et analyse comportementale.",
+        edu_2_desc: "California State University San Marcos. Immersion totale et perspective globale de l'ingénierie.",
         scroll_down: "SCROLL ↓",
         scroll_up: "REMONTER ↑"
       },
       en: {
         meta_desc: "Engineering Manager, Tech Lead & Developer. Blending technical excellence with human-centric leadership.",
         header_sub: "© 2026 — EM & Developer",
+        menu_btn: "Menu",
+        menu_close: "Close",
+        menu_about: "Philosophy",
+        menu_exp: "Expertise",
+        menu_path: "Journey",
+        menu_pub: "Writings",
+        menu_edu: "Education",
         hero_role: "Engineering Manager, Tech Lead & Developer",
         hero_title: "Translating ideas, <span style=\"font-weight: 400;\">elevating the team</span><span class=\"dot-accent\">.</span>",
-        hero_desc: "A developer at heart, I see code as the direct translation of our needs. Now an Engineering Manager, I am convinced that technical excellence comes from a smart mix of architectural pragmatism, rigorous methodology, and deeply caring management.",
+        hero_desc: "A developer at heart, I see code as the direct translation of our needs. Now an Engineering Manager, I am convinced that technical excellence comes from a smart mix of architectural pragmatism and caring management.",
         hero_cta: "Start a conversation",
-        hero_cv: "View my Linkedin",
+        hero_linkedin: "View my Linkedin",
         philo_title: "Philosophy",
         philo_subtitle: "My Vision",
-        philo_quote: "\"A lot of engineering challenges go beyond the code. My approach: <span style=\"font-weight: 600;\" class=\"text-gradient\">understand the why, craft the how</span>.\"",
-        philo_desc: "As AI reshapes our industry, giving purpose to our actions has never been more vital. I have a deep appreciation for tech and beautiful code. I believe in taking the time to do things right, capitalizing properly on our knowledge, and choosing the right methodologies, always striving for technical and architectural simplicity. On the human side, I strive for humble, transparent leadership: working with heart, rejecting micromanagement, and giving the team the space to express themselves and build together.",
+        philo_quote: "\"Understand the why, craft the how. Engineering is more than just code.\"",
+        philo_desc: "As AI reshapes our industry, giving purpose to our actions has never been more vital. I have a deep appreciation for tech and clean code. I believe in taking the time to do things right and choosing the right methodologies. On the human side, I strive for humble, transparent leadership: working with heart, rejecting micromanagement, and empowering the team.",
         philo_stat1: "Years of experience",
         philo_stat2: "Pro. experiences",
         philo_stat3: "Roles explored",
@@ -1191,87 +1080,48 @@
         exp_title: "Expertise",
         exp_intro: "Identify priorities, reduce complexity.",
         exp_card1_title: "Leadership & Proximity",
-        exp_card1_desc: "As a humble and attentive manager, I avoid being directive. My mission is to create a transparent, caring, and trusting environment, allowing the <span class=\"font-accent\">team</span> to express themselves, grow, and deliver the best value with full autonomy.",
+        exp_card1_desc: "Humble and attentive manager. My mission is to create a trusting environment where the <span class=\"font-accent\">team</span> can grow and deliver value autonomously.",
         exp_card2_title: "System Design & Pragmatism",
-        exp_card2_desc: "A developer at heart with a strong <span class=\"font-accent\">Back-End</span> profile, my curiosity grants me a global understanding (system, product, user). I design technical solutions always seeking the balance between strict <span class=\"text-gradient\">Code Quality</span> & maintainability, and absolute pragmatism.",
+        exp_card2_desc: "Strong <span class=\"font-accent\">Backend</span> profile with a global understanding. I design technical solutions with a high standard for <span class=\"text-gradient\">Code Quality</span> and maintainability.",
         exp_card3_title: "Scoping & Delivery",
-        exp_card3_desc: "Sound engineering starts with precise scoping. I align user needs with our technical realities. A smart blend of <span class=\"font-accent\">hard and soft skills</span> dedicated to a smooth and impactful delivery.",
-        focus_1: "Engineering Management",
-        focus_2: "Tech Leadership & Design",
-        focus_3: "Java / Spring Boot Ecosystem",
-        focus_4: "Team Scaling & Mentoring",
-        focus_5: "Product Delivery",
-        focus_6: "Stakeholder Management",
+        exp_card3_desc: "Sound engineering starts with scoping. I align user needs with technical realities through a blend of <span class=\"font-accent\">hard and soft skills</span>.",
+        focus_1: "Engineering Management & Strategy",
+        focus_2: "Software Architecture & Design Patterns",
+        focus_3: "Modern Web Development",
+        focus_4: "Backend Expertise",
+        focus_5: "Quality Engineering & Agile Delivery",
+        focus_6: "Human-Centric Leadership & Mentoring",
         path_title: "Strategic <br> <span style=\"white-space: nowrap;\">Journey<span class=\"dot-accent\">.</span></span>",
         path_present: "Jul 2023 — Present",
         path_1_role: "Engineering Manager",
         path_1_bu: "Supply",
         path_1_sub: "Logistics",
-        path_1_desc: "<ul class=\"exp-list-ui\"><li><strong>Modernization & Architecture:</strong> Led the transition of a legacy WMS (AS400) to a modern platform using the <em>Strangler Pattern</em>.</li><li><strong>Scaling Organization:</strong> Restructured ~30 contractors into business-oriented Feature Teams supported by a transversal Ops & QE team.</li><li><strong>Performance Culture:</strong> Shifted from traditional QA to Quality Engineering (automation) and managed <em>lead time</em> using DORA metrics.</li><li><strong>Strategic Management:</strong> Managed a fluctuating budget (€1.2M - €3M) and strategically resized the workforce based on business needs.</li></ul>",
+        path_1_desc: "<ul class=\"exp-list-ui\"><li><strong>Modernization & Architecture:</strong> Led the transition from legacy systems to a modern platform (Strangler Pattern).</li><li><strong>Scaling Organization:</strong> Restructured ~30 contractors into autonomous Feature Teams.</li><li><strong>Performance Culture:</strong> Tracking lead time using DORA metrics and Quality Engineering.</li></ul>",
         kpi_budget: "IT Budget",
-        kpi_leadtime: "Lead Time",
         kpi_team: "Engineers",
         path_2_date: "Feb 2022 — Jul 2023",
         path_2_role: "Engineering Manager",
         path_2_bu: "Data",
         path_2_sub: "Business Intelligence",
-        path_2_desc: "<ul class=\"exp-list-ui\"><li><strong>Team & Product Leadership:</strong> Led a Feature Team (5 engineers) building a strategic BI app distributing economic performance data company-wide (from department managers to the CEO).</li><li><strong>Dual EM / Tech Lead Role:</strong> Comprehensive management (budget, recruitment, Agile facilitation) coupled with strong technical involvement (Java/Spring development, architecture, mentoring).</li><li><strong>Balance & Delivery:</strong> Maintained a smooth delivery pace by skillfully balancing priorities between human support, architectural vision, and code production.</li></ul>",
+        path_2_desc: "<ul class=\"exp-list-ui\"><li><strong>Product Leadership:</strong> Led a Feature Team designing a global strategic BI application.</li><li><strong>Dual EM / Tech Lead Role:</strong> Comprehensive management coupled with Java/Spring development and architecture.</li></ul>",
         kpi_team_size: "Engineers",
         kpi_budget_status: "Budget",
         kpi_scope: "Impact",
-        kpi_budget_val: "~€500k",
-        kpi_scope_val: "Company-wide",
-        path_3_date: "Jan 2021 — Feb 2022",
-        path_3_role: "Tech Lead",
-        path_3_bu: "Data",
-        path_3_sub: "Business Intelligence",
-        path_3_desc: "<ul class=\"exp-list-ui\"><li><strong>Product/Tech Alignment:</strong> Technical leadership of the BI platform, ensuring need/solution fit through agility and the implementation of the \"3 Amigos\" approach (understanding, US refinement, and pre-design).</li><li><strong>Quality & Performance:</strong> Major codebase refactoring doubling calculation/display performance, and securing delivery with 80% test coverage.</li><li><strong>Infrastructure & Ops:</strong> Optimized CI/CD pipelines and orchestrated the migration from Rancher to Kubernetes (K8s) in close collaboration with Ops teams.</li></ul>",
-        kpi_perf: "Calculation Perf.",
-        kpi_coverage: "Test Coverage",
-        kpi_infra: "Infrastructure",
-        path_4_date: "Feb 2019 — Dec 2020",
-        path_4_role: "Developer & Scrum Master",
-        path_4_bu: "Data",
-        path_4_sub: "Business Intelligence",
-        path_4_desc: "<ul class=\"exp-list-ui\"><li><strong>Agile Evangelization:</strong> Introduced and deployed the Scrum framework within the team (ritual facilitation, User Story writing, creating a common language).</li><li><strong>Development & Mentoring:</strong> Developed new features and heavily invested in upskilling the team via Pair and Mob Programming.</li><li><strong>Cross-functional Sync:</strong> Created a direct communication bridge with a remote Ops team to unblock and streamline our releases.</li></ul>",
-        kpi_agile: "Methodology",
-        kpi_mentoring: "Knowledge Sharing",
-        kpi_ops: "Collaboration",
-        path_5_date: "Feb 2016 — Feb 2019",
-        path_5_role: "Back-end Developer & Scrum Master",
-        path_5_bu: "IT Services",
-        path_5_sub: "B2B & Mission-Critical",
-        path_5_desc: "<ul class=\"exp-list-ui\"><li><strong>Mission-Critical B2B Apps:</strong> Designed high-stakes applications, forging a strong foundation bridging client requirements and technical execution.</li><li><strong>Tech Lead (Société Générale):</strong> Led the codebase for a professional credit project, ensuring a highly efficient technical link between the client and the delivery team.</li><li><strong>Scrum Master (SNCF):</strong> Provided full-time Agile facilitation for the team managing the catenary intervention application.</li></ul>",
-        kpi_sg: "Société Générale",
-        kpi_sncf: "SNCF",
-        kpi_b2b: "Focus",
-        kpi_sg_val: "Codebase Lead",
-        kpi_sncf_val: "Scrum Master",
-        kpi_b2b_val: "Mission-Critical",
         path_more: "And other foundations laid previously",
-        tag_team: "Team Scaling", tag_debt: "Tech Debt", tag_wms: "WMS Modernization", tag_people: "People Management", tag_back: "Back-end Dev", tag_mentor: "Mentoring", tag_archi: "Software Architecture", tag_bi: "BI Platform", tag_agile: "Agile Delivery", tag_api: "API Development", tag_scrum: "Scrum Facilitation", tag_ops: "Ops Coordination", tag_java: "Java / Spring / Angular", tag_apps: "Mission-Critical Apps", tag_agile_leader: "Agile Leader",
         pub_title: "Writings & Thoughts",
         pub_1_tag: "AI Project / Python",
         pub_1_title: "Trading Bot NSGA-II",
-        pub_1_desc: "Multi-objective optimization of crypto portfolios via genetic algorithms. Streamlit interface for training monitoring.",
+        pub_1_desc: "Multi-objective crypto portfolio optimization using genetic algorithms. Streamlit UI.",
         pub_article_tag: "Medium Article",
         pub_2_title: "Burnout in Tech",
-        pub_2_desc: "Knowing how to recognize the signals, protect teams' mental health, and build a truly sustainable delivery pace.",
-        pub_3_title: "From QA to QE: The Stake",
-        pub_3_desc: "Cultural transition: why quality is the bedrock of any product velocity.",
-        pub_4_title: "Technical Debt",
-        pub_4_desc: "Learning to stop negotiating with tomorrow to protect the future of your codebase.",
+        pub_2_desc: "Recognizing signals, protecting mental health, and building a sustainable pace.",
+        pub_3_title: "From QA to QE",
+        pub_3_desc: "Cultural transition: why quality is the bedrock of product velocity.",
         edu_title: "Education",
         edu_1_sub: "Computer Science (Lille - Paris)",
-        edu_1_desc: "Intensive project-based pedagogy (C/C++, Software Architecture). Developed strong autonomy and complex problem-solving capabilities.",
+        edu_1_desc: "Intensive project-based pedagogy, fostering autonomy and complex problem-solving skills.",
         edu_2_sub: "Computer Science (Int. Year)",
-        edu_2_desc: "California State University San Marcos. Total immersion. Developed cross-cultural skills and a global perspective on engineering.",
-        edu_3_sub: "Computer Science",
-        edu_3_desc: "Acquired technical fundamentals and a structured approach to software development.",
-        edu_4_tag: "Continuous Education",
-        edu_4_title: "Certifications & Soft Skills",
-        edu_4_skills: "PSM I / MBTI / DISC / NVC",
-        edu_4_desc: "Professional Scrum Master I Certification. Strong investment in human leadership, including training in Non-Violent Communication and behavioral analysis.",
+        edu_2_desc: "California State University San Marcos. Global perspective on software engineering.",
         scroll_down: "SCROLL ↓",
         scroll_up: "SCROLL UP ↑"
       }
@@ -1280,50 +1130,29 @@
     function setLanguage(lang) {
       currentLang = lang;
       document.documentElement.lang = lang;
-
-      // Update meta info
       document.title = lang === 'fr' ? "Julien Marchand — EM & Développeur" : "Julien Marchand — EM & Developer";
       document.getElementById('meta-desc').setAttribute('content', translations[lang].meta_desc);
 
-      // Mettre à jour tous les éléments textuels
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang][key]) {
           el.innerHTML = translations[lang][key];
-
-          // Gérer le SplitText dynamiquement sans casser le style SOTY
           if (el.classList.contains('text-split')) {
             splitText(el);
-            // On force l'apparition des lettres puisqu'elles sont déjà à l'écran
-            el.querySelectorAll('.split-char').forEach(char => {
-              char.style.opacity = 1;
-              char.style.transform = 'none';
-            });
+            el.querySelectorAll('.split-char').forEach(char => { char.style.opacity = 1; char.style.transform = 'none'; });
           }
         }
       });
 
-      // Mettre à jour le dictionnaire pour l'effet Hacker sur les tags
-      document.querySelectorAll('.tag').forEach(tag => {
-        tag.dataset.value = tag.innerText;
-      });
-
-      // Mettre à jour le texte du bouton UI
       const langBtn = document.querySelector('#lang-toggle .btn-text');
       if (langBtn) langBtn.innerText = lang === 'fr' ? 'EN' : 'FR';
-
-      // Rafraichir le texte du Scroll Indicator si visible
+      const menuBtn = document.getElementById('menu-toggle-text');
+      if(menuBtn) menuBtn.innerText = menuOpen ? translations[lang].menu_close : translations[lang].menu_btn;
       const scrollIndicator = document.getElementById('global-scroll-indicator');
       const scrollTextElement = document.getElementById('scroll-text');
       if(scrollIndicator && scrollTextElement) {
-        if(scrollIndicator.classList.contains('up')) {
-          scrollTextElement.innerText = translations[lang].scroll_up;
-        } else {
-          scrollTextElement.innerText = translations[lang].scroll_down;
-        }
+        scrollTextElement.innerText = scrollIndicator.classList.contains('up') ? translations[lang].scroll_up : translations[lang].scroll_down;
       }
-
-      // Re-trigger layout sizing
       setTimeout(() => ScrollTrigger.refresh(), 100);
     }
 
@@ -1331,123 +1160,84 @@
       setLanguage(currentLang === 'fr' ? 'en' : 'fr');
     });
 
-    // Custom Text Splitter (SOTY Liquid Typography effect anti-coupure)
+    // Utilities
     function splitText(elements) {
       if(typeof elements === 'string') elements = document.querySelectorAll(elements);
       else if(elements.nodeType) elements = [elements];
-
       elements.forEach(el => {
         const html = el.innerHTML;
-        let newHtml = '';
-        let inTag = false;
-        let currentWord = '';
-
-        const flushWord = () => {
-          if (currentWord.length > 0) {
-            newHtml += `<span class="split-word">${currentWord}</span>`;
-            currentWord = '';
-          }
-        };
-
+        let newHtml = ''; let inTag = false; let currentWord = '';
+        const flushWord = () => { if (currentWord.length > 0) { newHtml += `<span class="split-word">${currentWord}</span>`; currentWord = ''; } };
         for (let i = 0; i < html.length; i++) {
-          if (html[i] === '<') {
-            flushWord();
-            inTag = true;
-            newHtml += html[i];
-          } else if (html[i] === '>') {
-            inTag = false;
-            newHtml += html[i];
-          } else if (inTag) {
-            newHtml += html[i];
-          } else if (html[i] === ' ' || html[i] === '\n') {
-            flushWord();
-            newHtml += html[i];
-          } else {
-            currentWord += `<span class="split-char">${html[i]}</span>`;
-          }
+          if (html[i] === '<') { flushWord(); inTag = true; newHtml += html[i]; }
+          else if (html[i] === '>') { inTag = false; newHtml += html[i]; }
+          else if (inTag) { newHtml += html[i]; }
+          else if (html[i] === ' ' || html[i] === '\n') { flushWord(); newHtml += html[i]; }
+          else { currentWord += `<span class="split-char">${html[i]}</span>`; }
         }
-        flushWord();
-        el.innerHTML = newHtml;
+        flushWord(); el.innerHTML = newHtml;
       });
     }
 
-    // 1. Theme Toggle Logic
     const themeToggleBtn = document.getElementById('theme-toggle');
     themeToggleBtn.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
-      if (currentTheme === 'dark') {
-        document.documentElement.removeAttribute('data-theme');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
+      if (currentTheme === 'dark') document.documentElement.removeAttribute('data-theme');
+      else document.documentElement.setAttribute('data-theme', 'dark');
     });
 
-    // 2. Hacker Text Effect (Scramble) - Mathématiquement Parfait
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    // Setup initial data-value
-    document.querySelectorAll('.tag').forEach(el => el.dataset.value = el.innerText);
-    document.querySelectorAll('.tag').forEach(el => {
-      el.addEventListener('mouseenter', e => {
-        if(e.target.dataset.animating === "true") return;
-        e.target.dataset.animating = "true";
-        const originalText = e.target.dataset.value;
-        let iterations = 0;
-        const interval = setInterval(() => {
-          e.target.innerText = originalText.split("").map((letter, index) => {
-            if(index < iterations) return originalText[index];
-            return letters[Math.floor(Math.random() * 26)];
-          }).join("");
-          if(iterations >= originalText.length) {
-            clearInterval(interval);
-            e.target.innerText = originalText;
-            e.target.dataset.animating = "false";
-          }
-          iterations += 1 / 3;
-        }, 30);
-      });
-    });
-
-    // 3. Smooth Scroll (Lenis) & GSAP Sync
     const lenis = new Lenis({ duration: 1.2, smooth: true });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => { lenis.raf(time * 1000); });
     gsap.ticker.lagSmoothing(0);
 
-    // 4. Custom Cursor SOTY (Morphing Ring)
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuToggleText = document.getElementById('menu-toggle-text');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const menuBg = document.querySelector('.menu-bg');
+    const menuLinks = document.querySelectorAll('.menu-link');
+    const menuCloseTrigger = document.querySelector('.menu-close-trigger');
+    let menuOpen = false;
+
+    function toggleMenu() {
+      menuOpen = !menuOpen;
+      if(menuOpen) {
+        menuOverlay.style.visibility = 'visible'; menuOverlay.classList.add('is-open');
+        gsap.to(menuBg, { opacity: 0.95, duration: 0.6, ease: "power3.out" });
+        gsap.to(menuLinks, { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "power3.out", delay: 0.2 });
+        menuToggleText.innerText = translations[currentLang].menu_close;
+        lenis.stop();
+      } else {
+        gsap.to(menuLinks, { opacity: 0, y: -20, duration: 0.4, stagger: 0.05, ease: "power2.in" });
+        gsap.to(menuBg, { opacity: 0, duration: 0.6, ease: "power3.inOut", delay: 0.3, onComplete: () => {
+          menuOverlay.style.visibility = 'hidden'; menuOverlay.classList.remove('is-open');
+        }});
+        menuToggleText.innerText = translations[currentLang].menu_btn;
+      }
+    }
+
+    menuToggle.addEventListener('click', toggleMenu);
+    menuCloseTrigger.addEventListener('click', (e) => { e.preventDefault(); if(menuOpen) toggleMenu(); lenis.start(); setTimeout(() => { lenis.scrollTo(0, { duration: 1.5 }); }, 50); });
+    menuLinks.forEach(link => { link.addEventListener('click', (e) => { e.preventDefault(); const targetId = link.getAttribute('href'); const targetEl = document.querySelector(targetId); if(menuOpen) toggleMenu(); lenis.start(); if (targetEl) setTimeout(() => { lenis.scrollTo(targetEl, { offset: 0, duration: 1.5 }); }, 50); }); });
+
     const cursor = document.querySelector('.cursor');
     const spotlight = document.querySelector('.mouse-glow');
     window.addEventListener('mousemove', (e) => {
       gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.15, ease: "power2.out" });
       gsap.to(spotlight, { x: e.clientX, y: e.clientY, duration: 0.8, ease: "power3.out" });
     });
-    const hoverElements = document.querySelectorAll('a, .nav-hover, button');
-    hoverElements.forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hover-active'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hover-active'));
-    });
 
-    // 5. 3D Tilt Effect on Cards
-    const tiltCards = document.querySelectorAll('.tilt-card');
-    tiltCards.forEach(card => {
-        card.addEventListener('mousemove', e => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = ((y - centerY) / centerY) * -8;
-            const rotateY = ((x - centerX) / centerX) * 8;
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
-        });
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
-        });
-    });
+    const updateHoverElements = () => {
+      document.querySelectorAll('a, .nav-hover, button, .menu-link').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover-active'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover-active'));
+      });
+    };
+    updateHoverElements();
 
-    // 6. Boutons Magnétiques
-    const magnetics = document.querySelectorAll('.magnetic-btn:not(.project-card)');
-    magnetics.forEach(elem => {
-      const text = elem.querySelector('.btn-text');
+    // Magnetics
+    document.querySelectorAll('.magnetic-btn:not(.project-card)').forEach(elem => {
+      const text = elem.querySelector('.btn-text') || elem.querySelector('svg');
       elem.addEventListener('mousemove', (e) => {
         const rect = elem.getBoundingClientRect();
         const x = (e.clientX - rect.left - rect.width / 2) * 0.2;
@@ -1461,183 +1251,58 @@
       });
     });
 
-    // 7. SOTY Video Effect : Fade out de la vidéo en descendant du Hero
-    const heroVideo = document.getElementById('vid-0');
-    ScrollTrigger.create({
-      trigger: ".main-content",
-      start: "top 60%", // Dés que le contenu principal arrive au milieu de l'écran
-      onEnter: () => { if(heroVideo) heroVideo.classList.remove('active'); },
-      onLeaveBack: () => { if(heroVideo) heroVideo.classList.add('active'); }
-    });
-
-    // 8. Reveal Initial, Preloader Quantum SOTY
     window.addEventListener("load", () => {
-      splitText('.text-split'); // Applique la typo liquide sécurisée (sans coupure de mots)
-
+      splitText('.text-split');
       const tl = gsap.timeline();
       const loaderText = document.getElementById('ascii-loader');
-      const counterText = document.getElementById('loader-counter');
       const targetText = "JULIEN MARCHAND";
-      let iter = 0;
-      let counter = { value: 0 };
-
-      // Animation Compteur 0 -> 100%
-      gsap.to(counter, {
-        value: 100,
-        duration: 2.5,
-        ease: "power2.inOut",
-        onUpdate: () => {
-          counterText.innerText = Math.round(counter.value) + "%";
-        }
-      });
-
-      // Animation ASCII synchronisée
+      let iter = 0; let counter = { value: 0 };
+      gsap.to(counter, { value: 100, duration: 2.5, ease: "power2.inOut", onUpdate: () => { document.getElementById('loader-counter').innerText = Math.round(counter.value) + "%"; } });
       const loaderInterval = setInterval(() => {
-        loaderText.innerText = targetText.split("").map((letter, index) => {
-          if(index < Math.floor(iter)) return targetText[index];
-          return letters[Math.floor(Math.random() * 26)];
-        }).join("");
-        if(iter >= targetText.length) {
-          clearInterval(loaderInterval);
-          loaderText.innerText = targetText;
-        }
-        iter += 1/4; // Ralenti pour correspondre au compteur
+        loaderText.innerText = targetText.split("").map((letter, index) => index < Math.floor(iter) ? targetText[index] : "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 26)]).join("");
+        if(iter >= targetText.length) { clearInterval(loaderInterval); loaderText.innerText = targetText; }
+        iter += 1/4;
       }, 30);
-
-      // Séquence Reveal
       tl.to('.preloader-bar', { width: "100%", duration: 2.5, ease: "power2.inOut" })
         .to('.preloader-content', { opacity: 0, y: -20, duration: 0.4 })
         .to('.preloader', { yPercent: -100, duration: 1, ease: "power4.inOut" }, "+=0.1")
-
-        // Apparition Typo Liquide
         .to('.split-char', { y: "0%", opacity: 1, rotateX: 0, duration: 0.8, stagger: 0.02, ease: "power4.out" }, "-=0.4")
-
         .to('.fade-reveal-header', { opacity: 1, duration: 1, ease: "power3.out" }, "-=0.8")
         .to('.fade-reveal', { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" }, "-=0.8");
-
-      setTimeout(() => {
-        document.getElementById('global-scroll-indicator').classList.add('visible');
-      }, 3500);
-
+      setTimeout(() => { document.getElementById('global-scroll-indicator').classList.add('visible'); }, 3500);
       gsap.utils.toArray('.path-hero').forEach(path => {
         const length = path.getTotalLength() || 800;
         gsap.set(path, { opacity: 1, strokeDasharray: length, strokeDashoffset: length });
         tl.to(path, { strokeDashoffset: 0, duration: 2.5, ease: "power3.out" }, "-=1");
       });
-      gsap.utils.toArray('.node-hero').forEach(node => {
-        tl.to(node, { opacity: 1, duration: 0.8 }, "-=1.5");
-      });
-
-      gsap.to('.hero-content', {
-        y: "-20vh", opacity: 0, scale: 0.95, filter: "blur(10px)", ease: "none",
-        scrollTrigger: { trigger: ".main-content", start: "top bottom", end: "top top", scrub: true }
-      });
-
+      gsap.to('.hero-content', { y: "-20vh", opacity: 0, scale: 0.95, filter: "blur(10px)", ease: "none", scrollTrigger: { trigger: ".main-content", start: "top bottom", end: "top top", scrub: true } });
       animateDoodlesScroll();
-
-      gsap.from("footer", {
-        yPercent: -30, opacity: 0, ease: "none",
-        scrollTrigger: { trigger: "footer", start: "top bottom", end: "bottom bottom", scrub: true }
-      });
-
+      gsap.from("footer", { yPercent: -30, opacity: 0, ease: "none", scrollTrigger: { trigger: "footer", start: "top bottom", end: "bottom bottom", scrub: true } });
       setTimeout(() => { ScrollTrigger.refresh(); }, 100);
     });
 
-    // 9. Scroll Indicator Logic
-    const scrollIndicator = document.getElementById('global-scroll-indicator');
-    const scrollText = document.getElementById('scroll-text');
-    ScrollTrigger.create({
-      trigger: "footer",
-      start: "top 95%",
-      onEnter: () => {
-         scrollIndicator.classList.add('up');
-         scrollText.innerText = translations[currentLang].scroll_up;
-         scrollIndicator.onclick = () => lenis.scrollTo(0, { duration: 1.5, ease: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-      },
-      onLeaveBack: () => {
-         scrollIndicator.classList.remove('up');
-         scrollText.innerText = translations[currentLang].scroll_down;
-         scrollIndicator.onclick = null;
-      }
-    });
-
-    gsap.to('.scroll-progress', { scaleX: 1, ease: "none", scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: 0.3 } });
-
-    // 10. Horizontal Scroll Fixé et Sécurisé
     let mm = gsap.matchMedia();
     mm.add("(min-width: 1025px)", () => {
       const container = document.querySelector('.horizontal-content');
-      gsap.to(container, {
-        x: () => -(container.scrollWidth - window.innerWidth) + "px",
-        ease: "none",
-        scrollTrigger: { trigger: ".horizontal-wrap", pin: true, scrub: 1, end: () => "+=" + container.scrollWidth, invalidateOnRefresh: true, anticipatePin: 1 }
-      });
+      let horizTween = gsap.to(container, { x: () => -(container.scrollWidth - window.innerWidth) + "px", ease: "none", scrollTrigger: { trigger: ".horizontal-wrap", pin: true, scrub: 1, end: () => "+=" + container.scrollWidth, invalidateOnRefresh: true, anticipatePin: 1 } });
+      gsap.utils.toArray('.skill-card').forEach((card) => { ScrollTrigger.create({ trigger: card, containerAnimation: horizTween, start: "left 65%", end: "right 35%", toggleClass: "is-focused" }); });
     });
+    mm.add("(max-width: 1024px)", () => { gsap.utils.toArray('.skill-card').forEach((card) => { ScrollTrigger.create({ trigger: card, start: "top 70%", end: "bottom 30%", toggleClass: "is-focused" }); }); });
 
-    // 11. Les Sketches liés au Scroll
     function animateDoodlesScroll() {
       gsap.utils.toArray('.path-narrative').forEach(path => {
         const length = path.getTotalLength() || 300;
         gsap.set(path, { opacity: 1, strokeDasharray: length, strokeDashoffset: length });
-        gsap.to(path, {
-          strokeDashoffset: 0, ease: "power1.inOut",
-          scrollTrigger: { trigger: path.closest('.section'), start: "top 80%", end: "center 50%", scrub: 1.5 }
-        });
+        gsap.to(path, { strokeDashoffset: 0, ease: "power1.inOut", scrollTrigger: { trigger: path.closest('.section'), start: "top 80%", end: "center 50%", scrub: 1.5 } });
       });
-
       gsap.utils.toArray('.path-horizontal').forEach(path => {
         const length = path.getTotalLength() || 500;
         gsap.set(path, { opacity: 1, strokeDasharray: length, strokeDashoffset: length });
-        gsap.to(path, {
-          strokeDashoffset: 0, ease: "none",
-          scrollTrigger: { trigger: ".horizontal-wrap", start: "top 60%", end: () => "+=" + (document.querySelector('.horizontal-content').scrollWidth), scrub: 1.5 }
-        });
-      });
-
-      // Le Chien et le Bébé
-      gsap.utils.toArray('.path-footer').forEach(path => {
-        const length = path.getTotalLength() || 150;
-        gsap.set(path, { opacity: 1, strokeDasharray: length, strokeDashoffset: length });
-        gsap.to(path, {
-          strokeDashoffset: 0, duration: 2.5, ease: "power2.out",
-          scrollTrigger: { trigger: "footer", start: "top 95%", toggleActions: "play none none none" }
-        });
-      });
-
-      gsap.utils.toArray('.node-anim:not(.node-hero)').forEach(node => {
-        gsap.to(node, {
-          opacity: 1, duration: 0.5,
-          scrollTrigger: { trigger: node.closest('footer') ? "footer" : (node.closest('.section') || node.closest('.horizontal-wrap')), start: "top 80%", toggleActions: "play none none reverse" }
-        });
+        gsap.to(path, { strokeDashoffset: 0, ease: "none", scrollTrigger: { trigger: ".horizontal-wrap", start: "top 60%", end: () => "+=" + (document.querySelector('.horizontal-content').scrollWidth), scrub: 1.5 } });
       });
     }
 
-    window.addEventListener('resize', () => {
-      ScrollTrigger.refresh();
-      gsap.utils.toArray('.path-narrative, .path-horizontal, .path-footer').forEach(path => {
-        const length = path.getTotalLength();
-        if(length) gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
-      });
-    });
-
-    // 12. Reveal des contenus
-    gsap.utils.toArray('.glass-card:not(.tilt-card), .exp-item, .project-card:not(.tilt-card)').forEach(el => {
-      gsap.from(el, {
-        scrollTrigger: { trigger: el, start: "top 90%" },
-        opacity: 0, y: 40, duration: 1, ease: "power3.out"
-      });
-    });
-
-    // 13. Focus Typographique au Scroll
-    gsap.utils.toArray('.skill-focus-item').forEach(item => {
-      ScrollTrigger.create({
-        trigger: item,
-        start: "top 70%",
-        end: "bottom 30%",
-        toggleClass: "is-active",
-      });
-    });
-
+    gsap.utils.toArray('.skill-focus-item').forEach(item => { ScrollTrigger.create({ trigger: item, start: "top 70%", end: "bottom 30%", toggleClass: "is-active" }); });
   </script>
 </body>
 </html>
