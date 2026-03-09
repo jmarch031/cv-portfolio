@@ -365,7 +365,7 @@
     [data-theme="dark"] .skill-focus-item.alt-focus.is-active { color: var(--accent-teal); }
 
     /* Projets */
-    .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 2rem; margin-top: 4rem; position: relative; z-index: 20; }
+    .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 2rem; margin-top: clamp(2rem, 5vw, 4rem); position: relative; z-index: 20; }
     .project-card { background: var(--bg-card); border-radius: var(--radius-card); padding: 4rem; border: 1px solid var(--border-glass); text-decoration: none; color: inherit; position: relative; z-index: 20; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, background-color 0.8s; transform-style: preserve-3d; will-change: transform; overflow: hidden; }
 
     .project-img-reveal { position: absolute; inset: 0; z-index: -1; opacity: 0; background-size: cover; background-position: center; transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); transform: scale(1.05); filter: grayscale(100%) opacity(0.15); mix-blend-mode: multiply; }
@@ -837,7 +837,7 @@
 
         <!-- PUBLICATIONS -->
         <section id="publications" class="section container" style="text-align: center;">
-          <h2 class="h-section" style="margin-bottom: 5rem;">
+          <h2 class="h-section" style="margin-bottom: clamp(2rem, 5vw, 5rem);">
             <span data-i18n="pub_title">Écrits & Réflexions</span><span class="dot-accent">.
               <div class="doodle-anchor doodle-float-fast" style="left: 50%;">
                 <svg class="doodle-narrative" style="overflow: visible; width: 1px; height: 1px;">
