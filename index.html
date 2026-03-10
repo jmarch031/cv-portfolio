@@ -421,7 +421,6 @@
       .btn, .icon-btn { cursor: pointer; }
       html { cursor: auto; }
       .cursor, .mouse-glow, .scroll-progress { display: none; }
-      .preloader { display: none; }
       .project-card, .glass-card { transition: background-color 0.8s, border-color 0.8s; transform: none !important; }
       .tag:hover { background: transparent; color: var(--text-soft); }
       .project-arrow { display: none; }
@@ -1290,26 +1289,26 @@
       });
     });
 
-    window.addEventListener("load", () => {
+    const init = () => {
       splitText('.text-split');
       const tl = gsap.timeline();
       const loaderText = document.getElementById('ascii-loader');
       const targetText = "JULIEN MARCHAND";
       let iter = 0; let counter = { value: 0 };
-      gsap.to(counter, { value: 100, duration: 2.5, ease: "power2.inOut", onUpdate: () => { document.getElementById('loader-counter').innerText = Math.round(counter.value) + "%"; } });
+      gsap.to(counter, { value: 100, duration: 3.0, ease: "power2.inOut", onUpdate: () => { document.getElementById('loader-counter').innerText = Math.round(counter.value) + "%"; } });
       const loaderInterval = setInterval(() => {
-        loaderText.innerText = targetText.split("").map((letter, index) => index < Math.floor(iter) ? targetText[index] : "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 26)]).join("");
+        loaderText.innerText = targetText.split("").map((letter, index) => index < Math.floor(iter) ? targetText[index] : (Math.random() > 0.5 ? "0" : "1")).join("");
         if(iter >= targetText.length) { clearInterval(loaderInterval); loaderText.innerText = targetText; }
-        iter += 1/4;
+        iter += 0.15;
       }, 30);
-      tl.to('.preloader-bar', { width: "100%", duration: 2.5, ease: "power2.inOut" })
+      tl.to('.preloader-bar', { width: "100%", duration: 3.0, ease: "power2.inOut" })
         .to('.preloader-content', { opacity: 0, y: -20, duration: 0.4 })
         .to('.preloader', { yPercent: -100, duration: 1, ease: "power4.inOut" }, "+=0.1")
         .to('.split-char', { y: "0%", opacity: 1, rotateX: 0, duration: 0.8, stagger: 0.02, ease: "power4.out" }, "-=0.4")
         .to('.fade-reveal-header', { opacity: 1, duration: 1, ease: "power3.out" }, "-=0.8")
         .to('.fade-reveal', { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" }, "-=0.8");
 
-      setTimeout(() => { document.getElementById('global-scroll-indicator').classList.add('visible'); }, 3500);
+      setTimeout(() => { document.getElementById('global-scroll-indicator').classList.add('visible'); }, 4000);
 
       gsap.utils.toArray('.path-hero').forEach(path => {
         const length = path.getTotalLength() || 800;
@@ -1364,7 +1363,13 @@
           }
         });
       }
-    });
+    };
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      init();
+    } else {
+      window.addEventListener('load', init);
+    }
 
     let mm = gsap.matchMedia();
     mm.add("(min-width: 1025px)", () => {
