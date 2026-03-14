@@ -20,9 +20,9 @@ This plan outlines the steps for transitioning the current monolithic portfolio 
 ## Phase 3: Integration & Testing
 - [x] Task: Update the main `index.html` file to use the new modular structure and Vite asset loading.
 - [x] Task: Re-implement the GSAP animations and Lenis smooth scrolling using the new TypeScript modules and NPM packages.
-- [~] Task: Test the i18n system to ensure it correctly loads and switches between languages from external JSON files.
-- [ ] Task: Verify the overall site performance and 60fps animation consistency.
-- [ ] Task: Conductor - User Manual Verification 'Integration & Testing' (Protocol in workflow.md).
+- [x] Task: Test the i18n system to ensure it correctly loads and switches between languages from external JSON files.
+- [x] Task: Verify the overall site performance and 60fps animation consistency.
+- [~] Task: Conductor - User Manual Verification 'Integration & Testing' (Protocol in workflow.md).
 
 ## Phase 4: Final Deployment & Cleanup
 - [ ] Task: Run a production build (`npm run build`) and verify the output.
