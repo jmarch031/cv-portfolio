@@ -61,7 +61,7 @@
 .doodle-float-fast { animation: floatSOTD 9s ease-in-out infinite 1s; will-change: transform; }
 
 /* Horizontal Scroll Focus */
-.horizontal-wrap { overflow: hidden; width: 100%; background: transparent; position: relative; z-index: 10; transition: border-color 0.8s, background-color 0.8s; }
+.horizontal-wrap { overflow: hidden; width: 100%; background: transparent; position: relative; z-index: 25; transition: border-color 0.8s, background-color 0.8s; }
 .horizontal-content { display: flex; width: max-content; height: 100vh; align-items: center; padding: 0 15vw 0 var(--space-x); position: relative; z-index: 40; }
 .cards-container { display: flex; align-items: center; }
 
