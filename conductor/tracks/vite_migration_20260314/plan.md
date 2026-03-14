@@ -11,11 +11,11 @@ This plan outlines the steps for transitioning the current monolithic portfolio 
 - [x] Task: Conductor - User Manual Verification 'Vite & Infrastructure Setup' (Protocol in workflow.md).
 
 ## Phase 2: Content & Asset Extraction
-- [~] Task: Extract CSS from `index.html` into modular `.css` or `.scss` files.
-- [ ] Task: Extract JavaScript logic from `index.html` and convert it into TypeScript (`.ts`) modules.
-- [ ] Task: Move i18n translations from `index.html` into separate JSON files (`fr.json`, `en.json`).
-- [ ] Task: Move images and other static assets into the `public/` or `assets/` directory.
-- [ ] Task: Conductor - User Manual Verification 'Content & Asset Extraction' (Protocol in workflow.md).
+- [x] Task: Extract CSS from `index.html` into modular `.css` or `.scss` files.
+- [x] Task: Extract JavaScript logic from `index.html` and convert it into TypeScript (`.ts`) modules.
+- [x] Task: Move i18n translations from `index.html` into separate JSON files (`fr.json`, `en.json`).
+- [x] Task: Move images and other static assets into the `public/` or `assets/` directory.
+- [~] Task: Conductor - User Manual Verification 'Content & Asset Extraction' (Protocol in workflow.md).
 
 ## Phase 3: Integration & Testing
 - [ ] Task: Update the main `index.html` file to use the new modular structure and Vite asset loading.

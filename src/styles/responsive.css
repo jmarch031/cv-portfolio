@@ -1,0 +1,46 @@
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hero-section { position: relative; height: auto; padding: 15vh var(--space-x) 10vh var(--space-x); display: block; }
+  .main-content { margin-top: 0; border-radius: 0; box-shadow: none; background: transparent; }
+  .curtain-top-edge, .scroll-indicator { display: none; }
+  .split-layout { grid-template-columns: 1fr; gap: 4vw;}
+  .sticky-sidebar { position: relative; top: 0; margin-bottom: 2rem; }
+
+  .horizontal-content { flex-direction: column; height: auto; width: 100%; padding: 10vh var(--space-x); align-items: stretch;}
+  .cards-container { flex-direction: column; width: 100%; gap: 2rem; padding-right: 0;}
+  .skill-card { width: 100%; height: auto; margin-right: 0; padding: 3rem; opacity: 0.5; filter: blur(3px); transform: scale(0.95); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+  .skill-card.is-focused { opacity: 1; filter: none; transform: scale(1); }
+
+  .doodle-anchor { display: none; }
+
+  .skill-focus-item { font-size: 3rem; gap: 1rem; transform: none; }
+  .skill-focus-item.alt-focus { font-size: 2.2rem; }
+  .skill-focus-item.is-active { transform: translateX(10px); }
+  .skill-focus-item.is-active::before { width: 30px; }
+
+  .btn, .icon-btn { cursor: pointer; }
+  html { cursor: auto; }
+  .cursor, .mouse-glow, .scroll-progress { display: none; }
+  .project-card, .glass-card { transition: background-color 0.8s, border-color 0.8s; transform: none !important; }
+  .tag:hover { background: transparent; color: var(--text-soft); }
+  .project-arrow { display: none; }
+}
+
+@media (max-width: 768px) {
+  .h-giant { font-size: clamp(2.5rem, 12vw, 4rem); line-height: 1.1; }
+  .h-section { font-size: clamp(2.2rem, 8vw, 3rem); }
+  .glass-card, .project-card, .skill-card { padding: 2rem; }
+  .exp-item { padding: 3rem 0; }
+  .menu-link { font-size: 3rem; }
+  .menu-link .num { display: none; }
+
+  .skill-focus-item { font-size: 2rem; gap: 0.5rem; }
+  .skill-focus-item.alt-focus { font-size: 1.5rem; }
+
+  .btn-group { flex-direction: column; width: 100%; gap: 1rem; }
+  .btn { width: 100%; padding: 1.2rem 2rem; text-align: center; }
+  footer { flex-direction: column; text-align: center; gap: 2rem; padding: 6vh var(--space-x) 10vh var(--space-x); }
+  .footer-brand { justify-content: center; }
+}

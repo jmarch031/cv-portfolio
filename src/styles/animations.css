@@ -1,0 +1,89 @@
+/* ==========================================================================
+   SCROLL INDICATOR & ANIMATIONS
+   ========================================================================== */
+.scroll-indicator {
+  position: fixed; bottom: 5vh; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+  z-index: 150; mix-blend-mode: difference; color: #fff;
+  opacity: 0; pointer-events: none; transition: opacity 1s ease;
+}
+.scroll-indicator.visible { opacity: 0.8; }
+.scroll-indicator span { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; transition: transform 0.4s ease; }
+.scroll-indicator .line-track { width: 1px; height: 50px; background: rgba(255,255,255,0.2); position: relative; overflow: hidden; }
+.scroll-indicator .line-fill { position: absolute; top: -100%; left: 0; width: 100%; height: 100%; background: #fff; animation: scrollDown 1.8s infinite ease-in-out; }
+
+@keyframes scrollDown { 0% { top: -100%; } 50% { top: 0%; } 100% { top: 100%; } }
+@keyframes scrollUp { 0% { top: 100%; } 50% { top: 0%; } 100% { top: -100%; } }
+
+.scroll-indicator.up { pointer-events: auto; cursor: none; }
+.scroll-indicator.up .line-fill { animation: scrollUp 1.8s infinite ease-in-out; }
+
+.texture {
+  position: fixed; inset: -50%; width: 200%; height: 200%; z-index: 3; pointer-events: none;
+  opacity: 0.15;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  animation: noiseAnim 0.2s steps(2) infinite;
+}
+[data-theme="dark"] .texture { opacity: 0.08; }
+
+@keyframes noiseAnim {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(-1%, -1%); }
+  20% { transform: translate(1%, 1%); }
+  30% { transform: translate(-2%, 1%); }
+  40% { transform: translate(1%, -1%); }
+  50% { transform: translate(-1%, 2%); }
+  60% { transform: translate(2%, -1%); }
+  70% { transform: translate(1%, 1%); }
+  80% { transform: translate(-1%, -2%); }
+  90% { transform: translate(2%, 1%); }
+  100% { transform: translate(0, 0); }
+}
+
+.mouse-glow { position: fixed; width: 40vw; height: 40vw; background: radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: -50; transform: translate(-50%, -50%); will-change: transform; mix-blend-mode: multiply; transition: background 0.8s ease; }
+[data-theme="dark"] .mouse-glow { background: radial-gradient(circle, rgba(96,165,250,0.1) 0%, transparent 70%); mix-blend-mode: screen; }
+
+/* Doodles & Float */
+.doodle-anchor { position: absolute; pointer-events: none; z-index: -1; }
+.doodle-narrative { position: absolute; top: 0; left: 0; overflow: visible; opacity: 0.8; }
+.path-narrative, .path-horizontal, .path-hero, .path-footer { fill: none; stroke-linecap: round; stroke-linejoin: round; opacity: 1; transition: stroke 0.8s ease;}
+.node-anim { opacity: 0; transition: fill 0.8s ease, stroke 0.8s ease;}
+
+@keyframes floatSOTD {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-30px) rotate(3deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+.hero-doodle-float { animation: floatSOTD 15s ease-in-out infinite; will-change: transform; }
+.doodle-float { animation: floatSOTD 12s ease-in-out infinite; will-change: transform; }
+.doodle-float-alt { animation: floatSOTD 14s ease-in-out infinite reverse; will-change: transform; }
+.doodle-float-fast { animation: floatSOTD 9s ease-in-out infinite 1s; will-change: transform; }
+
+/* Horizontal Scroll Focus */
+.horizontal-wrap { overflow: hidden; width: 100%; background: transparent; position: relative; z-index: 10; transition: border-color 0.8s, background-color 0.8s; }
+.horizontal-content { display: flex; width: max-content; height: 100vh; align-items: center; padding: 0 15vw 0 var(--space-x); position: relative; z-index: 20; }
+.cards-container { display: flex; align-items: center; }
+
+.skill-card {
+  width: 450px; height: 60vh; background: var(--bg-card); border-radius: var(--radius-card);
+  margin-right: 5vw; flex-shrink: 0; padding: 4rem; display: flex; flex-direction: column;
+  justify-content: center; border: 1px solid var(--border-glass); z-index: 20;
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  cursor: none;
+  opacity: 0.25; filter: blur(6px); transform: scale(0.9);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.6s, box-shadow 0.6s;
+}
+
+.skill-card.is-focused {
+  opacity: 1; filter: none; transform: scale(1);
+  border-color: var(--accent-indigo);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.04);
+  z-index: 30;
+}
+[data-theme="dark"] .skill-card.is-focused {
+   box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 30px 60px rgba(0,0,0,0.2);
+}

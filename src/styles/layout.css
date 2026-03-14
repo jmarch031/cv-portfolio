@@ -1,0 +1,86 @@
+/* ==========================================================================
+   MENU OVERLAY
+   ========================================================================== */
+.menu-overlay {
+  position: fixed; inset: 0; z-index: 99990; pointer-events: none; visibility: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.menu-overlay.is-open { pointer-events: auto; }
+
+.menu-bg {
+  position: absolute; inset: 0; background: var(--bg-base); opacity: 0;
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  will-change: opacity; transition: background-color 0.8s;
+}
+
+.menu-nav { position: relative; z-index: 10; width: 100%; max-width: var(--max-w); padding: 0 var(--space-x); }
+.menu-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1.5vh; }
+
+.menu-link {
+  font-size: clamp(3rem, 7vw, 6.5rem); font-weight: 800; color: var(--text-main);
+  text-decoration: none; letter-spacing: -0.04em; display: inline-flex; align-items: baseline;
+  opacity: 0; transform: translateY(40px); transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: none; line-height: 1.1; text-transform: uppercase;
+}
+.menu-link .num { font-size: clamp(1rem, 2vw, 1.5rem); font-family: 'Space Mono', monospace; color: var(--accent-indigo); margin-right: 1.5rem; opacity: 0.8; font-weight: 700;}
+.menu-link:hover { color: var(--accent-indigo); transform: translateX(30px); font-style: italic; }
+
+[data-theme="dark"] .menu-link:hover { color: var(--accent-indigo); }
+
+/* ==========================================================================
+   SCÉNOGRAPHIE : VISUELS DE FOND
+   ========================================================================== */
+.bg-visuals {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: -100; overflow: hidden; pointer-events: none;
+  background: var(--bg-base); transition: background-color 0.8s ease;
+}
+
+.video-layer {
+  position: absolute; top: 50%; left: 50%; width: 110vw; height: 110vh; object-fit: cover;
+  opacity: 0; visibility: hidden;
+  transform: translate(-50%, -50%) scale(1.1);
+  transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.5s, filter 1.5s ease, transform 2.5s ease-out;
+  filter: blur(20px) grayscale(40%);
+}
+
+.video-layer.active {
+  opacity: 0.25; visibility: visible; transform: translate(-50%, -50%) scale(1.05); filter: blur(6px) grayscale(10%) saturate(1.1);
+}
+[data-theme="dark"] .video-layer.active {
+  opacity: 0.15; filter: blur(6px) saturate(1.4) hue-rotate(180deg);
+}
+
+.video-blend { position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 0%, var(--bg-base) 100%); opacity: 0.9; transition: background 0.8s ease; z-index: 1;}
+.structural-grid { position: absolute; inset: 0; z-index: 2; background-size: 80px 80px; background-image: linear-gradient(to right, var(--border-grid) 1px, transparent 1px), linear-gradient(to bottom, var(--border-grid) 1px, transparent 1px); mask-image: linear-gradient(to bottom, black 5%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 5%, transparent 100%); transition: background-image 0.8s ease; }
+
+/* ==========================================================================
+   ARCHITECTURE RIDEAU (CURTAIN REVEAL)
+   ========================================================================== */
+.hero-section {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+  z-index: 1; display: flex; flex-direction: column; justify-content: center;
+  padding: 0 var(--space-x); will-change: transform, opacity;
+}
+.hero-content { will-change: transform, opacity; }
+
+.main-content {
+  position: relative; z-index: 10; margin-top: 100vh;
+  background-color: transparent; padding-bottom: 5vh;
+}
+
+.curtain-top-edge { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--border-subtle), transparent); margin-bottom: 5vh; transition: background 0.8s;}
+
+/* ==========================================================================
+   HEADER & FOOTER
+   ========================================================================== */
+header { position: fixed; top: 0; left: 0; width: 100%; z-index: 100000; padding: 2rem var(--space-x); display: flex; justify-content: space-between; align-items: center; opacity: 0; }
+
+footer { padding: 10vh var(--space-x) 15vh var(--space-x); border-top: 1px solid var(--border-glass); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 3rem; position: relative; z-index: 20; background: transparent; will-change: transform, opacity; transition: border-color 0.8s; }
+.footer-brand { font-size: 3rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.05em; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+
+.container { max-width: var(--max-w); margin: 0 auto; padding-left: var(--space-x); padding-right: var(--space-x); position: relative; z-index: 10; }
+.section { padding-top: 12vh; padding-bottom: 12vh; position: relative; }
+
+.split-layout { display: grid; grid-template-columns: 1fr 1.8fr; gap: 8vw; align-items: start; position: relative; z-index: 10; }
+.sticky-sidebar { position: sticky; top: 20vh; z-index: 10; }

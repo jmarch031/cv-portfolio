@@ -1,0 +1,81 @@
+:root {
+  /* Mode Clair */
+  --bg-base: #FAF9F6;
+  --bg-base-glass: rgba(250, 249, 246, 0.5);
+  --bg-card: rgba(255, 255, 255, 0.6);
+  --border-subtle: rgba(0, 0, 0, 0.05);
+  --border-glass: rgba(255, 255, 255, 0.5);
+  --border-grid: rgba(0, 0, 0, 0.03);
+
+  --text-main: #1C1917;
+  --text-soft: #57534E;
+  --text-faint: #A8A29E;
+
+  --accent-indigo: #2563EB;
+  --accent-teal: #EA580C;
+  --accent-rose: #059669;
+
+  --max-w: 1400px;
+
+  /* Unification des cartes */
+  --radius-card: 24px;
+
+  /* ESPACE LATÉRAL GLOBAL DU SITE */
+  --space-x: clamp(24px, 5vw, 80px);
+}
+
+/* Mode Sombre */
+[data-theme="dark"] {
+  --bg-base: #090A0F;
+  --bg-base-glass: rgba(9, 10, 15, 0.4);
+  --bg-card: rgba(20, 22, 30, 0.4);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-grid: rgba(255, 255, 255, 0.02);
+
+  --text-main: #F8FAFC;
+  --text-soft: #94A3B8;
+  --text-faint: #475569;
+
+  --accent-indigo: #60A5FA;
+  --accent-teal: #F97316;
+  --accent-rose: #34D399;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--bg-base);
+  cursor: none;
+  transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.lenis {
+  height: auto;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: transparent;
+  color: var(--text-main);
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+::selection {
+  background: var(--accent-indigo);
+  color: #fff;
+}
+
+.font-accent {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85em;
+  letter-spacing: -0.05em;
+  font-weight: 400;
+}
