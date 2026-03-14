@@ -1,0 +1,8 @@
+{
+  "track_id": "linkedin_recommendations_20260314",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-03-14T10:45:00Z",
+  "updated_at": "2026-03-14T10:45:00Z",
+  "description": "Ajouter une section pour mettre en avant les recommendations que j'ai recu sur mon profil linkedin. Le contenu des recommendations peuvent se trouver dans le fichier pdf contenant mon profil linkedin. La section doit être parfaitement intégré au portfolio, design, modern, awaaaards, ... On peut envisager quelque chose de dynamique."
+}
