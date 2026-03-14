@@ -298,9 +298,11 @@ A task is complete when:
 4. Notify affected users (if any)
 5. Document and update security procedures
 
-## Deployment Workflow
+### Deployment Workflow
 
-### Pre-Deployment Checklist
+**CRITICAL MANDATE:** The AI agent **MUST NOT** push code to the remote repository (`main` branch) without explicit manual confirmation from the user. Even if all tests pass and the phase is complete, the agent must ask for the final "go" before executing `git push`.
+
+#### Pre-Deployment Checklist
 - [ ] All tests passing
 - [ ] Coverage >80%
 - [ ] No linting errors
@@ -309,14 +311,11 @@ A task is complete when:
 - [ ] Database migrations ready
 - [ ] Backup created
 
-### Deployment Steps
-1. Merge feature branch to main
-2. Tag release with version
-3. Push to deployment service
-4. Run database migrations
-5. Verify deployment
-6. Test critical paths
-7. Monitor for errors
+#### Deployment Steps
+1. **Manual Confirmation:** Ask the user: "All changes are committed locally. Should I push the code to the main branch to trigger deployment?"
+2. **Execute Push:** ONLY if the user says "yes", execute `git push origin main`.
+3. **Verify Deployment:** Check the GitHub Actions tab and the live site.
+4. **Monitor:** Check for errors and gather feedback.
 
 ### Post-Deployment
 1. Monitor analytics
