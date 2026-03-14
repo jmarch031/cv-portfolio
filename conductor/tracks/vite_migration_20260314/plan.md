@@ -1,17 +1,17 @@
-# Implementation Plan: Vite Migration & Professional Structure
+# Implementation Plan: Vite Migration & Professional Structure [checkpoint: 6d68ee5]
 
 ## Overview
 This plan outlines the steps for transitioning the current monolithic portfolio to a professional Vite-based structure using TypeScript. Each phase will focus on a specific area of the modernization process.
 
-## Phase 1: Vite & Infrastructure Setup
+## Phase 1: Vite & Infrastructure Setup [checkpoint: 6d68ee5]
 - [x] Task: Initialize a new Vite project with the TypeScript template (`vanilla-ts`).
 - [x] Task: Set up the project's dependency management by creating a `package.json` file.
 - [x] Task: Install core dependencies (GSAP, Lenis, etc.) as NPM packages.
 - [x] Task: Configure GitHub Actions for automated deployment to GitHub Pages.
-- [~] Task: Conductor - User Manual Verification 'Vite & Infrastructure Setup' (Protocol in workflow.md).
+- [x] Task: Conductor - User Manual Verification 'Vite & Infrastructure Setup' (Protocol in workflow.md).
 
 ## Phase 2: Content & Asset Extraction
-- [ ] Task: Extract CSS from `index.html` into modular `.css` or `.scss` files.
+- [~] Task: Extract CSS from `index.html` into modular `.css` or `.scss` files.
 - [ ] Task: Extract JavaScript logic from `index.html` and convert it into TypeScript (`.ts`) modules.
 - [ ] Task: Move i18n translations from `index.html` into separate JSON files (`fr.json`, `en.json`).
 - [ ] Task: Move images and other static assets into the `public/` or `assets/` directory.
