@@ -1,7 +1,7 @@
 # Quick Task: Add Read Time Badge to Articles
 
 ## Goal
-Add a small badge indicating the reading time for each article in the "Écrits & Réflexions" section.
+Add a small badge indicating the reading time for each Medium article in the "Écrits & Réflexions" section (excluding other projects).
 
 ## Plan
 1. Modify `src/styles/components.css`:

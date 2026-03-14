@@ -13,6 +13,7 @@
 | ---- | ----------- | ---- | ------ |
 | Unify Menu Button Style | Made the menu button circular to match lang/theme buttons. | 2026-03-14 | 51b2477 |
 | Expertise Cards Foreground | Increased z-index of skill cards to ensure they are in front. | 2026-03-14 | dc735bb |
+| Add Read Time Badge to Articles | Added reading time badges to Medium article cards in the publication section. | 2026-03-14 | abae617 |
 
 ## Progress
 
