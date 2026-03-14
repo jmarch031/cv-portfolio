@@ -32,3 +32,18 @@ export function renderRecommendations(recommendations: Recommendation[]) {
     container.appendChild(card);
   });
 }
+
+/**
+ * Setup the marquee for an infinite loop by duplicating its content
+ */
+export function setupMarquee() {
+  const marqueeContent = document.querySelector('.marquee-content');
+  if (!marqueeContent) return;
+
+  // Clone all child elements
+  const items = Array.from(marqueeContent.children);
+  items.forEach(item => {
+    const clone = item.cloneNode(true);
+    marqueeContent.appendChild(clone);
+  });
+}
