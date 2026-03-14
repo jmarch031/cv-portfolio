@@ -7,6 +7,13 @@
 - **Last session:** 2026-03-14T10:00:00Z
 - **Stopped At:** Initializing Phase 1
 
+## Quick Tasks Completed
+
+| Task | Description | Date | Commit |
+| ---- | ----------- | ---- | ------ |
+| Unify Menu Button Style | Made the menu button circular to match lang/theme buttons. | 2026-03-14 | 51b2477 |
+| Expertise Cards Foreground | Increased z-index of skill cards to ensure they are in front. | 2026-03-14 | dc735bb |
+
 ## Progress
 
 | Phase | Plan | Tasks | Status |
