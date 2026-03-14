@@ -112,3 +112,47 @@
 .cursor.hover-active { width: 60px; height: 60px; background: transparent; border: 1px solid var(--text-main); mix-blend-mode: difference;}
 [data-theme="dark"] .cursor { background: #fff; }
 [data-theme="dark"] .cursor.hover-active { border-color: #fff; }
+
+/* Recommendations Marquee */
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 4rem 0;
+}
+.marquee-content {
+  display: flex;
+  gap: 2rem;
+  width: max-content;
+  will-change: transform;
+  padding-left: 2rem; /* Initial offset */
+}
+.recommendation-card {
+  width: clamp(300px, 40vw, 500px);
+  flex-shrink: 0;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 300px;
+}
+.recommendation-quote {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.6;
+  color: var(--text-soft);
+  font-style: italic;
+  margin-bottom: 2.5rem;
+}
+.recommendation-name {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--text-main);
+  margin-bottom: 0.2rem;
+}
+.recommendation-role {
+  font-size: 0.8rem;
+  font-family: 'Space Mono', monospace;
+  color: var(--accent-indigo);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
