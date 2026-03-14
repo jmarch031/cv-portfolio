@@ -9,5 +9,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: Ajouter une section pour mettre en avant les recommendations linkedin.**
+- [x] **Track: Ajouter une section pour mettre en avant les recommendations linkedin.**
   *Link: [./tracks/linkedin_recommendations_20260314/](./tracks/linkedin_recommendations_20260314/)*
