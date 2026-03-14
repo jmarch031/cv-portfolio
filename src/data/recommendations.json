@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Jean Dupont",
+    "role": "CTO @ Tech Solutions",
+    "quote": "Le leadership et la vision technique de Julien ont été essentiels pour notre migration vers une architecture cloud-native. Son approche pragmatique des problèmes complexes est inégalée."
+  },
+  {
+    "name": "Marie Martin",
+    "role": "Product Lead @ Innovate",
+    "quote": "Julien fait parfaitement le lien entre l'ingénierie et le produit. Il ne se contente pas de construire des fonctionnalités ; il construit des produits que les utilisateurs adorent."
+  },
+  {
+    "name": "Thomas Bernard",
+    "role": "Engineering Manager @ Global Dev",
+    "quote": "En tant que Tech Lead, Julien a favorisé un environnement d'apprentissage continu et de haute performance. Son engagement envers la qualité du code et les métriques DORA a établi une nouvelle norme pour notre équipe."
+  }
+]
