@@ -19,8 +19,9 @@ Implement a dynamic LinkedIn Recommendations section using an infinite horizonta
 ## Phase 3: Interactive Effects & Reveal
 - [x] Task: Write tests for the 3D tilt effect's initialization and mouse tracking. [1772cc5]
 - [x] Task: Implement the 3D tilt logic for cards using GSAP/Vanilla JS (matching existing site behaviors). [1772cc5]
-- [x] Task: Add the GSAP ScrollTrigger reveal animation to fade/slide the section into view. [f47f09b]
-- [ ] Task: Conductor - User Manual Verification 'Interactive Effects & Reveal' (Protocol in workflow.md)
+- [x] Task: Add the GSAP ScrollTrigger reveal animation to fade/slide the section into view. [Reverted per user request]
+- [x] Task: Conductor - User Manual Verification 'Interactive Effects & Reveal' (Protocol in workflow.md) [Verified]
+
 
 ## Phase 4: Mobile Optimization & Cleanup
 - [ ] Task: Optimize the marquee speed and card sizes for mobile and tablet breakpoints.

@@ -170,28 +170,6 @@ export function initAnimations(lenis: Lenis, translations: any, currentLang: str
     
     initMarquee();
     initTilt();
-
-    gsap.from('#recommendations .container', {
-      y: 50,
-      opacity: 0,
-      duration: 1,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: "#recommendations",
-        start: "top 80%"
-      }
-    });
-
-    gsap.from('#recommendations .marquee-container', {
-      opacity: 0,
-      duration: 1.5,
-      delay: 0.3,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: "#recommendations",
-        start: "top 80%"
-      }
-    });
   };
 
   function initMarquee() {

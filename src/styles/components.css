@@ -119,6 +119,7 @@
   overflow: hidden;
   position: relative;
   padding: 4rem 0;
+  will-change: transform, opacity;
 }
 .marquee-content {
   display: flex;
