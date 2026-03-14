@@ -11,8 +11,8 @@ Implement a dynamic LinkedIn Recommendations section using an infinite horizonta
 
 ## Phase 2: Infinite Marquee Implementation
 - [x] Task: Write unit tests for the marquee's infinite loop logic and scroll behavior. [e4a2086]
-- [~] Task: Implement the CSS for the marquee layout and horizontal alignment in `src/styles/components.css`.
-- [ ] Task: Create the GSAP timeline for the infinite horizontal scroll in `src/scripts/animations.ts`.
+- [x] Task: Implement the CSS for the marquee layout and horizontal alignment in `src/styles/components.css`. [dfbee98]
+- [~] Task: Create the GSAP timeline for the infinite horizontal scroll in `src/scripts/animations.ts`.
 - [ ] Task: Implement the "Pause on Hover" functionality.
 - [ ] Task: Conductor - User Manual Verification 'Infinite Marquee Implementation' (Protocol in workflow.md)
 
