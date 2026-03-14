@@ -25,10 +25,10 @@ This plan outlines the steps for transitioning the current monolithic portfolio 
 - [x] Task: Conductor - User Manual Verification 'Integration & Testing' (Protocol in workflow.md).
 
 ## Phase 4: Final Deployment & Cleanup
-- [~] Task: Run a production build (`npm run build`) and verify the output.
-- [ ] Task: Push the changes to the `main` branch and verify the GitHub Actions deployment workflow.
-- [ ] Task: Clean up the old monolithic `index.html` and any unused assets.
-- [ ] Task: Conductor - User Manual Verification 'Final Deployment & Cleanup' (Protocol in workflow.md).
+- [x] Task: Run a production build (`npm run build`) and verify the output.
+- [x] Task: Push the changes to the `main` branch and verify the GitHub Actions deployment workflow.
+- [x] Task: Clean up the old monolithic `index.html` and any unused assets.
+- [~] Task: Conductor - User Manual Verification 'Final Deployment & Cleanup' (Protocol in workflow.md).
 
 ---
 
