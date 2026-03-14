@@ -2,6 +2,12 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Julien Marchand — EM & Développeur</title>
   <meta name="description" id="meta-desc" content="Engineering Manager, Tech Lead & Développeur. L'alliance de l'excellence technique et du leadership humain." />
@@ -11,6 +17,72 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-base: #FAF9F6;
+      --text-main: #1C1917;
+      --accent-indigo: #2563EB;
+      --border-subtle: rgba(0, 0, 0, 0.05);
+    }
+    [data-theme="dark"] {
+      --bg-base: #090A0F;
+      --text-main: #F8FAFC;
+      --accent-indigo: #60A5FA;
+      --border-subtle: rgba(255, 255, 255, 0.04);
+    }
+    .preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      background: var(--bg-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .preloader-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .preloader-text {
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .preloader-counter {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent-indigo);
+      font-family: 'Space Mono', monospace;
+    }
+    .preloader-progress {
+      width: 250px;
+      height: 2px;
+      background: var(--border-subtle);
+      margin-top: 1.5rem;
+      overflow: hidden;
+      position: relative;
+      border-radius: 2px;
+    }
+    .preloader-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: var(--accent-indigo);
+    }
+    header, main {
+      opacity: 0;
+    }
+  </style>
 </head>
 <body>
 
@@ -84,7 +156,7 @@
     <div class="texture"></div>
   </div>
 
-  <header class="fade-reveal-header" style="opacity: 0;">
+  <header class="fade-reveal-header">
     <div style="font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.8rem; cursor: none;" class="nav-hover menu-close-trigger">
       <span class="dot-accent" style="width: 8px; height: 8px; background: var(--accent-indigo); border-radius: 50%;"></span>
       Julien Marchand

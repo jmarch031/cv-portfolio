@@ -78,6 +78,7 @@ export function initAnimations(lenis: Lenis, translations: any, currentLang: str
     tl.to('.preloader-bar', { width: "100%", duration: 3.0, ease: "power2.inOut" })
       .to('.preloader-content', { opacity: 0, y: -20, duration: 0.4 })
       .to('.preloader', { yPercent: -100, duration: 1, ease: "power4.inOut" }, "+=0.1")
+      .to('main', { opacity: 1, duration: 0 }, "-=1") // Reveal main content as preloader slides up
       .to('.split-char', { y: "0%", opacity: 1, rotateX: 0, duration: 0.8, stagger: 0.02, ease: "power4.out" }, "-=0.4")
       .to('.fade-reveal-header', { opacity: 1, duration: 1, ease: "power3.out" }, "-=0.8")
       .to('.fade-reveal', { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" }, "-=0.8");
