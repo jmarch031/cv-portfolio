@@ -16,7 +16,7 @@
 | Add Read Time Badge to Articles | Added reading time badges to Medium article cards in the publication section. | 2026-03-14 | abae617 |
 | Fix Expertise Layering and Update Read Times | Increased horizontal-wrap z-index and updated article reading times. | 2026-03-14 | 6503ab1 |
 | Synchronize Existing Experiences with LinkedIn | Updated existing experience descriptions to match LinkedIn. | 2026-03-14 | b810a4f |
-| Fix Loader Flicker | Inlined critical preloader CSS and added early theme detection to prevent flickering. | 2026-03-14 | [TBD] |
+| Fix Loader Flicker | Inlined critical preloader CSS and added early theme detection to prevent flickering. | 2026-03-14 | c215cfa |
 
 ## Progress
 
