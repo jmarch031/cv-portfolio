@@ -169,6 +169,7 @@ export function initAnimations(lenis: Lenis, translations: any, currentLang: str
     setTimeout(() => { ScrollTrigger.refresh(); }, 100);
     
     initMarquee();
+    initTilt();
   };
 
   function initMarquee() {
@@ -290,5 +291,41 @@ export function initAnimations(lenis: Lenis, translations: any, currentLang: str
       end: "bottom 30%", 
       toggleClass: "is-active" 
     }); 
+  });
+}
+
+/**
+ * Initialize 3D tilt effect for all elements with .tilt-card class
+ */
+export function initTilt() {
+  document.querySelectorAll('.tilt-card').forEach(elem => {
+    elem.addEventListener('mousemove', (e: any) => {
+      const rect = elem.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = (y - centerY) / 10;
+      const rotateY = (centerX - x) / 10;
+      
+      gsap.to(elem, {
+        rotateX: rotateX,
+        rotateY: rotateY,
+        duration: 0.5,
+        ease: "power2.out",
+        transformPerspective: 1000
+      });
+    });
+    
+    elem.addEventListener('mouseleave', () => {
+      gsap.to(elem, {
+        rotateX: 0,
+        rotateY: 0,
+        duration: 0.5,
+        ease: "power2.out"
+      });
+    });
   });
 }
