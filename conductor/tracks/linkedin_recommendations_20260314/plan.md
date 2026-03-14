@@ -24,6 +24,6 @@ Implement a dynamic LinkedIn Recommendations section using an infinite horizonta
 
 
 ## Phase 4: Mobile Optimization & Cleanup
-- [ ] Task: Optimize the marquee speed and card sizes for mobile and tablet breakpoints.
-- [ ] Task: Verify 60fps performance and implement `prefers-reduced-motion` compliance.
+- [x] Task: Optimize the marquee speed and card sizes for mobile and tablet breakpoints. [d042857]
+- [~] Task: Verify 60fps performance and implement `prefers-reduced-motion` compliance.
 - [ ] Task: Conductor - User Manual Verification 'Mobile Optimization & Cleanup' (Protocol in workflow.md)
