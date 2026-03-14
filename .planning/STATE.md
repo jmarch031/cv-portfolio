@@ -19,6 +19,7 @@
 | Fix Loader Flicker | Inlined critical preloader CSS and added early theme detection (defaulting to light) to prevent flickering. | 2026-03-14 | 79032b9 |
 | Add Recommendations to Menu | Added "Recommendations" entry to the navigation menu with i18n support. | 2026-03-14 | 046b1f0 |
 | Truncate Recommendations | Implemented text truncation with a "Read more" toggle for long recommendation quotes. | 2026-03-14 | 375748c |
+| Update Header Name | Changed "Julien Marchand" to "JM" in the header for a more minimalist look. | 2026-03-14 | [TBD] |
 
 ## Progress
 
