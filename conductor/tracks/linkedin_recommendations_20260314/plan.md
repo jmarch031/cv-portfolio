@@ -4,7 +4,7 @@
 Implement a dynamic LinkedIn Recommendations section using an infinite horizontal marquee and 3D tilt effects, fully integrated into the existing Vite/GSAP structure.
 
 ## Phase 1: Content & Structure
-- [ ] Task: Write tests for recommendation data loading and component rendering.
+- [x] Task: Write tests for recommendation data loading and component rendering. [731a5f7]
 - [ ] Task: Create a structured data file (e.g., `src/data/recommendations.json`) containing the names, roles, and quotes.
 - [ ] Task: Implement the HTML structure for the section and individual cards in `index.html`.
 - [ ] Task: Conductor - User Manual Verification 'Content & Structure' (Protocol in workflow.md)
