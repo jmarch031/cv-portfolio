@@ -26,6 +26,9 @@
   .project-card, .glass-card { transition: background-color 0.8s, border-color 0.8s; transform: none !important; }
   .tag:hover { background: transparent; color: var(--text-soft); }
   .project-arrow { display: none; }
+
+  .recommendation-card { width: 80vw; min-height: auto; padding: 2.5rem; }
+  .marquee-container { padding: 2rem 0; }
 }
 
 @media (max-width: 768px) {
@@ -41,6 +44,10 @@
 
   .btn-group { flex-direction: column; width: 100%; gap: 1rem; }
   .btn { width: 100%; padding: 1.2rem 2rem; text-align: center; }
+  
+  .recommendation-card { width: 85vw; padding: 2rem; }
+  .recommendation-quote { font-size: 1.1rem; margin-bottom: 1.5rem; }
+
   footer { flex-direction: column; text-align: center; gap: 2rem; padding: 6vh var(--space-x) 10vh var(--space-x); }
   .footer-brand { justify-content: center; }
 }
