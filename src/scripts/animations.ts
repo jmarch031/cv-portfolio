@@ -181,6 +181,11 @@ export function initAnimations(lenis: Lenis, translations: any, currentLang: str
       const items = Array.from(marqueeContent.children);
       if (items.length === 0) return;
 
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set(marqueeContent, { x: 0 });
+        return;
+      }
+
       const gap = 32; // 2rem gap from CSS
       const totalWidth = (marqueeContent.scrollWidth + gap) / 2;
 
@@ -298,6 +303,8 @@ export function initAnimations(lenis: Lenis, translations: any, currentLang: str
  * Initialize 3D tilt effect for all elements with .tilt-card class
  */
 export function initTilt() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
   document.querySelectorAll('.tilt-card').forEach(elem => {
     elem.addEventListener('mousemove', (e: any) => {
       const rect = elem.getBoundingClientRect();
