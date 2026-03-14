@@ -46,7 +46,7 @@
   .btn { width: 100%; padding: 1.2rem 2rem; text-align: center; }
   
   .recommendation-card { width: 85vw; padding: 2rem; }
-  .recommendation-quote { font-size: 1.1rem; margin-bottom: 1.5rem; }
+  .recommendation-quote { font-size: 1.1rem; margin-bottom: 1.5rem; -webkit-line-clamp: 6; }
 
   footer { flex-direction: column; text-align: center; gap: 2rem; padding: 6vh var(--space-x) 10vh var(--space-x); }
   .footer-brand { justify-content: center; }

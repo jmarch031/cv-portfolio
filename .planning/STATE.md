@@ -18,6 +18,7 @@
 | Synchronize Existing Experiences with LinkedIn | Updated existing experience descriptions to match LinkedIn. | 2026-03-14 | b810a4f |
 | Fix Loader Flicker | Inlined critical preloader CSS and added early theme detection (defaulting to light) to prevent flickering. | 2026-03-14 | 79032b9 |
 | Add Recommendations to Menu | Added "Recommendations" entry to the navigation menu with i18n support. | 2026-03-14 | 046b1f0 |
+| Truncate Recommendations | Implemented text truncation with a "Read more" toggle for long recommendation quotes. | 2026-03-14 | [TBD] |
 
 ## Progress
 
