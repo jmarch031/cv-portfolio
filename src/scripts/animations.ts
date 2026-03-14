@@ -167,7 +167,41 @@ export function initAnimations(lenis: Lenis, translations: any, currentLang: str
     }
 
     setTimeout(() => { ScrollTrigger.refresh(); }, 100);
+    
+    initMarquee();
   };
+
+  function initMarquee() {
+    const marqueeContent = document.querySelector('.marquee-content') as HTMLElement;
+    if (!marqueeContent) return;
+
+    // Use a small timeout to ensure layout is calculated correctly
+    setTimeout(() => {
+      const items = Array.from(marqueeContent.children);
+      if (items.length === 0) return;
+
+      const gap = 32; // 2rem gap from CSS
+      const totalWidth = (marqueeContent.scrollWidth + gap) / 2;
+
+      const tl = gsap.to(marqueeContent, {
+        x: `-=${totalWidth}`,
+        duration: 40,
+        ease: "none",
+        repeat: -1,
+        modifiers: {
+          x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
+        }
+      });
+
+      // Task 4: Pause on Hover (implementing now for efficiency)
+      marqueeContent.addEventListener('mouseenter', () => {
+        gsap.to(tl, { timeScale: 0.1, duration: 0.5 });
+      });
+      marqueeContent.addEventListener('mouseleave', () => {
+        gsap.to(tl, { timeScale: 1, duration: 0.5 });
+      });
+    }, 500);
+  }
 
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
     init();

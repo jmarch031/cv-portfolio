@@ -3,6 +3,8 @@ import { initTheme } from './scripts/theme';
 import { initI18n } from './scripts/i18n';
 import { initMenu } from './scripts/menu';
 import { initAnimations } from './scripts/animations';
+import { renderRecommendations, setupMarquee } from './scripts/recommendations';
+import recommendationsData from './data/recommendations.json';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -33,6 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const initialLang = 'fr';
   const i18n = initI18n(initialLang, translations);
   initTheme();
+  
+  // Initialize Recommendations before animations
+  renderRecommendations(recommendationsData);
+  setupMarquee();
+
   initMenu(lenis, translations, initialLang);
   initAnimations(lenis, translations, initialLang);
 
