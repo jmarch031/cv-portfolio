@@ -17,15 +17,15 @@ This plan outlines the steps for transitioning the current monolithic portfolio 
 - [x] Task: Move images and other static assets into the `public/` or `assets/` directory.
 - [x] Task: Conductor - User Manual Verification 'Content & Asset Extraction' (Protocol in workflow.md).
 
-## Phase 3: Integration & Testing
+## Phase 3: Integration & Testing [checkpoint: 3a6ee99]
 - [x] Task: Update the main `index.html` file to use the new modular structure and Vite asset loading.
 - [x] Task: Re-implement the GSAP animations and Lenis smooth scrolling using the new TypeScript modules and NPM packages.
 - [x] Task: Test the i18n system to ensure it correctly loads and switches between languages from external JSON files.
 - [x] Task: Verify the overall site performance and 60fps animation consistency.
-- [~] Task: Conductor - User Manual Verification 'Integration & Testing' (Protocol in workflow.md).
+- [x] Task: Conductor - User Manual Verification 'Integration & Testing' (Protocol in workflow.md).
 
 ## Phase 4: Final Deployment & Cleanup
-- [ ] Task: Run a production build (`npm run build`) and verify the output.
+- [~] Task: Run a production build (`npm run build`) and verify the output.
 - [ ] Task: Push the changes to the `main` branch and verify the GitHub Actions deployment workflow.
 - [ ] Task: Clean up the old monolithic `index.html` and any unused assets.
 - [ ] Task: Conductor - User Manual Verification 'Final Deployment & Cleanup' (Protocol in workflow.md).
