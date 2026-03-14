@@ -1,0 +1,7 @@
+{
+  "model": "gemini 3",
+  "research": true,
+  "plan_check": true,
+  "verifier": true,
+  "branching": true
+}

@@ -4,11 +4,11 @@
 This plan outlines the steps for transitioning the current monolithic portfolio to a professional Vite-based structure using TypeScript. Each phase will focus on a specific area of the modernization process.
 
 ## Phase 1: Vite & Infrastructure Setup
-- [ ] Task: Initialize a new Vite project with the TypeScript template (`vanilla-ts`).
-- [ ] Task: Set up the project's dependency management by creating a `package.json` file.
-- [ ] Task: Install core dependencies (GSAP, Lenis, etc.) as NPM packages.
-- [ ] Task: Configure GitHub Actions for automated deployment to GitHub Pages.
-- [ ] Task: Conductor - User Manual Verification 'Vite & Infrastructure Setup' (Protocol in workflow.md).
+- [x] Task: Initialize a new Vite project with the TypeScript template (`vanilla-ts`).
+- [x] Task: Set up the project's dependency management by creating a `package.json` file.
+- [x] Task: Install core dependencies (GSAP, Lenis, etc.) as NPM packages.
+- [x] Task: Configure GitHub Actions for automated deployment to GitHub Pages.
+- [~] Task: Conductor - User Manual Verification 'Vite & Infrastructure Setup' (Protocol in workflow.md).
 
 ## Phase 2: Content & Asset Extraction
 - [ ] Task: Extract CSS from `index.html` into modular `.css` or `.scss` files.
