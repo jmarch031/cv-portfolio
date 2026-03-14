@@ -10,7 +10,6 @@ describe('3D Tilt initialization', () => {
   });
 
   it('should attach mousemove and mouseleave listeners to tilt-cards', () => {
-    const cards = document.querySelectorAll('.tilt-card');
     const addEventListenerSpy = vi.spyOn(Element.prototype, 'addEventListener');
     
     initTilt();
