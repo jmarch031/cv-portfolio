@@ -5,8 +5,8 @@ Implement a dynamic LinkedIn Recommendations section using an infinite horizonta
 
 ## Phase 1: Content & Structure
 - [x] Task: Write tests for recommendation data loading and component rendering. [731a5f7]
-- [ ] Task: Create a structured data file (e.g., `src/data/recommendations.json`) containing the names, roles, and quotes.
-- [ ] Task: Implement the HTML structure for the section and individual cards in `index.html`.
+- [x] Task: Create a structured data file (e.g., `src/data/recommendations.json`) containing the names, roles, and quotes. [261ea4c]
+- [x] Task: Implement the HTML structure for the section and individual cards in `index.html`. [5be159c]
 - [ ] Task: Conductor - User Manual Verification 'Content & Structure' (Protocol in workflow.md)
 
 ## Phase 2: Infinite Marquee Implementation
