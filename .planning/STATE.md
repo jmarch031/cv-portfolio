@@ -21,7 +21,7 @@
 | Truncate Recommendations | Implemented text truncation with a "Read more" toggle for long recommendation quotes. | 2026-03-14 | 375748c |
 | Update Header Name | Changed "Julien Marchand" to "JM" in the header for a more minimalist look. | 2026-03-14 | b5e6751 |
 | Add Recommendations Doodle | Added a decorative SVG doodle to the "Recommendations" section header. | 2026-03-14 | 7f8f71c |
-| Hide Header Copyright on Mobile | Fixed header layout on small screens by adding the missing .hide-mobile class to CSS. | 2026-03-14 | [TBD] |
+| Hide Header Copyright on Mobile | Fixed header layout on small screens by adding the missing .hide-mobile class to CSS. | 2026-03-14 | 5ac60b6 |
 
 ## Progress
 
