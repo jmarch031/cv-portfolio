@@ -29,6 +29,7 @@
 
   .recommendation-card { width: 80vw; min-height: auto; padding: 2.5rem; }
   .marquee-container { padding: 2rem 0; }
+  .hide-mobile { display: none !important; }
 }
 
 @media (max-width: 768px) {
