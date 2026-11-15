@@ -236,7 +236,7 @@ function journey(c: Content) {
             )
             .join('')}
         </ol>
-        <aside class="journey__panel" aria-hidden="true">
+        <aside class="journey__panel" aria-live="polite">
           <div class="journey__panel-inner">
             ${s.jobs
               .map(

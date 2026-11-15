@@ -20,7 +20,7 @@ export const fr: Content = {
     toDark: 'Sombre',
   },
   intro: {
-    roles: ['Developer Intern', 'Developer', 'Software Engineer', 'Scrum Master', 'Lead Software Engineer', 'Engineering Manager'],
+    roles: ['Developer Intern', 'Developer', 'Software Engineer', 'Scrum Master', 'Lead Software Engineer', 'Software Engineering Manager'],
     caption: 'Julien Marchand — 2011 → 2026',
   },
   hero: {
@@ -69,7 +69,7 @@ export const fr: Content = {
     label: 'En chiffres',
     stats: [
       { value: 12, label: 'ans de métier', detail: 'Depuis l’alternance en 2014' },
-      { value: 7, label: 'ans chez Decathlon Digital', detail: '4 postes, de Software Engineer à Manager' },
+      { value: 8, prefix: '~', label: 'ans chez Decathlon Digital', detail: '7 ans 10 mois, 4 postes' },
       { value: 30, prefix: '~', label: 'ingénieurs menés', detail: 'Répartis en 5 Feature Teams' },
       { value: 5, prefix: '~', label: 'ans de management', detail: 'Software Engineering Manager, 2022 → 2026' },
     ],
@@ -102,11 +102,8 @@ export const fr: Content = {
       },
       {
         name: 'Architecture logicielle',
-        text: 'Prendre les décisions techniques et moderniser des systèmes à grande échelle, comme le Warehouse Management System mondial de Decathlon, avec des pratiques de développement modernes.',
-        applied: [
-          { role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → aujourd’hui' },
-          { role: 'Software Engineering Manager', period: '2022 → 2026' },
-        ],
+        text: "Porter les décisions techniques d'une application stratégique, puis faire de l'architecture logicielle et des pratiques de développement modernes un axe central de mon rôle actuel.",
+        applied: [{ role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → aujourd’hui' }],
         current: true,
         status: 'Aujourd’hui',
       },
@@ -138,7 +135,7 @@ export const fr: Content = {
         name: 'Data & Business Intelligence',
         text: "Construire des produits data et une application stratégique de Business Intelligence : comme ingénieur, comme lead, puis à la tête de l'équipe.",
         applied: [
-          { role: 'Software Engineering Manager', period: 'en début de poste, dès 2022' },
+          { role: 'Software Engineering Manager', period: 'équipe BI, avant le WMS' },
           { role: 'Lead Software Engineer', period: '2021 → 2022' },
           { role: 'Software Engineer', period: '2019 → 2020' },
         ],
@@ -169,7 +166,7 @@ export const fr: Content = {
         company: 'Decathlon Digital',
         place: 'Lille',
         text: "Retour au software engineering hands-on, avec un focus sur le développement logiciel, l'architecture et l'IA.",
-        points: ['Construire des logiciels utiles et résoudre de vrais problèmes', "Porter l'architecture et les choix techniques", "Mettre l'IA au service du développement", 'Partager la connaissance et apprendre en continu'],
+        points: ['Construire des logiciels utiles', 'Résoudre de vrais problèmes', 'Partager la connaissance et apprendre en continu'],
         tags: ['Développement', 'Architecture', 'IA'],
       },
       {
@@ -260,7 +257,7 @@ export const fr: Content = {
       {
         kind: 'Projet perso · AI engineering',
         title: 'Ce portfolio, conçu 100 % avec l’IA',
-        text: "Direction artistique, contenu, code et animations réalisés entièrement en pair-programming avec une IA (Claude Code), du premier commit au déploiement sur GitHub Pages. Une mise en pratique concrète du développement assisté par l'IA.",
+        text: "Une refonte complète : direction artistique, contenu, code et animations réalisés entièrement en pair-programming avec une IA (Claude Code). Une mise en pratique concrète du développement assisté par l'IA.",
         meta: '2026',
         href: 'https://github.com/jmarch031/cv-portfolio',
         tags: ['Claude Code', 'TypeScript', 'GSAP', 'WebGL'],
@@ -301,7 +298,7 @@ export const fr: Content = {
     label: 'Formation',
     title: 'Apprendre, toujours.',
     schools: [
-      { years: '2010 — 2015', from: 2010, to: 2015, name: 'EPITECH', degree: 'Master, Informatique', note: 'European Institute of Technology. Une pédagogie par projets.' },
+      { years: '2010 — 2015', from: 2010, to: 2015, name: 'EPITECH', degree: 'Master, Informatique', note: 'European Institute of Technology.' },
       { years: '2013 — 2014', from: 2013, to: 2014, name: 'California State University San Marcos', degree: 'Master, Informatique', note: 'Une année à l’international, en Californie, pendant le cursus EPITECH.' },
       { years: '2009 — 2010', from: 2009, to: 2010, name: 'Institut Informatique et Entreprise', degree: 'DUT, Informatique', note: 'Premier diplôme en informatique.' },
     ],

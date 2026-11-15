@@ -20,7 +20,7 @@ export const en: Content = {
     toDark: 'Dark',
   },
   intro: {
-    roles: ['Developer Intern', 'Developer', 'Software Engineer', 'Scrum Master', 'Lead Software Engineer', 'Engineering Manager'],
+    roles: ['Developer Intern', 'Developer', 'Software Engineer', 'Scrum Master', 'Lead Software Engineer', 'Software Engineering Manager'],
     caption: 'Julien Marchand — 2011 → 2026',
   },
   hero: {
@@ -69,7 +69,7 @@ export const en: Content = {
     label: 'In numbers',
     stats: [
       { value: 12, label: 'years in the craft', detail: 'Since my 2014 apprenticeship' },
-      { value: 7, label: 'years at Decathlon Digital', detail: '4 roles, from Software Engineer to Manager' },
+      { value: 8, prefix: '~', label: 'years at Decathlon Digital', detail: '7 years 10 months, 4 roles' },
       { value: 30, prefix: '~', label: 'engineers led', detail: 'Across 5 Feature Teams' },
       { value: 5, prefix: '~', label: 'years of management', detail: 'Software Engineering Manager, 2022 → 2026' },
     ],
@@ -102,11 +102,8 @@ export const en: Content = {
       },
       {
         name: 'Software architecture',
-        text: "Driving technical decisions and modernizing large-scale systems such as Decathlon's global Warehouse Management System, with modern development practices.",
-        applied: [
-          { role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → today' },
-          { role: 'Software Engineering Manager', period: '2022 → 2026' },
-        ],
+        text: 'Driving the technical decisions of a strategic application, then making software architecture and modern development practices a central focus of my current role.',
+        applied: [{ role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → today' }],
         current: true,
         status: 'Today',
       },
@@ -138,7 +135,7 @@ export const en: Content = {
         name: 'Data & Business Intelligence',
         text: 'Building data products and a strategic Business Intelligence application: as an engineer, as the lead, then heading the team.',
         applied: [
-          { role: 'Software Engineering Manager', period: 'early in the role, from 2022' },
+          { role: 'Software Engineering Manager', period: 'BI team, before the WMS' },
           { role: 'Lead Software Engineer', period: '2021 → 2022' },
           { role: 'Software Engineer', period: '2019 → 2020' },
         ],
@@ -169,7 +166,7 @@ export const en: Content = {
         company: 'Decathlon Digital',
         place: 'Lille',
         text: 'Back to hands-on software engineering, focusing on software development, architecture, and AI.',
-        points: ['Building useful software and solving real problems', 'Owning architecture and technical choices', 'Putting AI to work in software development', 'Sharing knowledge and continuously learning'],
+        points: ['Building useful software', 'Solving real problems', 'Sharing knowledge and continuously learning'],
         tags: ['Development', 'Architecture', 'AI'],
       },
       {
@@ -260,7 +257,7 @@ export const en: Content = {
       {
         kind: 'Side project · AI engineering',
         title: 'This portfolio, built 100% with AI',
-        text: 'Art direction, content, code and animations created entirely by pair-programming with an AI (Claude Code), from the first commit to the GitHub Pages deployment. A hands-on application of AI-assisted development.',
+        text: 'A complete redesign: art direction, content, code and animations created entirely by pair-programming with an AI (Claude Code). A hands-on application of AI-assisted development.',
         meta: '2026',
         href: 'https://github.com/jmarch031/cv-portfolio',
         tags: ['Claude Code', 'TypeScript', 'GSAP', 'WebGL'],
@@ -301,7 +298,7 @@ export const en: Content = {
     label: 'Education',
     title: 'Always learning.',
     schools: [
-      { years: '2010 — 2015', from: 2010, to: 2015, name: 'EPITECH', degree: "Master's degree, Computer Science", note: 'European Institute of Technology. Project-based learning.' },
+      { years: '2010 — 2015', from: 2010, to: 2015, name: 'EPITECH', degree: "Master's degree, Computer Science", note: 'European Institute of Technology.' },
       { years: '2013 — 2014', from: 2013, to: 2014, name: 'California State University San Marcos', degree: "Master's degree, Computer Science", note: 'A year abroad in California, during the EPITECH programme.' },
       { years: '2009 — 2010', from: 2009, to: 2010, name: 'Institut Informatique et Entreprise', degree: 'DUT, Computer Science', note: 'First degree in computer science.' },
     ],

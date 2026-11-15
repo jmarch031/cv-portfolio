@@ -750,3 +750,25 @@ ul, ol { list-style: none; }
   .skill__status { grid-column: 1; grid-row: 2; }
   .skill__plus { grid-column: 2; grid-row: 1 / span 2; }
 }
+
+/* =====================================================================
+   Review pass — legibility over the liquid, rhythm
+   ===================================================================== */
+/* Contact: the light stays behind the headline; controls and footer sit on calm ground */
+.contact__media { bottom: auto; height: min(100%, 120vh); opacity: 0.85; }
+.contact__media::after { background: linear-gradient(180deg, var(--bg) 0%, transparent 30%, color-mix(in srgb, var(--bg) 35%, transparent) 55%, var(--bg) 88%); }
+.contact__ctas .pill { background: color-mix(in srgb, var(--bg) 60%, transparent); }
+.contact .footer { background: var(--bg); margin-top: clamp(64px, 9vw, 120px); }
+.footer__grid { color: var(--muted); }
+.footer__grid a { color: var(--fg); }
+@media (min-width: 961px) { .contact__ctas .pill { backdrop-filter: blur(10px); } }
+@media (max-width: 600px) {
+  .contact { padding-top: 96px; }
+  .contact .footer { margin-top: 64px; padding: 28px 0 40px; }
+  .footer__grid { gap: 20px; }
+}
+/* Story text always wins over the light behind it */
+.act__text, .act__years { text-shadow: 0 0 24px var(--bg); }
+/* Recommendations: no empty stage under short quotes */
+.recos__stage { min-height: 0; }
+.recos__controls { margin-top: 48px; }

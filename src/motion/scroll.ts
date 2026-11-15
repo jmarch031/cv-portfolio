@@ -189,7 +189,8 @@ export function initScroll(liquids: Liquids) {
         /* ---------- Skills: rows glide in from alternating sides ---------- */
         gsap.utils.toArray<HTMLElement>('.skill').forEach((row, i) => {
           gsap.fromTo(row.querySelector('.skill__name'),
-            { xPercent: i % 2 ? 12 : -12, autoAlpha: 0.15 },
+            // horizontal glide only where there is room for it
+            { xPercent: desktop ? (i % 2 ? 5 : -3) : 0, autoAlpha: 0.15 },
             { xPercent: 0, autoAlpha: 1, ease: 'none', scrollTrigger: { trigger: row, start: 'top 98%', end: 'top 65%', scrub: true } });
         });
 
