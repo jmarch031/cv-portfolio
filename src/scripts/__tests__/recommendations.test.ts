@@ -1,44 +1,55 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { renderRecommendations } from '../recommendations';
+import { renderRecommendations, LONG_QUOTE } from '../recommendations';
 
-describe('Recommendation Section rendering', () => {
+const labels = { more: 'Lire plus', less: 'Réduire' };
+
+describe('renderRecommendations', () => {
+  let container: HTMLElement;
+
   beforeEach(() => {
-    // Set up the container in the DOM
-    document.body.innerHTML = `
-      <section id="recommendations">
-        <div class="marquee-content"></div>
-      </section>
-    `;
+    document.body.innerHTML = '<div class="recos__list"></div>';
+    container = document.querySelector('.recos__list')!;
   });
 
-  it('should render recommendation cards when given data', () => {
-    const mockData = [
-      {
-        name: 'John Doe',
-        role: 'CEO at Tech Corp',
-        quote: 'Julien is an amazing developer!'
-      },
-      {
-        name: 'Jane Smith',
-        role: 'Lead Architect at Cloud Inc',
-        quote: 'Exceptional work and great leadership.'
-      }
-    ];
+  it('renders one item per recommendation with name, role and quote', () => {
+    renderRecommendations(container, [
+      { name: 'John Doe', role: 'CEO at Tech Corp', quote: 'Great developer.' },
+      { name: 'Jane Smith', role: 'Lead Architect', quote: 'Great leader.' },
+    ], labels);
 
-    renderRecommendations(mockData);
-
-    const cards = document.querySelectorAll('.recommendation-card');
-    expect(cards.length).toBe(mockData.length);
-
-    const firstCard = cards[0];
-    expect(firstCard.querySelector('.recommendation-name')?.textContent).toBe('John Doe');
-    expect(firstCard.querySelector('.recommendation-role')?.textContent).toBe('CEO at Tech Corp');
-    expect(firstCard.querySelector('.recommendation-quote')?.textContent).toBe('Julien is an amazing developer!');
+    const items = container.querySelectorAll('.reco');
+    expect(items.length).toBe(2);
+    expect(items[0].querySelector('.reco__name')?.textContent).toBe('John Doe');
+    expect(items[0].querySelector('.reco__role')?.textContent).toBe('CEO at Tech Corp');
+    expect(items[0].querySelector('.reco__quote')?.textContent).toContain('Great developer.');
   });
 
-  it('should handle empty data gracefully', () => {
-    renderRecommendations([]);
-    const cards = document.querySelectorAll('.recommendation-card');
-    expect(cards.length).toBe(0);
+  it('escapes content instead of injecting HTML', () => {
+    renderRecommendations(container, [{ name: '<b>x</b>', role: 'r', quote: 'q' }], labels);
+    expect(container.querySelector('.reco__name b')).toBeNull();
+    expect(container.querySelector('.reco__name')?.textContent).toBe('<b>x</b>');
+  });
+
+  it('adds a toggle only on long quotes and flips its label', () => {
+    renderRecommendations(container, [
+      { name: 'Short', role: 'r', quote: 'short' },
+      { name: 'Long', role: 'r', quote: 'a'.repeat(LONG_QUOTE + 1) },
+    ], labels);
+
+    const [short, long] = Array.from(container.querySelectorAll('.reco'));
+    expect(short.querySelector('.reco__toggle')).toBeNull();
+
+    const btn = long.querySelector<HTMLButtonElement>('.reco__toggle')!;
+    expect(btn.textContent).toBe('Lire plus');
+    btn.click();
+    expect(long.classList.contains('is-expanded')).toBe(true);
+    expect(btn.textContent).toBe('Réduire');
+    expect(btn.getAttribute('aria-expanded')).toBe('true');
+  });
+
+  it('handles empty data and a missing container', () => {
+    renderRecommendations(container, [], labels);
+    expect(container.children.length).toBe(0);
+    expect(() => renderRecommendations(null, [], labels)).not.toThrow();
   });
 });

@@ -4,68 +4,58 @@ export interface Recommendation {
   quote: string;
 }
 
-/**
- * Render recommendation cards into the DOM
- * @param recommendations - Array of recommendation data
- */
-export function renderRecommendations(recommendations: Recommendation[]) {
-  const container = document.querySelector('#recommendations .marquee-content');
-  if (!container) return;
-
-  // Clear existing content
-  container.innerHTML = '';
-
-  recommendations.forEach(rec => {
-    const card = document.createElement('div');
-    card.classList.add('recommendation-card', 'glass-card', 'tilt-card');
-    
-    // Only show toggle if quote is long enough (e.g. > 150 chars)
-    const isLong = rec.quote.length > 150;
-    
-    card.innerHTML = `
-      <div class="recommendation-content">
-        <p class="recommendation-quote">${rec.quote}</p>
-        ${isLong ? `
-          <button class="rec-toggle-btn nav-hover" aria-label="Toggle recommendation text">
-            <span data-i18n="rec_more" class="more-text">Lire plus</span>
-            <span data-i18n="rec_less" class="less-text">Réduire</span>
-          </button>
-        ` : ''}
-        <div class="recommendation-meta">
-          <p class="recommendation-name">${rec.name}</p>
-          <p class="recommendation-role">${rec.role}</p>
-        </div>
-      </div>
-    `;
-    
-    container.appendChild(card);
-  });
-
-  // Event delegation for toggle buttons
-  container.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement;
-    const btn = target.closest('.rec-toggle-btn');
-    if (btn) {
-      const card = btn.closest('.recommendation-card');
-      if (card) {
-        card.classList.toggle('is-expanded');
-        btn.classList.toggle('is-active');
-      }
-    }
-  });
+export interface RecoLabels {
+  more: string;
+  less: string;
 }
 
-/**
- * Setup the marquee for an infinite loop by duplicating its content
- */
-export function setupMarquee() {
-  const marqueeContent = document.querySelector('.marquee-content');
-  if (!marqueeContent) return;
+/** Quotes longer than this get a "read more" toggle (CSS clamps them to 4 lines). */
+export const LONG_QUOTE = 220;
 
-  // Clone all child elements
-  const items = Array.from(marqueeContent.children);
-  items.forEach(item => {
-    const clone = item.cloneNode(true);
-    marqueeContent.appendChild(clone);
+export function renderRecommendations(
+  container: Element | null,
+  recommendations: Recommendation[],
+  labels: RecoLabels,
+) {
+  if (!container) return;
+  container.innerHTML = '';
+
+  recommendations.forEach((rec) => {
+    const item = document.createElement('article');
+    item.className = 'reco';
+
+    const meta = document.createElement('div');
+    meta.className = 'reco__meta';
+    const name = document.createElement('p');
+    name.className = 'reco__name';
+    name.textContent = rec.name;
+    const role = document.createElement('p');
+    role.className = 'reco__role';
+    role.textContent = rec.role;
+    meta.append(name, role);
+
+    const body = document.createElement('div');
+    const quote = document.createElement('p');
+    quote.className = 'reco__quote';
+    quote.textContent = `« ${rec.quote} »`;
+    body.append(quote);
+
+    if (rec.quote.length > LONG_QUOTE) {
+      const btn = document.createElement('button');
+      btn.className = 'reco__toggle';
+      btn.type = 'button';
+      btn.dataset.cursor = 'hover';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.textContent = labels.more;
+      btn.addEventListener('click', () => {
+        const expanded = item.classList.toggle('is-expanded');
+        btn.setAttribute('aria-expanded', String(expanded));
+        btn.textContent = expanded ? labels.less : labels.more;
+      });
+      body.append(btn);
+    }
+
+    item.append(meta, body);
+    container.appendChild(item);
   });
 }

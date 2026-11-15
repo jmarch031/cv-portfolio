@@ -2,635 +2,499 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <script>
-    (function() {
-      // Default to light theme if no choice has been made
-      const savedTheme = localStorage.getItem('theme') || 'light';
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    })();
-  </script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Julien Marchand — EM & Développeur</title>
-  <meta name="description" id="meta-desc" content="Engineering Manager, Tech Lead & Développeur. L'alliance de l'excellence technique et du leadership humain." />
-  <meta name="theme-color" content="#FAF9F6" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Julien Marchand — Lead Software Engineer</title>
+  <meta name="description" id="meta-desc" content="Lead Software Engineer chez Decathlon Digital. Plus de 10 ans de développement logiciel, de leadership technique et de management d'équipes d'ingénierie." />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-  <!-- Polices : Plus Jakarta Sans (Géométrique) & Space Mono (Tech/Accent) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg-base: #FAF9F6;
-      --text-main: #1C1917;
-      --accent-indigo: #2563EB;
-      --border-subtle: rgba(0, 0, 0, 0.05);
-    }
-    [data-theme="dark"] {
-      --bg-base: #090A0F;
-      --text-main: #F8FAFC;
-      --accent-indigo: #60A5FA;
-      --border-subtle: rgba(255, 255, 255, 0.04);
-    }
-    .preloader {
-      position: fixed;
-      inset: 0;
-      z-index: 999999;
-      background: var(--bg-base);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-    }
-    .preloader-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .preloader-text {
-      font-size: clamp(1.5rem, 4vw, 3rem);
-      font-weight: 800;
-      color: var(--text-main);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-    .preloader-counter {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--accent-indigo);
-      font-family: 'Space Mono', monospace;
-    }
-    .preloader-progress {
-      width: 250px;
-      height: 2px;
-      background: var(--border-subtle);
-      margin-top: 1.5rem;
-      overflow: hidden;
-      position: relative;
-      border-radius: 2px;
-    }
-    .preloader-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 0%;
-      background: var(--accent-indigo);
-    }
-    header, main {
-      opacity: 0;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="is-loading is-dark">
 
-  <!-- BARRE DE PROGRESSION -->
-  <div class="scroll-progress"></div>
-
-  <!-- INDICATEUR DE SCROLL GLOBAL -->
-  <div class="scroll-indicator nav-hover" id="global-scroll-indicator">
-    <span id="scroll-text">SCROLL ↓</span>
-    <div class="line-track">
-      <div class="line-fill"></div>
-    </div>
+  <!-- INTRO / PRELOADER -->
+  <div class="intro" aria-hidden="true">
+    <div class="intro__count"><span class="intro__num">0</span></div>
+    <div class="intro__label">Julien Marchand — Portfolio</div>
   </div>
 
-  <!-- MENU OVERLAY -->
-  <div class="menu-overlay" id="menu-overlay">
-    <div class="menu-bg"></div>
-    <nav class="menu-nav">
-      <ul class="menu-list">
-        <li>
-          <a href="#about" class="menu-link nav-hover">
-            <span class="num">01</span><span class="btn-text" data-i18n="menu_about">Philosophie</span>
-          </a>
-        </li>
-        <li>
-          <a href="#expertise-section" class="menu-link nav-hover">
-            <span class="num">02</span><span class="btn-text" data-i18n="menu_exp">Expertise</span>
-          </a>
-        </li>
-        <li>
-          <a href="#experience" class="menu-link nav-hover">
-            <span class="num">03</span><span class="btn-text" data-i18n="menu_path">Parcours</span>
-          </a>
-        </li>
-        <li>
-          <a href="#publications" class="menu-link nav-hover">
-            <span class="num">04</span><span class="btn-text" data-i18n="menu_pub">Publications</span>
-          </a>
-        </li>
-        <li>
-          <a href="#education" class="menu-link nav-hover">
-            <span class="num">05</span><span class="btn-text" data-i18n="menu_edu">Formation</span>
-          </a>
-        </li>
-        <li>
-          <a href="#recommendations" class="menu-link nav-hover">
-            <span class="num">06</span><span class="btn-text" data-i18n="menu_rec">Recommandations</span>
-          </a>
-        </li>
-      </ul>
+  <!-- CURSOR -->
+  <div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+
+  <!-- HEADER -->
+  <header class="nav">
+    <a href="#top" class="nav__logo js-scroll" data-cursor="hover">julien marchand</a>
+
+    <div class="nav__lang" role="group" aria-label="Langue">
+      <button class="nav__lang-btn is-active" data-lang="fr" data-cursor="hover">FR</button>
+      <button class="nav__lang-btn" data-lang="en" data-cursor="hover">EN</button>
+    </div>
+
+    <nav class="nav__menu" aria-label="Navigation principale">
+      <a href="#about" class="nav__link js-scroll roll" data-cursor="hover"><span data-i18n="menu_about">À propos</span></a>
+      <a href="#expertise" class="nav__link js-scroll roll" data-cursor="hover"><span data-i18n="menu_exp">Expertise</span></a>
+      <a href="#experience" class="nav__link js-scroll roll" data-cursor="hover"><span data-i18n="menu_path">Parcours</span></a>
+      <a href="#writings" class="nav__link js-scroll roll" data-cursor="hover"><span data-i18n="menu_pub">Écrits</span></a>
+      <a href="#education" class="nav__link js-scroll roll" data-cursor="hover"><span data-i18n="menu_edu">Formation</span></a>
+      <a href="#contact" class="nav__link js-scroll roll" data-cursor="hover"><span data-i18n="menu_contact">Contact</span></a>
+    </nav>
+
+    <button class="nav__burger" aria-label="Menu" aria-expanded="false" data-cursor="hover">
+      <span data-i18n="menu_btn">Menu</span>
+    </button>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" aria-hidden="true">
+    <nav class="mobile-menu__list">
+      <a href="#about" class="mobile-menu__link js-scroll"><span class="mobile-menu__idx">01</span><span data-i18n="menu_about">À propos</span></a>
+      <a href="#expertise" class="mobile-menu__link js-scroll"><span class="mobile-menu__idx">02</span><span data-i18n="menu_exp">Expertise</span></a>
+      <a href="#experience" class="mobile-menu__link js-scroll"><span class="mobile-menu__idx">03</span><span data-i18n="menu_path">Parcours</span></a>
+      <a href="#writings" class="mobile-menu__link js-scroll"><span class="mobile-menu__idx">04</span><span data-i18n="menu_pub">Écrits</span></a>
+      <a href="#education" class="mobile-menu__link js-scroll"><span class="mobile-menu__idx">05</span><span data-i18n="menu_edu">Formation</span></a>
+      <a href="#contact" class="mobile-menu__link js-scroll"><span class="mobile-menu__idx">06</span><span data-i18n="menu_contact">Contact</span></a>
     </nav>
   </div>
 
-  <!-- PRELOADER -->
-  <div class="preloader">
-    <div class="preloader-content">
-      <div class="preloader-text" id="ascii-loader">01001010</div>
-      <div class="preloader-counter" id="loader-counter">0%</div>
-      <div class="preloader-progress">
-        <div class="preloader-bar"></div>
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" data-theme-band="dark">
+      <div class="hero__media">
+        <canvas class="hero__canvas" aria-hidden="true"></canvas>
+        <div class="hero__veil"></div>
       </div>
-    </div>
-  </div>
 
-  <!-- CUSTOM CURSOR -->
-  <div class="cursor"></div>
-  <div class="mouse-glow"></div>
+      <div class="hero__inner">
+        <p class="hero__eyebrow">
+          <span class="line-mask"><span class="line-inner" data-i18n="hero_role">Lead Software Engineer — Technical Leadership</span></span>
+        </p>
 
-  <!-- SCÉNOGRAPHIE : VISUELS DE FOND -->
-  <div class="bg-visuals">
-    <video class="video-layer active" autoplay loop muted playsinline poster="">
-      <source src="https://assets.codepen.io/3364143/7btrrd.mp4" type="video/mp4">
-    </video>
-    <div class="video-blend"></div>
-    <div class="structural-grid"></div>
-    <div class="texture"></div>
-  </div>
+        <h1 class="hero__title" aria-label="Julien Marchand">
+          <span class="hero__word" data-split>Julien</span>
+          <span class="hero__word hero__word--indent" data-split>Marchand</span>
+        </h1>
 
-  <header class="fade-reveal-header">
-    <div style="font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.8rem; cursor: none;" class="nav-hover menu-close-trigger">
-      <span class="dot-accent" style="width: 8px; height: 8px; background: var(--accent-indigo); border-radius: 50%;"></span>
-      JM
-    </div>
-    <div style="display: flex; gap: 1rem; align-items: center;">
-      <div style="font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-right: 1rem;" class="text-faint hide-mobile" data-i18n="header_sub">© 2026 — EM & Développeur</div>
-      
-      <button id="menu-toggle" class="nav-hover magnetic-btn icon-btn">
-        <span class="btn-text" id="menu-toggle-text" data-i18n="menu_btn">Menu</span>
-      </button>
-
-      <button id="lang-toggle" class="nav-hover magnetic-btn icon-btn" aria-label="Changer de langue">
-        <span class="btn-text">EN</span>
-      </button>
-
-      <button id="theme-toggle" class="nav-hover magnetic-btn icon-btn" aria-label="Basculer le thème">
-        <span class="btn-text">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; fill: currentColor;">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </span>
-      </button>
-    </div>
-  </header>
-
-  <main>
-    <!-- HERO -->
-    <section class="hero-section">
-      <div class="hero-content" style="max-width: var(--max-w); margin: 0 auto; width: 100%; position: relative;">
-        
-        <div class="doodle-anchor hide-mobile hero-doodle-float" style="top: 5%; right: 0%; left: auto; z-index: 0; width: 600px; height: 600px; pointer-events: none; opacity: 0.7;">
-          <svg class="doodle-narrative" viewBox="0 0 600 600" style="width: 100%; height: 100%; overflow: visible;">
-            <defs>
-              <linearGradient id="doodleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="var(--accent-indigo)" />
-                <stop offset="100%" stop-color="var(--accent-teal)" />
-              </linearGradient>
-            </defs>
-            <path class="path-hero" style="stroke: url(#doodleGrad); stroke-width: 1.5; fill: none; stroke-linecap: round;" d="M 300 50 C 500 50, 550 250, 450 400 C 350 550, 150 500, 100 350 C 50 200, 100 50, 300 50 Z" />
-            <path class="path-hero" style="stroke: var(--text-faint); stroke-width: 1; fill: none; stroke-linecap: round; stroke-dasharray: 4 12;" d="M 280 70 C 460 70, 510 250, 420 380 C 330 510, 150 470, 110 340 C 70 210, 100 70, 280 70 Z" />
-            <circle class="node-anim node-hero" cx="450" cy="400" r="4" fill="var(--accent-teal)" />
-            <circle class="node-anim node-hero" cx="100" cy="350" r="3" fill="var(--accent-indigo)" />
-            <circle class="node-anim node-hero" cx="300" cy="50" r="5" fill="var(--bg-base)" stroke="var(--accent-indigo)" stroke-width="2" />
-          </svg>
+        <div class="hero__bottom">
+          <p class="hero__lead">
+            <span class="line-mask"><span class="line-inner" data-i18n="hero_desc">Traduire les idées, élever le collectif.</span></span>
+          </p>
+          <div class="hero__ctas">
+            <a href="mailto:jmarch031@gmail.com" class="pill pill--light magnetic" data-cursor="hover">
+              <span class="pill__text" data-i18n="hero_cta">Démarrer une conversation</span>
+            </a>
+            <a href="https://www.linkedin.com/in/julien-marchand-0256186a" target="_blank" rel="noopener" class="pill pill--light magnetic" data-cursor="hover">
+              <span class="pill__text">LinkedIn</span>
+            </a>
+          </div>
         </div>
 
-        <div style="font-weight: 700; color: var(--accent-indigo); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem;" class="fade-reveal" data-i18n="hero_role">Engineering Manager, Tech Lead & Développeur</div>
-        <h1 class="h-giant text-split" style="max-width: 1200px; position: relative; z-index: 10;" data-i18n="hero_title">Traduire les idées, <span style="font-weight: 400;">élever le collectif</span><span class="dot-accent">.</span></h1>
-        <p class="fade-reveal" style="font-size: clamp(1.2rem, 2vw, 1.5rem); color: var(--text-soft); max-width: 700px; margin-top: 4rem; position: relative; z-index: 10; line-height: 1.6; opacity: 0; transform: translateY(20px);" data-i18n="hero_desc">Développeur dans l'âme, je vois le code comme la traduction directe de nos besoins. Aujourd'hui Engineering Manager, je suis convaincu que l'excellence technique naît d'un savant mélange de pragmatisme architectural, d'une méthodologie rigoureuse et d'un management profondément bienveillant.</p>
-        
-        <div class="btn-group fade-reveal" style="opacity: 0; transform: translateY(20px);">
-          <a href="mailto:jmarch031@gmail.com" class="btn btn-primary nav-hover magnetic-btn">
-            <span class="btn-text" data-i18n="hero_cta">Démarrer une conversation</span>
-          </a>
-          <a href="https://www.linkedin.com/in/julien-marchand-0256186a" target="_blank" class="btn btn-secondary nav-hover magnetic-btn">
-            <span class="btn-text" data-i18n="hero_linkedin">Voir mon Linkedin</span>
+        <div class="hero__meta">
+          <span data-i18n="hero_location">Lille, France</span>
+          <span>Decathlon Digital</span>
+        </div>
+      </div>
+
+      <!-- Rotating scroll badge -->
+      <a href="#about" class="scroll-badge js-scroll" aria-label="Scroll" data-cursor="hover">
+        <svg viewBox="0 0 120 120" class="scroll-badge__ring">
+          <defs><path id="circlePath" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" /></defs>
+          <text><textPath href="#circlePath" textLength="286">SCROLL DOWN · SCROLL DOWN · SCROLL DOWN ·</textPath></text>
+        </svg>
+        <span class="scroll-badge__arrow">↓</span>
+      </a>
+    </section>
+
+    <!-- ============ ABOUT / MANIFESTO ============ -->
+    <section id="about" class="section about">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__idx">01</span>
+          <span class="section-head__label" data-i18n="menu_about">À propos</span>
+        </div>
+
+        <p class="manifesto" data-words data-i18n="philo_quote">L'ingénierie, ce n'est pas qu'une affaire de code. Mon approche : comprendre le pourquoi, soigner le comment.</p>
+
+        <div class="about__grid">
+          <div class="about__col">
+            <p class="about__text reveal-lines" data-i18n="about_1">Software Engineer avec plus de 10 ans d'expérience en développement logiciel, leadership technique et management d'équipes d'ingénierie. Chez Decathlon Digital, j'ai travaillé sur des produits de Business Intelligence et sur la modernisation d'un Warehouse Management System (WMS) mondial.</p>
+          </div>
+          <div class="about__col">
+            <p class="about__text reveal-lines" data-i18n="about_2">Après plusieurs années de management, j'ai choisi de revenir à ce que j'aime le plus : écrire du code, résoudre des problèmes techniques et transformer des idées en logiciels qui fonctionnent. Je m'intéresse à l'architecture logicielle, aux pratiques de développement modernes et à la façon dont l'IA change notre manière de construire des produits.</p>
+            <p class="about__text about__text--muted reveal-lines" data-i18n="about_3">Ce qui compte le plus pour moi ? Construire des logiciels utiles, apprendre chaque jour, travailler avec des gens formidables et prendre plaisir à ce que je fais.</p>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="stat__value"><span class="js-count" data-to="10">10</span>+</div>
+            <div class="stat__label" data-i18n="stat_1">Années d'expérience</div>
+          </div>
+          <div class="stat">
+            <div class="stat__value">~<span class="js-count" data-to="30">30</span></div>
+            <div class="stat__label" data-i18n="stat_2">Ingénieurs encadrés</div>
+          </div>
+          <div class="stat">
+            <div class="stat__value"><span class="js-count" data-to="5">5</span></div>
+            <div class="stat__label" data-i18n="stat_3">Feature Teams pilotées</div>
+          </div>
+          <div class="stat">
+            <div class="stat__value"><span class="js-count" data-to="4">4</span></div>
+            <div class="stat__label" data-i18n="stat_4">Rôles explorés</div>
+            <div class="stat__sub" data-i18n="stat_4_sub">Dev, Scrum Master, Tech Lead, EM</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EXPERTISE (horizontal) ============ -->
+    <section id="expertise" class="expertise">
+      <div class="expertise__pin">
+        <div class="expertise__track">
+          <div class="expertise__intro">
+            <div class="section-head">
+              <span class="section-head__idx">02</span>
+              <span class="section-head__label" data-i18n="menu_exp">Expertise</span>
+            </div>
+            <h2 class="h-whisper" data-i18n="exp_intro">Identifier les priorités, réduire la complexité.</h2>
+          </div>
+
+          <article class="exp-card">
+            <span class="exp-card__idx">01 / <span data-i18n="exp_tag_1">Technique</span></span>
+            <h3 class="exp-card__title" data-i18n="exp_card2_title">Conception &amp; Pragmatisme</h3>
+            <p class="exp-card__text" data-i18n="exp_card2_desc">Développeur dans l'âme au profil fortement Back-End, ma curiosité me confère une compréhension globale. Je conçois des solutions techniques en cherchant toujours l'équilibre entre exigence de Code Quality et pragmatisme.</p>
+          </article>
+
+          <article class="exp-card">
+            <span class="exp-card__idx">02 / <span data-i18n="exp_tag_2">IA</span></span>
+            <h3 class="exp-card__title" data-i18n="exp_card4_title">AI Engineering</h3>
+            <p class="exp-card__text" data-i18n="exp_card4_desc">Contribution à l'adoption de pratiques de développement assistées par l'IA, par l'expérimentation, le partage de connaissances et l'apprentissage continu.</p>
+          </article>
+
+          <article class="exp-card">
+            <span class="exp-card__idx">03 / <span data-i18n="exp_tag_3">Produit</span></span>
+            <h3 class="exp-card__title" data-i18n="exp_card3_title">Cadrage &amp; Delivery</h3>
+            <p class="exp-card__text" data-i18n="exp_card3_desc">Une ingénierie saine commence par un cadrage précis de nos idées. J'aligne les besoins utilisateurs avec nos réalités techniques, un mélange de hard skills et de soft skills au service du produit.</p>
+          </article>
+
+          <article class="exp-card">
+            <span class="exp-card__idx">04 / <span data-i18n="exp_tag_4">Culture</span></span>
+            <h3 class="exp-card__title" data-i18n="exp_card1_title">Leadership &amp; Proximité</h3>
+            <p class="exp-card__text" data-i18n="exp_card1_desc">Manager humble et à l'écoute, je fuis la directivité. Ma mission est de créer un cadre de confiance, transparent et bienveillant, permettant au collectif de s'exprimer, de grandir et de livrer la meilleure valeur possible en toute autonomie.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__row">
+          <span class="marquee__item">AI Engineering</span><span class="marquee__sep">●</span>
+          <span class="marquee__item marquee__item--light">Software Architecture</span><span class="marquee__sep">●</span>
+          <span class="marquee__item">Backend</span><span class="marquee__sep">●</span>
+          <span class="marquee__item marquee__item--light">Full-stack</span><span class="marquee__sep">●</span>
+          <span class="marquee__item">Quality Engineering</span><span class="marquee__sep">●</span>
+          <span class="marquee__item marquee__item--light">Engineering Management</span><span class="marquee__sep">●</span>
+          <span class="marquee__item">Mentoring</span><span class="marquee__sep">●</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EXPERIENCE (dark band) ============ -->
+    <section id="experience" class="section experience" data-theme-band="dark">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__idx">03</span>
+          <span class="section-head__label" data-i18n="menu_path">Parcours</span>
+        </div>
+        <h2 class="h-anchor" data-split-lines data-i18n="path_title">Dix ans à construire du logiciel.</h2>
+
+        <ol class="jobs">
+
+          <li class="job" data-cursor="open">
+            <button class="job__head" aria-expanded="false">
+              <span class="job__date" data-i18n="job_1_date">Oct 2026 — Présent</span>
+              <span class="job__role">Lead Software Engineer</span>
+              <span class="job__company">Decathlon Digital</span>
+              <span class="job__toggle" aria-hidden="true"></span>
+            </button>
+            <div class="job__body">
+              <div class="job__body-inner">
+                <p class="job__place" data-i18n="job_loc_lille">Lille, Hauts-de-France</p>
+                <p data-i18n="job_1_desc">Retour au software engineering hands-on, avec un focus sur le développement, l'architecture et l'IA. Construire des logiciels utiles, résoudre de vrais problèmes, partager la connaissance et apprendre en continu.</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="job" data-cursor="open">
+            <button class="job__head" aria-expanded="false">
+              <span class="job__date" data-i18n="job_2_date">Fév 2022 — Oct 2026</span>
+              <span class="job__role">Software Engineering Manager</span>
+              <span class="job__company">Decathlon Digital</span>
+              <span class="job__toggle" aria-hidden="true"></span>
+            </button>
+            <div class="job__body">
+              <div class="job__body-inner">
+                <p class="job__place" data-i18n="job_2_place">Lille — Supply / Logistics &amp; Data / Business Intelligence</p>
+                <div class="kpis">
+                  <div class="kpi"><span class="kpi__value">~30</span><span class="kpi__label" data-i18n="kpi_team">Ingénieurs</span></div>
+                  <div class="kpi"><span class="kpi__value">5</span><span class="kpi__label">Feature Teams</span></div>
+                  <div class="kpi"><span class="kpi__value">DORA</span><span class="kpi__label" data-i18n="kpi_dora">Suivi de la performance</span></div>
+                </div>
+                <div data-i18n="job_2_desc"></div>
+              </div>
+            </div>
+          </li>
+
+          <li class="job" data-cursor="open">
+            <button class="job__head" aria-expanded="false">
+              <span class="job__date" data-i18n="job_3_date">Jan 2021 — Fév 2022</span>
+              <span class="job__role">Lead Software Engineer</span>
+              <span class="job__company">Decathlon Digital</span>
+              <span class="job__toggle" aria-hidden="true"></span>
+            </button>
+            <div class="job__body">
+              <div class="job__body-inner">
+                <p class="job__place" data-i18n="job_3_place">Croix — Data / Business Intelligence</p>
+                <div class="kpis">
+                  <div class="kpi"><span class="kpi__value">x2</span><span class="kpi__label" data-i18n="kpi_perf">Performance de calcul</span></div>
+                  <div class="kpi"><span class="kpi__value">80%</span><span class="kpi__label" data-i18n="kpi_coverage">Couverture de tests</span></div>
+                  <div class="kpi"><span class="kpi__value">K8s</span><span class="kpi__label" data-i18n="kpi_infra">Infrastructure</span></div>
+                </div>
+                <div data-i18n="job_3_desc"></div>
+              </div>
+            </div>
+          </li>
+
+          <li class="job" data-cursor="open">
+            <button class="job__head" aria-expanded="false">
+              <span class="job__date" data-i18n="job_4_date">Fév 2019 — Déc 2020</span>
+              <span class="job__role">Software Engineer</span>
+              <span class="job__company">Decathlon Digital</span>
+              <span class="job__toggle" aria-hidden="true"></span>
+            </button>
+            <div class="job__body">
+              <div class="job__body-inner">
+                <p class="job__place">Croix</p>
+                <p data-i18n="job_4_desc">Conception de services backend et de produits data, dont une API de communautés sportives et une application stratégique de Business Intelligence, tout en facilitant l'équipe en tant que Scrum Master.</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="job" data-cursor="open">
+            <button class="job__head" aria-expanded="false">
+              <span class="job__date" data-i18n="job_5_date">Fév 2016 — Fév 2019</span>
+              <span class="job__role">Software Engineer</span>
+              <span class="job__company">Sopra Steria</span>
+              <span class="job__toggle" aria-hidden="true"></span>
+            </button>
+            <div class="job__body">
+              <div class="job__body-inner">
+                <p class="job__place" data-i18n="job_loc_lille_area">Lille et périphérie</p>
+                <p data-i18n="job_5_desc">Développement d'applications backend pour de grands comptes, dont Nexity, SNCF et Société Générale, tout en assurant le rôle de Scrum Master.</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="job" data-cursor="open">
+            <button class="job__head" aria-expanded="false">
+              <span class="job__date" data-i18n="job_6_date">Sep 2015 — Fév 2016</span>
+              <span class="job__role" data-i18n="job_6_role">Développeur</span>
+              <span class="job__company">ELOSI</span>
+              <span class="job__toggle" aria-hidden="true"></span>
+            </button>
+            <div class="job__body">
+              <div class="job__body-inner">
+                <p class="job__place">Villeneuve-d'Ascq</p>
+                <p data-i18n="job_6_desc">Développement d'applications backend pour des clients grands comptes du secteur de l'assurance.</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="job" data-cursor="open">
+            <button class="job__head" aria-expanded="false">
+              <span class="job__date" data-i18n="job_7_date">Sep 2014 — Sep 2015</span>
+              <span class="job__role" data-i18n="job_7_role">Développeur en alternance</span>
+              <span class="job__company">Cassiop</span>
+              <span class="job__toggle" aria-hidden="true"></span>
+            </button>
+            <div class="job__body">
+              <div class="job__body-inner">
+                <p class="job__place" data-i18n="job_loc_lille_area">Lille et périphérie</p>
+                <p data-i18n="job_7_desc">Développement de fonctionnalités full-stack en PHP/Laravel pour une plateforme de gamification et de marketing digital.</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="job" data-cursor="open">
+            <button class="job__head" aria-expanded="false">
+              <span class="job__date" data-i18n="job_8_date">Août 2011 — Déc 2011</span>
+              <span class="job__role" data-i18n="job_8_role">Développeur stagiaire</span>
+              <span class="job__company">MOBIVIA</span>
+              <span class="job__toggle" aria-hidden="true"></span>
+            </button>
+            <div class="job__body">
+              <div class="job__body-inner">
+                <p class="job__place" data-i18n="job_loc_lille_area">Lille et périphérie</p>
+                <div data-i18n="job_8_desc"></div>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ WRITINGS ============ -->
+    <section id="writings" class="section writings">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__idx">04</span>
+          <span class="section-head__label" data-i18n="menu_pub">Écrits</span>
+        </div>
+        <h2 class="h-whisper" data-split-lines data-i18n="pub_title">Écrits &amp; Réflexions</h2>
+
+        <ul class="works">
+          <li class="work">
+            <a href="https://medium.com/@julienmarchand_83183/leadership-how-to-avoid-burnout-by-learning-to-listen-to-yourself-e4cf7b5e96f8" target="_blank" rel="noopener" class="work__link" data-cursor="read">
+              <span class="work__idx">01</span>
+              <span class="work__main">
+                <span class="work__title" data-i18n="pub_2_title">Leadership : éviter le burnout en s'écoutant</span>
+                <span class="work__desc" data-i18n="pub_2_desc">Ce que le fait de frôler le burnout m'a appris sur le véritable leadership. Reconnaître les signaux, s'écouter et protéger sa santé mentale.</span>
+              </span>
+              <span class="work__meta"><span data-i18n="pub_article_tag">Article Medium</span> · 5 min</span>
+              <span class="work__arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+          <li class="work">
+            <a href="https://medium.com/@julienmarchand_83183/from-qa-to-qe-how-to-bring-quality-back-to-the-core-of-the-product-7aee2b169ac7" target="_blank" rel="noopener" class="work__link" data-cursor="read">
+              <span class="work__idx">02</span>
+              <span class="work__main">
+                <span class="work__title" data-i18n="pub_3_title">De la QA à la QE : au cœur du produit</span>
+                <span class="work__desc" data-i18n="pub_3_desc">La qualité n'est plus une simple étape de validation finale, mais une responsabilité collective intégrée dès la conception.</span>
+              </span>
+              <span class="work__meta"><span data-i18n="pub_article_tag">Article Medium</span> · 5 min</span>
+              <span class="work__arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+          <li class="work">
+            <a href="https://medium.com/@julienmarchand_83183/stop-negotiating-with-tomorrow-build-sustainable-products-today-f851e2a0fe05" target="_blank" rel="noopener" class="work__link" data-cursor="read">
+              <span class="work__idx">03</span>
+              <span class="work__main">
+                <span class="work__title" data-i18n="pub_4_title">Cessez de négocier avec demain</span>
+                <span class="work__desc" data-i18n="pub_4_desc">La véritable vitesse naît de ce que vous construisez correctement dès le premier jour. Bâtir des produits durables dès aujourd'hui.</span>
+              </span>
+              <span class="work__meta"><span data-i18n="pub_article_tag">Article Medium</span> · 4 min</span>
+              <span class="work__arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+          <li class="work">
+            <div class="work__link work__link--static">
+              <span class="work__idx">04</span>
+              <span class="work__main">
+                <span class="work__title">Trading Bot NSGA-II</span>
+                <span class="work__desc" data-i18n="pub_1_desc">Optimisation multi-objectif de portefeuilles crypto via algorithmes génétiques. Interface Streamlit pour le monitoring.</span>
+              </span>
+              <span class="work__meta" data-i18n="pub_1_tag">Projet IA / Python</span>
+              <span class="work__arrow" aria-hidden="true"></span>
+            </div>
+          </li>
+        </ul>
+
+        <div class="writings__cta">
+          <a href="https://medium.com/@julienmarchand_83183" target="_blank" rel="noopener" class="pill pill--dark magnetic" data-cursor="hover">
+            <span class="pill__text" data-i18n="pub_all">Tous les articles sur Medium</span>
           </a>
         </div>
       </div>
     </section>
 
-    <div class="main-content">
-      <div class="curtain-top-edge"></div>
-      
-      <!-- PHILOSOPHIE -->
-      <section id="about" class="section container">
-        <div class="split-layout">
-          <div class="sticky-sidebar">
-            <h2 class="h-section">
-              <span data-i18n="philo_title">Philosophie</span><span class="dot-accent">.
-                <div class="doodle-anchor doodle-float-alt">
-                  <svg class="doodle-narrative" style="width: 1px; height: 1px; overflow: visible;">
-                    <path class="path-narrative" style="stroke: var(--accent-indigo);" d="M 0 0 C -40 80, -100 150, 0 200 C 100 250, 40 350, 0 400" />
-                    <circle class="node-anim" cx="0" cy="0" r="4" fill="var(--accent-indigo)" />
-                    <circle class="node-anim" cx="0" cy="400" r="4" fill="var(--accent-rose)" />
-                  </svg>
-                </div>
-              </span>
-            </h2>
-          </div>
-          <div>
-            <div class="glass-card tilt-card">
-              <h3 class="font-accent" style="font-size: 1.5rem; color: var(--accent-indigo); margin-bottom: 1.5rem; text-transform: uppercase;" data-i18n="philo_subtitle">Ma Vision</h3>
-              <p style="font-size: 1.8rem; font-weight: 500; line-height: 1.4; color: var(--text-main); margin-bottom: 2rem;" data-i18n="philo_quote">
-                "L'ingénierie, ce n'est pas qu'une affaire de code. Mon approche : <span style="font-weight: 600;" class="text-gradient">comprendre le pourquoi, soigner le comment</span>."
-              </p>
-              <p style="font-size: 1.2rem; color: var(--text-soft); line-height: 1.6;" data-i18n="philo_desc">
-                À l'heure où l'IA bouleverse notre métier, donner du sens à nos actions n'a jamais été aussi vital. J'ai un goût profond pour la technique et le beau code. Je crois qu'il faut savoir prendre le temps de bien faire les choses, de capitaliser intelligemment et de choisir les bonnes méthodologies, en recherchant toujours la simplicité technique et architecturale. Côté humain, j'aspire à un leadership humble et transparent : travailler avec son cœur, refuser le micro-management et laisser le collectif s'exprimer pour construire ensemble.
-              </p>
-              
-              <div style="margin-top: 4rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 2rem; border-top: 1px solid var(--border-glass); padding-top: 3rem;">
-                <div>
-                  <div style="font-size: clamp(3rem, 5vw, 4.5rem); font-weight: 800; color: var(--accent-indigo); line-height: 1; margin-bottom: 0.5rem; font-variant-numeric: tabular-nums;">10+</div>
-                  <div style="font-size: 0.85rem; font-weight: 800; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.05em;" data-i18n="philo_stat1">Années d'expérience</div>
-                </div>
-                <div>
-                  <div style="font-size: clamp(3rem, 5vw, 4.5rem); font-weight: 800; color: var(--accent-teal); line-height: 1; margin-bottom: 0.5rem; font-variant-numeric: tabular-nums;">8</div>
-                  <div style="font-size: 0.85rem; font-weight: 800; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.05em;" data-i18n="philo_stat2">Expériences pro.</div>
-                </div>
-                <div>
-                  <div style="font-size: clamp(3rem, 5vw, 4.5rem); font-weight: 800; color: var(--accent-rose); line-height: 1; margin-bottom: 0.5rem; font-variant-numeric: tabular-nums;">4</div>
-                  <div style="font-size: 0.85rem; font-weight: 800; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.05em;" data-i18n="philo_stat3">Rôles explorés</div>
-                  <div style="font-size: 0.7rem; color: var(--text-faint); margin-top: 0.3rem;" data-i18n="philo_stat3_sub">Dev, Scrum Master, Tech Lead, EM</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- EXPERTISE (HORIZONTAL) -->
-      <section id="expertise-section" class="horizontal-wrap">
-        <div class="horizontal-content">
-          <div class="h-intro" style="margin-right: 5vw;">
-            <h2 class="h-section">
-              <span data-i18n="exp_title">Expertise</span><span class="dot-accent">.
-                <div class="doodle-anchor">
-                  <svg class="doodle-narrative" style="width: 1px; height: 1px; overflow: visible;">
-                    <path class="path-horizontal" style="stroke: var(--accent-teal);" d="M 0 0 H 150 L 180 -40 H 400 L 430 30 H 700 L 730 -20 H 1000 L 1020 10 H 1300" />
-                    <path class="path-horizontal" style="stroke: var(--accent-indigo);" d="M 150 0 L 180 40 H 350 M 400 -40 L 430 -80 H 600 M 700 30 L 730 70 H 900 M 1000 -20 L 1030 -60 H 1200" />
-                    <circle class="node-anim" cx="180" cy="-40" r="5" fill="var(--accent-teal)" />
-                    <circle class="node-anim" cx="430" cy="30" r="5" fill="var(--accent-teal)" />
-                    <circle class="node-anim" cx="730" cy="-20" r="5" fill="var(--accent-teal)" />
-                    <rect class="node-anim" x="346" y="36" width="8" height="8" fill="var(--accent-rose)" />
-                    <rect class="node-anim" x="896" y="66" width="8" height="8" fill="var(--accent-rose)" />
-                  </svg>
-                </div>
-              </span>
-            </h2>
-            <p style="color: var(--text-soft); font-size: 1.2rem; margin-top: 2rem; position: relative; z-index: 10;" data-i18n="exp_intro">Identifier les priorités, réduire la complexité.</p>
-          </div>
-          
-          <div class="cards-container">
-            <div class="skill-card nav-hover">
-              <div style="font-size: 0.8rem; font-family: 'Space Mono', monospace; color: var(--accent-indigo); margin-bottom: 2rem;">01 / CULTURE</div>
-              <h3 class="exp-role" style="margin-bottom: 1.5rem;" data-i18n="exp_card1_title">Leadership & Proximité</h3>
-              <p style="color: var(--text-soft); font-size: 1.1rem; line-height: 1.7;" data-i18n="exp_card1_desc">Manager humble et à l'écoute, je fuis la directivité. Ma mission est de créer un cadre de confiance permettant au <span class="font-accent">collectif</span> de s'exprimer et de grandir en toute autonomie.</p>
-            </div>
-            
-            <div class="skill-card nav-hover">
-              <div style="font-size: 0.8rem; font-family: 'Space Mono', monospace; color: var(--accent-teal); margin-bottom: 2rem;">02 / TECHNIQUE</div>
-              <h3 class="exp-role" style="margin-bottom: 1.5rem;" data-i18n="exp_card2_title">Conception & Pragmatisme</h3>
-              <p style="color: var(--text-soft); font-size: 1.1rem; line-height: 1.7;" data-i18n="exp_card2_desc">Développeur au profil fortement <span class="font-accent">Back-End</span>, ma curiosité me confère une compréhension globale. Je conçois des solutions techniques avec une exigence de <span class="text-gradient">Code Quality</span> et de maintenabilité.</p>
-            </div>
-            
-            <div class="skill-card nav-hover">
-              <div style="font-size: 0.8rem; font-family: 'Space Mono', monospace; color: var(--accent-rose); margin-bottom: 2rem;">03 / PRODUIT</div>
-              <h3 class="exp-role" style="margin-bottom: 1.5rem;" data-i18n="exp_card3_title">Cadrage & Delivery</h3>
-              <p style="color: var(--text-soft); font-size: 1.1rem; line-height: 1.7;" data-i18n="exp_card3_desc">Une ingénierie saine commence par un cadrage précis. J'aligne les besoins utilisateurs avec nos réalités techniques. Un mélange de <span class="font-accent">hard skills et soft skills</span> au service du produit.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SKILLS FOCUS -->
-      <section class="core-skills-section container">
-        <div class="skills-focus-list">
-          <div class="skill-focus-item"><span data-i18n="focus_1">Engineering Management & Strategy</span></div>
-          <div class="skill-focus-item alt-focus"><span data-i18n="focus_2">Software Architecture & Design Patterns</span></div>
-          <div class="skill-focus-item"><span data-i18n="focus_3">Modern Web Development</span></div>
-          <div class="skill-focus-item alt-focus"><span data-i18n="focus_4">Backend Expertise</span></div>
-          <div class="skill-focus-item"><span data-i18n="focus_5">Quality Engineering & Agile Delivery</span></div>
-          <div class="skill-focus-item alt-focus"><span data-i18n="focus_6">Human-Centric Leadership & Mentoring</span></div>
-        </div>
-      </section>
-
-      <!-- PARCOURS -->
-      <section id="experience" class="section container">
-        <div class="split-layout">
-          <div class="sticky-sidebar">
-            <h2 class="h-section" style="display: block; line-height: 1.1;" data-i18n="path_title">
-              Parcours <br> <span style="white-space: nowrap;">Stratégique<span class="dot-accent">.</span></span>
-            </h2>
-          </div>
-          
-          <div class="exp-list">
-            <!-- Exp 1 -->
-            <article class="exp-item">
-              <div style="display: flex; gap: 1.5rem; align-items: flex-start; margin-bottom: 1.5rem;">
-                <div class="logo-box">
-                  <img src="https://www.google.com/s2/favicons?domain=decathlon.com&sz=128" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="Decathlon" />
-                  <div class="logo-fallback" style="display: none;">D</div>
-                </div>
-                <div>
-                  <div class="font-accent" style="color: var(--text-faint); margin-bottom: 0.5rem;" data-i18n="path_present">Juil 2023 — Présent</div>
-                  <h3 class="exp-role" data-i18n="path_1_role">Engineering Manager</h3>
-                  <span class="exp-company">Decathlon</span>
-                  <div style="font-size: 0.8rem; opacity: 0.6;"><span data-i18n="path_1_bu">Supply</span> — <span data-i18n="path_1_sub">Logistics</span></div>
-                </div>
-              </div>
-              <div class="kpi-group">
-                <div class="kpi-badge nav-hover"><span class="kpi-value">~30</span><span class="kpi-label" data-i18n="kpi_team">Ingénieurs</span></div>
-                <div class="kpi-badge nav-hover"><span class="kpi-value">3M€</span><span class="kpi-label" data-i18n="kpi_budget">Budget</span></div>
-                <div class="kpi-badge nav-hover"><span class="kpi-value">DORA</span><span class="kpi-label" data-i18n="kpi_dora">Suivi Perf.</span></div>
-              </div>
-              <div style="font-size: 1.1rem; color: var(--text-soft); line-height: 1.7;" data-i18n="path_1_desc">
-                <ul class="exp-list-ui">
-                  <li><strong>Modernisation & Architecture :</strong> Pilotage de la transition legacy vers une plateforme moderne (Strangler Pattern).</li>
-                  <li><strong>Réorganisation à l'échelle :</strong> Restructuration de ~30 prestataires en Feature Teams autonomes.</li>
-                  <li><strong>Culture Performance :</strong> Pilotage du lead time via les métriques DORA et Quality Engineering.</li>
-                </ul>
-              </div>
-            </article>
-
-            <!-- Exp 2 -->
-            <article class="exp-item">
-              <div style="display: flex; gap: 1.5rem; align-items: flex-start; margin-bottom: 1.5rem;">
-                <div class="logo-box">
-                  <img src="https://www.google.com/s2/favicons?domain=decathlon.com&sz=128" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="Decathlon" />
-                  <div class="logo-fallback" style="display: none;">D</div>
-                </div>
-                <div>
-                  <div class="font-accent" style="color: var(--text-faint); margin-bottom: 0.5rem;" data-i18n="path_2_date">Fév 2022 — Juil 2023</div>
-                  <h3 class="exp-role" data-i18n="path_2_role">Engineering Manager</h3>
-                  <span class="exp-company">Decathlon</span>
-                  <div style="font-size: 0.8rem; opacity: 0.6;"><span data-i18n="path_2_bu">Data</span> — <span data-i18n="path_2_sub">Business Intelligence</span></div>
-                </div>
-              </div>
-              <div class="kpi-group">
-                <div class="kpi-badge nav-hover"><span class="kpi-value">08</span><span class="kpi-label" data-i18n="kpi_team_size">Ingénieurs</span></div>
-                <div class="kpi-badge nav-hover"><span class="kpi-value">1.5M€</span><span class="kpi-label" data-i18n="kpi_budget_status">Budget</span></div>
-                <div class="kpi-badge nav-hover"><span class="kpi-value">Global</span><span class="kpi-label" data-i18n="kpi_scope">Portée</span></div>
-              </div>
-              <div style="font-size: 1.1rem; color: var(--text-soft); line-height: 1.7;" data-i18n="path_2_desc">
-                <ul class="exp-list-ui">
-                  <li><strong>Pilotage Produit :</strong> Lead d'une Feature Team concevant une application BI stratégique à l'échelle globale.</li>
-                  <li><strong>Double casquette EM / Tech Lead :</strong> Management complet couplé au développement Java/Spring et à l'architecture.</li>
-                </ul>
-              </div>
-            </article>
-
-            <!-- Exp 3 -->
-            <article class="exp-item">
-              <div style="display: flex; gap: 1.5rem; align-items: flex-start; margin-bottom: 1.5rem;">
-                <div class="logo-box">
-                  <img src="https://www.google.com/s2/favicons?domain=decathlon.com&sz=128" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="Decathlon" />
-                  <div class="logo-fallback" style="display: none;">D</div>
-                </div>
-                <div>
-                  <div class="font-accent" style="color: var(--text-faint); margin-bottom: 0.5rem;" data-i18n="path_3_date">Jan 2021 — Fév 2022</div>
-                  <h3 class="exp-role" data-i18n="path_3_role">Tech Lead</h3>
-                  <span class="exp-company">Decathlon</span>
-                  <div style="font-size: 0.8rem; opacity: 0.6;"><span data-i18n="path_3_bu">Data</span> — <span data-i18n="path_3_sub">Business Intelligence</span></div>
-                </div>
-              </div>
-              <div class="kpi-group">
-                <div class="kpi-badge nav-hover"><span class="kpi-value">x2</span><span class="kpi-label" data-i18n="kpi_perf">Perf. Calcul</span></div>
-                <div class="kpi-badge nav-hover"><span class="kpi-value">80%</span><span class="kpi-label" data-i18n="kpi_coverage">Couverture Tests</span></div>
-                <div class="kpi-badge nav-hover"><span class="kpi-value">K8s</span><span class="kpi-label" data-i18n="kpi_infra">Infrastructure</span></div>
-              </div>
-              <div style="font-size: 1.1rem; color: var(--text-soft); line-height: 1.7;" data-i18n="path_3_desc">
-                <ul class="exp-list-ui">
-                  <li><strong>Alignement Produit/Tech :</strong> Pilotage technique de la plateforme BI et garantie de l'adéquation besoin/solution par l'agilité et via la mise en place des « 3 Amigos ».</li>
-                  <li><strong>Qualité & Performance :</strong> Refactoring majeur de la base de code doublant les performances et sécurisation du delivery.</li>
-                  <li><strong>Infrastructure & Ops :</strong> Optimisation des pipelines CI/CD et orchestration de la migration vers Kubernetes (K8s).</li>
-                </ul>
-              </div>
-            </article>
-
-            <div style="padding: 2rem; border: 1px dashed var(--border-glass); border-radius: 16px; text-align: center; color: var(--text-faint); font-size: 0.9rem;">
-              <p class="font-accent" style="font-size: 1.2rem; margin-top: 0.5rem; color: var(--text-soft);" data-i18n="path_more">Et d'autres fondations posées précédemment</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- PUBLICATIONS & LAB -->
-      <section id="publications" class="section container" style="text-align: center;">
-        <h2 class="h-section" style="margin-bottom: clamp(2rem, 5vw, 5rem);">
-          <span data-i18n="pub_title">Écrits & Réflexions</span><span class="dot-accent">.
-            <div class="doodle-anchor doodle-float-fast" style="left: 50%;">
-              <svg class="doodle-narrative" style="overflow: visible; width: 1px; height: 1px;">
-                <path class="path-narrative" style="stroke: var(--accent-indigo);" d="M 0 0 C 50 0, 50 -10, 100 -10" />
-                <path class="path-narrative" style="stroke: var(--text-main);" d="M 85 -30 H 115 M 90 -20 H 110 M 95 -10 H 105" />
-                <path class="path-narrative" style="stroke: var(--accent-rose);" d="M 100 -30 C 60 -30, 40 -80, 60 -120 C 80 -160, 120 -160, 140 -120 C 160 -80, 140 -30, 100 -30 Z" />
-              </svg>
-            </div>
-          </span>
-        </h2>
-        
-        <div class="project-grid">
-          <!-- Projet 1 -->
-          <a href="#" class="project-card nav-hover magnetic-btn">
-            <div class="project-img-reveal"></div>
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-              <span class="tag" data-i18n="pub_1_tag">Projet IA / Python</span>
-            </div>
-            <h3 class="exp-role" style="font-size: 2rem; margin: 1.5rem 0;" data-i18n="pub_1_title">Trading Bot NSGA-II</h3>
-            <p style="color: var(--text-soft); font-size: 1.1rem; margin-top: 1rem;" data-i18n="pub_1_desc">Optimisation multi-objectif de portefeuilles crypto via algorithmes génétiques. Interface Streamlit pour le monitoring.</p>
-            <div style="margin-top: 1.5rem;"><span class="tag nav-hover">Python</span><span class="tag nav-hover">NSGA-II</span></div>
-            <div class="project-arrow">➜</div>
-          </a>
-
-          <!-- Article 1 -->
-          <a href="https://medium.com/@julienmarchand_83183/leadership-how-to-avoid-burnout-by-learning-to-listen-to-yourself-e4cf7b5e96f8" target="_blank" class="project-card nav-hover magnetic-btn">
-            <div class="project-img-reveal"></div>
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-              <span class="tag" data-i18n="pub_article_tag">Article Medium</span>
-              <div class="read-time-badge">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                <span data-i18n="pub_2_read_time">8 min</span>
-              </div>
-            </div>
-            <h3 class="exp-role" style="font-size: 2rem; margin: 1.5rem 0;" data-i18n="pub_2_title">Leadership : Éviter le burnout en s'écoutant</h3>
-            <p style="color: var(--text-soft); font-size: 1.1rem; margin-top: 1rem;" data-i18n="pub_2_desc">Ce que le fait de frôler le burnout m'a appris sur le véritable leadership. Reconnaître les signaux, s'écouter et protéger sa santé mentale.</p>
-            <div class="project-arrow">➜</div>
-          </a>
-
-          <!-- Article 2 -->
-          <a href="https://medium.com/@julienmarchand_83183/from-qa-to-qe-how-to-bring-quality-back-to-the-core-of-the-product-7aee2b169ac7" target="_blank" class="project-card nav-hover magnetic-btn">
-            <div class="project-img-reveal"></div>
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-              <span class="tag" data-i18n="pub_article_tag">Article Medium</span>
-              <div class="read-time-badge">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                <span data-i18n="pub_3_read_time">6 min</span>
-              </div>
-            </div>
-            <h3 class="exp-role" style="font-size: 2rem; margin: 1.5rem 0;" data-i18n="pub_3_title">De la QA à la QE : Au cœur du produit</h3>
-            <p style="color: var(--text-soft); font-size: 1.1rem; margin-top: 1rem;" data-i18n="pub_3_desc">La qualité n'est plus une simple étape de validation finale, mais une responsabilité collective intégrée dès la conception.</p>
-            <div class="project-arrow">➜</div>
-          </a>
-
-          <!-- Article 3 -->
-          <a href="https://medium.com/@julienmarchand_83183/stop-negotiating-with-tomorrow-build-sustainable-products-today-f851e2a0fe05" target="_blank" class="project-card nav-hover magnetic-btn">
-            <div class="project-img-reveal"></div>
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-              <span class="tag" data-i18n="pub_article_tag">Article Medium</span>
-              <div class="read-time-badge">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                <span data-i18n="pub_4_read_time">5 min</span>
-              </div>
-            </div>
-            <h3 class="exp-role" style="font-size: 2rem; margin: 1.5rem 0;" data-i18n="pub_4_title">Cessez de négocier avec demain</h3>
-            <p style="color: var(--text-soft); font-size: 1.1rem; margin-top: 1rem;" data-i18n="pub_4_desc">La véritable vitesse naît de ce que vous construisez correctement dès le premier jour. Bâtir des produits durables dès aujourd'hui.</p>
-            <div class="project-arrow">➜</div>
-          </a>
+    <!-- ============ EDUCATION ============ -->
+    <section id="education" class="section education">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__idx">05</span>
+          <span class="section-head__label" data-i18n="menu_edu">Formation</span>
         </div>
 
-        <div style="margin-top: 6rem;">
-          <a href="https://medium.com/@julienmarchand_83183" target="_blank" class="btn btn-primary nav-hover magnetic-btn">
-            <span class="btn-text">VOIR TOUS LES ARTICLES SUR MEDIUM</span>
-          </a>
-        </div>
-      </section>
-
-      <!-- FORMATION -->
-      <section id="education" class="section container">
-        <div class="split-layout">
-          <div class="sticky-sidebar">
-            <h2 class="h-section">
-              <span data-i18n="edu_title">Formation</span><span class="dot-accent">.
-                <div class="doodle-anchor doodle-float-alt">
-                  <svg class="doodle-narrative" style="width: 1px; height: 1px; overflow: visible;">
-                    <path class="path-narrative" style="stroke: var(--accent-teal);" d="M 0 0 L 100 -20 V 60 L 0 80 Z" />
-                    <path class="path-narrative" style="stroke: var(--accent-indigo);" d="M 20 10 L 80 0 M 20 30 L 70 20 M 20 50 L 60 40" />
-                    <circle class="path-narrative" cx="80" cy="60" r="20" style="stroke: var(--accent-rose);" />
-                    <path class="path-narrative" style="stroke: var(--accent-rose);" d="M 70 80 L 60 110 L 80 95 L 100 110 L 90 80" />
-                  </svg>
-                </div>
-              </span>
-            </h2>
-          </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 2rem; position: relative; z-index: 10;">
-            <!-- Epitech -->
-            <div class="glass-card tilt-card" style="padding: 3rem;">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
-                <span class="tag nav-hover" style="margin-bottom: 0; align-self: center;">Master's degree (2010 — 2015)</span>
-                <div class="logo-box">
-                  <img src="https://www.google.com/s2/favicons?domain=epitech.eu&sz=128" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="Epitech" />
-                  <div class="logo-fallback" style="display: none;">E</div>
-                </div>
-              </div>
-              <h4 style="font-weight: 700; font-size: 1.4rem;">Epitech</h4>
-              <p style="color: var(--accent-teal); font-weight: 600; margin-top: 0.5rem;" data-i18n="edu_1_sub">Informatique (Lille - Paris)</p>
-              <p style="color: var(--text-soft); margin-top: 1rem; font-size: 1rem; line-height: 1.6;" data-i18n="edu_1_desc">Pédagogie par projet intensive (C/C++, Architecture logicielle). Développement d'une forte autonomie et de capacités de résolution de problèmes complexes.</p>
+        <div class="edu-grid">
+          <div class="edu-list">
+            <div class="edu">
+              <span class="edu__years">2010 — 2015</span>
+              <span class="edu__school">EPITECH</span>
+              <span class="edu__degree" data-i18n="edu_1_degree">Master, Informatique</span>
+              <p class="edu__desc" data-i18n="edu_1_desc">Pédagogie par projet intensive (C/C++, architecture logicielle). Développement d'une forte autonomie et de capacités de résolution de problèmes complexes.</p>
             </div>
-
-            <!-- CSUSM -->
-            <div class="glass-card tilt-card" style="padding: 3rem;">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
-                <span class="tag nav-hover" style="margin-bottom: 0; align-self: center;">Exchange Year (2012 — 2013)</span>
-                <div class="logo-box">
-                  <img src="https://www.google.com/s2/favicons?domain=csusm.edu&sz=128" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="CSUSM" />
-                  <div class="logo-fallback" style="display: none;">C</div>
-                </div>
-              </div>
-              <h4 style="font-weight: 700; font-size: 1.4rem;">CSU San Marcos</h4>
-              <p style="color: var(--accent-indigo); font-weight: 600; margin-top: 0.5rem;" data-i18n="edu_2_sub">Informatique (Année Int.)</p>
-              <p style="color: var(--text-soft); margin-top: 1rem; font-size: 1rem; line-height: 1.6;" data-i18n="edu_2_desc">California State University San Marcos. Immersion totale. Développement de compétences interculturelles et d'une perspective globale de l'ingénierie.</p>
+            <div class="edu">
+              <span class="edu__years">2013 — 2014</span>
+              <span class="edu__school">California State University San Marcos</span>
+              <span class="edu__degree" data-i18n="edu_2_degree">Master, Informatique — année internationale</span>
+              <p class="edu__desc" data-i18n="edu_2_desc">Immersion totale. Développement de compétences interculturelles et d'une perspective globale de l'ingénierie.</p>
             </div>
-
-            <!-- IIE -->
-            <div class="glass-card tilt-card" style="padding: 3rem;">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
-                <span class="tag nav-hover" style="margin-bottom: 0; align-self: center;">Bachelor (2008 — 2010)</span>
-                <div class="logo-box">
-                  <div class="logo-fallback" style="font-size: 0.9rem;">IIE</div>
-                </div>
-              </div>
-              <h4 style="font-weight: 700; font-size: 1.4rem;">Inst. Info. et Entreprise</h4>
-              <p style="color: var(--accent-rose); font-weight: 600; margin-top: 0.5rem;" data-i18n="edu_3_sub">Informatique</p>
-              <p style="color: var(--text-soft); margin-top: 1rem; font-size: 1rem; line-height: 1.6;" data-i18n="edu_3_desc">Acquisition des fondamentaux techniques et approche structurée du développement logiciel, des réseaux et télécommunications.</p>
-            </div>
-
-            <!-- Certifs -->
-            <div class="glass-card tilt-card" style="padding: 3rem;">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
-                <span class="tag nav-hover" style="margin-bottom: 0; align-self: center;" data-i18n="edu_4_tag">Formation Continue</span>
-                <div class="logo-box">
-                  <img src="https://www.google.com/s2/favicons?domain=scrum.org&sz=128" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="Scrum.org" />
-                  <div class="logo-fallback" style="display: none; font-size: 0.9rem;">PSM</div>
-                </div>
-              </div>
-              <h4 style="font-weight: 700; font-size: 1.4rem;" data-i18n="edu_4_title">Certifications & Soft Skills</h4>
-              <p style="color: var(--accent-indigo); font-weight: 600; margin-top: 0.5rem;" data-i18n="edu_4_skills">PSM I / MBTI / DISC / CNV</p>
-              <p style="color: var(--text-soft); margin-top: 1rem; font-size: 1rem; line-height: 1.6;" data-i18n="edu_4_desc">Certification Professional Scrum Master I. Investissement fort dans le leadership humain avec des formations en Communication Non Violente et analyse comportementale.</p>
+            <div class="edu">
+              <span class="edu__years">2009 — 2010</span>
+              <span class="edu__school">Institut Informatique et Entreprise</span>
+              <span class="edu__degree" data-i18n="edu_3_degree">DUT, Informatique</span>
+              <p class="edu__desc" data-i18n="edu_3_desc">Acquisition des fondamentaux techniques et approche structurée du développement logiciel, des réseaux et télécommunications.</p>
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- RECOMMENDATIONS -->
-      <section id="recommendations" class="section">
-        <div class="container">
-          <h2 class="h-section" style="margin-bottom: clamp(2rem, 5vw, 5rem); text-align: center; width: 100%; display: block;">
-            <span data-i18n="rec_title">Recommendations</span><span class="dot-accent">.
-              <div class="doodle-anchor doodle-float-fast" style="left: 50%;">
-                <svg class="doodle-narrative" style="overflow: visible; width: 1px; height: 1px;">
-                  <path class="path-narrative" style="stroke: var(--accent-teal);" d="M -50 0 C -20 -40, 20 -40, 50 0" />
-                  <path class="path-narrative" style="stroke: var(--accent-indigo);" d="M -40 10 C -10 -20, 10 -20, 40 10" />
-                  <circle class="node-anim" cx="-50" cy="0" r="3" fill="var(--accent-teal)" />
-                  <circle class="node-anim" cx="50" cy="0" r="3" fill="var(--accent-indigo)" />
-                </svg>
-              </div>
-            </span>
-          </h2>
+          <aside class="edu-side">
+            <div class="edu-side__block">
+              <span class="edu-side__label">Certification</span>
+              <p class="edu-side__value">Professional Scrum Master I (PSM I)</p>
+            </div>
+            <div class="edu-side__block">
+              <span class="edu-side__label" data-i18n="edu_soft_label">Formation continue</span>
+              <p class="edu-side__value">MBTI · DISC · <span data-i18n="edu_cnv">CNV</span></p>
+            </div>
+            <div class="edu-side__block">
+              <span class="edu-side__label" data-i18n="lang_label">Langues</span>
+              <ul class="edu-side__langs">
+                <li><span data-i18n="lang_fr">Français</span><span data-i18n="lang_fr_lvl">Natif</span></li>
+                <li><span data-i18n="lang_en">Anglais</span><span data-i18n="lang_en_lvl">Professionnel</span></li>
+                <li><span data-i18n="lang_es">Espagnol</span><span data-i18n="lang_es_lvl">Notions</span></li>
+              </ul>
+            </div>
+          </aside>
         </div>
-        
-        <div class="marquee-container">
-          <div class="marquee-content">
-            <!-- Dynamically populated by recommendations.ts -->
-          </div>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- FOOTER -->
-      <footer class="container" style="padding-bottom: 10vh;">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 3rem;">
-          <h2 class="footer-brand text-gradient">
-            Julien Marchand
-            <svg width="100" height="40" viewBox="0 0 100 40" style="overflow: visible; opacity: 1; display: inline-block; vertical-align: middle;">
-              <path class="path-footer" style="stroke: var(--accent-teal);" d="M 15 10 Q 25 5 30 15 Q 40 15 45 20 Q 45 25 35 25 L 30 25 Q 25 35 15 35" />
-              <path class="path-footer" style="stroke: var(--accent-teal);" d="M 15 10 Q 5 15 10 25 Q 15 35 25 25 Q 25 15 15 10" />
-              <circle class="node-anim" cx="35" cy="18" r="1.5" fill="var(--accent-teal)" />
-              <path class="path-footer" style="stroke: var(--accent-rose);" d="M 70 5 A 5 5 0 1 1 69.9 5 Z" />
-              <path class="path-footer" style="stroke: var(--accent-rose);" d="M 66 14 C 55 20 60 35 70 35 C 80 35 85 20 74 14" />
-              <path class="path-footer" style="stroke: var(--accent-rose);" d="M 68 9 Q 69 11 70 9 M 72 9 Q 73 11 74 9" />
-            </svg>
-          </h2>
-          <div style="display: flex; gap: 2.5rem; justify-content: flex-end;">
-            <a href="mailto:jmarch031@gmail.com" class="nav-hover magnetic-btn" style="color:var(--text-soft); text-decoration: none; font-weight: 800; padding: 10px;"><span class="btn-text">Email</span></a>
-            <a href="https://www.linkedin.com/in/julien-marchand-0256186a" target="_blank" class="nav-hover magnetic-btn" style="color:var(--text-soft); text-decoration: none; font-weight: 800; padding: 10px;"><span class="btn-text">LinkedIn</span></a>
-          </div>
+    <!-- ============ RECOMMENDATIONS (dark band) ============ -->
+    <section id="recommendations" class="section recos" data-theme-band="dark">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-head__idx">06</span>
+          <span class="section-head__label" data-i18n="menu_rec">Recommandations</span>
+        </div>
+        <div class="recos__list">
+          <!-- rendered by recommendations.ts -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT / FOOTER ============ -->
+    <section id="contact" class="contact" data-theme-band="dark">
+      <div class="container">
+        <p class="contact__eyebrow" data-i18n="contact_eyebrow">Un projet, une idée, une question ?</p>
+        <a href="mailto:jmarch031@gmail.com" class="contact__big" data-cursor="mail">
+          <span class="contact__big-line" data-split data-i18n="contact_title">Parlons-en.</span>
+        </a>
+        <div class="contact__ctas">
+          <a href="mailto:jmarch031@gmail.com" class="pill pill--light magnetic" data-cursor="hover"><span class="pill__text">jmarch031@gmail.com</span></a>
+          <a href="https://www.linkedin.com/in/julien-marchand-0256186a" target="_blank" rel="noopener" class="pill pill--light magnetic" data-cursor="hover"><span class="pill__text">LinkedIn</span></a>
+          <a href="https://medium.com/@julienmarchand_83183" target="_blank" rel="noopener" class="pill pill--light magnetic" data-cursor="hover"><span class="pill__text">Medium</span></a>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div class="container footer__inner">
+          <span>© 2026 Julien Marchand</span>
+          <span data-i18n="hero_location">Lille, France</span>
+          <a href="#top" class="js-scroll roll" data-cursor="hover"><span data-i18n="back_top">Retour en haut ↑</span></a>
         </div>
       </footer>
-
-    </div>
+    </section>
   </main>
 
   <script type="module" src="/src/main.ts"></script>

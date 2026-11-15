@@ -1,337 +1,285 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Lenis from 'lenis';
-import { splitText } from './utils';
+import { SplitText } from 'gsap/SplitText';
+import type { HeroShader } from './shader';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
-/**
- * Global animations management
- */
-export function initAnimations(lenis: Lenis, translations: any, currentLang: string) {
-  
-  // Custom cursor and spotlight
-  const cursor = document.querySelector('.cursor');
-  const spotlight = document.querySelector('.mouse-glow');
-  
-  window.addEventListener('mousemove', (e) => {
-    gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.15, ease: "power2.out" });
-    gsap.to(spotlight, { x: e.clientX, y: e.clientY, duration: 0.8, ease: "power3.out" });
-  });
+/* Signature curve from design.md: cubic-bezier(0.19, 1, 0.22, 1) ≈ expo.out */
+const EASE = 'expo.out';
+const DUR = 1.25;
 
-  const updateHoverElements = () => {
-    document.querySelectorAll('a, .nav-hover, button, .menu-link').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor?.classList.add('hover-active'));
-      el.addEventListener('mouseleave', () => cursor?.classList.remove('hover-active'));
-    });
-  };
-  updateHoverElements();
+export const prefersReducedMotion = () =>
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Magnetic buttons
-  document.querySelectorAll('.magnetic-btn:not(.project-card)').forEach(elem => {
-    const text = elem.querySelector('.btn-text') || elem.querySelector('svg');
-    elem.addEventListener('mousemove', (e: any) => {
-      const rect = elem.getBoundingClientRect();
-      const x = (e.clientX - rect.left - rect.width / 2) * 0.2;
-      const y = (e.clientY - rect.top - rect.height / 2) * 0.2;
-      gsap.to(elem, { x: x, y: y, duration: 0.3, ease: "power2.out" });
-      if(text) gsap.to(text, { x: x*0.5, y: y*0.5, duration: 0.3, ease: "power2.out" });
-    });
-    elem.addEventListener('mouseleave', () => {
-      gsap.to(elem, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
-      if(text) gsap.to(text, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
-    });
-  });
+/* ======================================================================
+   INTRO — counter, curtain lift, hero reveal
+   ====================================================================== */
+export function playIntro(onDone: () => void) {
+  const intro = document.querySelector<HTMLElement>('.intro');
+  const num = document.querySelector<HTMLElement>('.intro__num');
+  const words = gsap.utils.toArray<HTMLElement>('.hero__word');
+  const splitHero = () =>
+    words.flatMap((w) => SplitText.create(w, { type: 'chars', mask: 'chars', charsClass: 'char' }).chars);
 
-  // Preloader and Initial Animation
-  const init = () => {
-    splitText('.text-split');
-    const tl = gsap.timeline();
-    const loaderText = document.getElementById('ascii-loader');
-    const targetText = "JULIEN MARCHAND";
-    let iter = 0; 
-    let counter = { value: 0 };
-    
-    gsap.to(counter, { 
-      value: 100, 
-      duration: 3.0, 
-      ease: "power2.inOut", 
-      onUpdate: () => { 
-        const counterEl = document.getElementById('loader-counter');
-        if (counterEl) counterEl.innerText = Math.round(counter.value) + "%"; 
-      } 
-    });
-
-    const loaderInterval = setInterval(() => {
-      if (loaderText) {
-        loaderText.innerText = targetText.split("").map((_, index) => 
-          index < Math.floor(iter) ? targetText[index] : (Math.random() > 0.5 ? "0" : "1")
-        ).join("");
-      }
-      if(iter >= targetText.length) { 
-        clearInterval(loaderInterval); 
-        if (loaderText) loaderText.innerText = targetText; 
-      }
-      iter += 0.15;
-    }, 30);
-
-    tl.to('.preloader-bar', { width: "100%", duration: 3.0, ease: "power2.inOut" })
-      .to('.preloader-content', { opacity: 0, y: -20, duration: 0.4 })
-      .to('.preloader', { yPercent: -100, duration: 1, ease: "power4.inOut" }, "+=0.1")
-      .to('main', { opacity: 1, duration: 0 }, "-=1") // Reveal main content as preloader slides up
-      .to('.split-char', { y: "0%", opacity: 1, rotateX: 0, duration: 0.8, stagger: 0.02, ease: "power4.out" }, "-=0.4")
-      .to('.fade-reveal-header', { opacity: 1, duration: 1, ease: "power3.out" }, "-=0.8")
-      .to('.fade-reveal', { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" }, "-=0.8");
-
-    setTimeout(() => { 
-      document.getElementById('global-scroll-indicator')?.classList.add('visible'); 
-    }, 4000);
-
-    gsap.utils.toArray<SVGPathElement>('.path-hero').forEach(path => {
-      const length = path.getTotalLength() || 800;
-      gsap.set(path, { opacity: 1, strokeDasharray: length, strokeDashoffset: length });
-      tl.to(path, { strokeDashoffset: 0, duration: 2.5, ease: "power3.out" }, "-=1");
-    });
-
-    gsap.to('.hero-content', { 
-      y: "-20vh", 
-      opacity: 0, 
-      scale: 0.95, 
-      filter: "blur(10px)", 
-      ease: "none", 
-      scrollTrigger: { 
-        trigger: ".main-content", 
-        start: "top bottom", 
-        end: "top top", 
-        scrub: true 
-      } 
-    });
-
-    gsap.to('.video-layer', {
-      opacity: 0,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".main-content",
-        start: "top bottom",
-        end: "top 20%",
-        scrub: true
-      }
-    });
-
-    // Wait a bit before initializing scroll doodles to ensure layout is ready
-    setTimeout(() => {
-      animateDoodlesScroll();
-    }, 1000);
-    
-    gsap.from("footer", { 
-      yPercent: -30, 
-      opacity: 0, 
-      ease: "none", 
-      scrollTrigger: { 
-        trigger: "footer", 
-        start: "top bottom", 
-        end: "bottom bottom", 
-        scrub: true 
-      } 
-    });
-
-    // Scroll to Top Logic
-    ScrollTrigger.create({
-      trigger: "footer",
-      start: "top 95%",
-      onEnter: () => {
-        const indicator = document.getElementById('global-scroll-indicator');
-        const textEl = document.getElementById('scroll-text');
-        if(indicator && textEl) {
-          indicator.classList.add('up');
-          textEl.innerText = translations[currentLang].scroll_up;
-        }
-      },
-      onLeaveBack: () => {
-        const indicator = document.getElementById('global-scroll-indicator');
-        const textEl = document.getElementById('scroll-text');
-        if(indicator && textEl) {
-          indicator.classList.remove('up');
-          textEl.innerText = translations[currentLang].scroll_down;
-        }
-      }
-    });
-
-    const globalScrollIndicator = document.getElementById('global-scroll-indicator');
-    if(globalScrollIndicator) {
-      globalScrollIndicator.addEventListener('click', function() {
-        if (this.classList.contains('up')) {
-          lenis.scrollTo(0, { duration: 1.5 });
-        }
-      });
-    }
-
-    setTimeout(() => { ScrollTrigger.refresh(); }, 100);
-    
-    initMarquee();
-    initTilt();
+  const finish = () => {
+    intro?.remove();
+    document.body.classList.remove('is-loading');
+    onDone();
   };
 
-  function initMarquee() {
-    const marqueeContent = document.querySelector('.marquee-content') as HTMLElement;
-    if (!marqueeContent) return;
-
-    // Use a small timeout to ensure layout is calculated correctly
-    setTimeout(() => {
-      const items = Array.from(marqueeContent.children);
-      if (items.length === 0) return;
-
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        gsap.set(marqueeContent, { x: 0 });
-        return;
-      }
-
-      const gap = 32; // 2rem gap from CSS
-      const totalWidth = (marqueeContent.scrollWidth + gap) / 2;
-
-      const tl = gsap.to(marqueeContent, {
-        x: `-=${totalWidth}`,
-        duration: 40,
-        ease: "none",
-        repeat: -1,
-        modifiers: {
-          x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
-        }
-      });
-
-      // Task 4: Pause on Hover (implementing now for efficiency)
-      marqueeContent.addEventListener('mouseenter', () => {
-        gsap.to(tl, { timeScale: 0.1, duration: 0.5 });
-      });
-      marqueeContent.addEventListener('mouseleave', () => {
-        gsap.to(tl, { timeScale: 1, duration: 0.5 });
-      });
-    }, 500);
+  if (prefersReducedMotion()) {
+    finish();
+    return;
   }
 
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    init();
-  } else {
-    window.addEventListener('load', init);
-  }
+  gsap.set('.hero .line-inner', { yPercent: 110 });
+  gsap.set(['.hero__ctas > *', '.hero__meta > *'], { opacity: 0, y: 24 });
+  gsap.set('.hero__media', { scale: 1.3, opacity: 0 });
+  gsap.set('.nav > *', { opacity: 0, y: -20 });
+  gsap.set('.scroll-badge', { scale: 0, rotate: -120 });
 
-  // Responsive MatchMedia
-  let mm = gsap.matchMedia();
-  mm.add("(min-width: 1025px)", () => {
-    const container = document.querySelector('.horizontal-content') as HTMLElement;
-    if (!container) return;
-    
-    let horizTween = gsap.to(container, { 
-      x: () => -(container.scrollWidth - window.innerWidth) + "px", 
-      ease: "none", 
-      scrollTrigger: { 
-        trigger: ".horizontal-wrap", 
-        pin: true, 
-        scrub: 1, 
-        end: () => "+=" + container.scrollWidth, 
-        invalidateOnRefresh: true, 
-        anticipatePin: 1 
-      } 
-    });
-    
-    gsap.utils.toArray('.skill-card').forEach((card: any) => { 
-      ScrollTrigger.create({ 
-        trigger: card, 
-        containerAnimation: horizTween, 
-        start: "left 65%", 
-        end: "right 35%", 
-        toggleClass: "is-focused" 
-      }); 
-    });
-  });
+  const counter = { v: 0 };
+  const fontsReady = (document as Document & { fonts?: FontFaceSet }).fonts?.ready ?? Promise.resolve();
 
-  mm.add("(max-width: 1024px)", () => { 
-    gsap.utils.toArray('.skill-card').forEach((card: any) => { 
-      ScrollTrigger.create({ 
-        trigger: card, 
-        start: "top 70%", 
-        end: "bottom 30%", 
-        toggleClass: "is-focused" 
-      }); 
-    }); 
-  });
+  const build = (chars: Element[]) => {
+  gsap.set(chars, { yPercent: 115 });
+  const tl = gsap.timeline({ onComplete: finish });
+  tl.to(counter, {
+    v: 100,
+    duration: 1.6,
+    ease: 'power3.inOut',
+    onUpdate: () => { if (num) num.textContent = String(Math.round(counter.v)); },
+  })
+    .to('.intro__count, .intro__label', { yPercent: -100, opacity: 0, duration: 0.8, ease: 'power3.in' })
+    .to(intro, { clipPath: 'inset(0 0 100% 0)', duration: 1.4, ease: 'expo.inOut' }, '-=0.2')
+    .to('.hero__media', { scale: 1, opacity: 1, duration: 2.4, ease: EASE }, '<0.2')
+    .to(chars, { yPercent: 0, duration: 1.6, stagger: 0.035, ease: EASE }, '<0.35')
+    .to('.hero .line-inner', { yPercent: 0, duration: DUR, stagger: 0.1, ease: EASE }, '<0.4')
+    .to(['.hero__ctas > *', '.hero__meta > *'], { opacity: 1, y: 0, duration: DUR, stagger: 0.08, ease: EASE }, '<0.2')
+    .to('.nav > *', { opacity: 1, y: 0, duration: DUR, stagger: 0.06, ease: EASE }, '<')
+    .to('.scroll-badge', { scale: 1, rotate: 0, duration: 1.6, ease: EASE }, '<0.1');
+  };
 
-  function animateDoodlesScroll() {
-    gsap.utils.toArray<SVGGeometryElement>('.path-narrative').forEach(path => {
-      const length = path.getTotalLength();
-      gsap.set(path, { opacity: 1, strokeDasharray: length, strokeDashoffset: length });
-
-      gsap.to(path, {
-        strokeDashoffset: 0,
-        ease: "power1.inOut",
-        scrollTrigger: {
-          trigger: path.closest('.h-section') || path.closest('section'),
-          start: "top 85%",
-          end: "bottom 30%",
-          scrub: 1.5
-        }
-      });
-    });
-
-    gsap.utils.toArray<SVGPathElement>('.path-horizontal').forEach(path => {
-      const length = path.getTotalLength();
-      gsap.set(path, { opacity: 1, strokeDasharray: length, strokeDashoffset: length });
-      gsap.to(path, { 
-        strokeDashoffset: 0, 
-        ease: "none", 
-        scrollTrigger: { 
-          trigger: ".horizontal-wrap", 
-          start: "top 60%", 
-          end: () => "+=" + (document.querySelector('.horizontal-content')?.scrollWidth || 0), 
-          scrub: 1.5 
-        } 
-      });
-    });
-  }
-
-  gsap.utils.toArray('.skill-focus-item').forEach((item: any) => { 
-    ScrollTrigger.create({ 
-      trigger: item, 
-      start: "top 70%", 
-      end: "bottom 30%", 
-      toggleClass: "is-active" 
-    }); 
-  });
+  // Split once the type is ready so character boxes match the final font
+  Promise.race([fontsReady, new Promise((r) => setTimeout(r, 2500))]).then(() => build(splitHero()));
 }
 
-/**
- * Initialize 3D tilt effect for all elements with .tilt-card class
- */
-export function initTilt() {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+/* ======================================================================
+   SCROLL — every ScrollTrigger lives inside a gsap.context so the whole
+   set can be reverted and rebuilt after a language switch.
+   ====================================================================== */
+export function initScrollAnimations(shader: HeroShader) {
+  return gsap.context(() => {
+    const mm = gsap.matchMedia();
 
-  document.querySelectorAll('.tilt-card').forEach(elem => {
-    elem.addEventListener('mousemove', (e: any) => {
-      const rect = elem.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      const rotateX = (y - centerY) / 10;
-      const rotateY = (centerX - x) / 10;
-      
-      gsap.to(elem, {
-        rotateX: rotateX,
-        rotateY: rotateY,
-        duration: 0.5,
-        ease: "power2.out",
-        transformPerspective: 1000
-      });
+    /* ---- Hero: pause shader off-screen ---- */
+    ScrollTrigger.create({
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      onToggle: (self) => shader.setActive(self.isActive),
     });
-    
-    elem.addEventListener('mouseleave', () => {
-      gsap.to(elem, {
-        rotateX: 0,
-        rotateY: 0,
-        duration: 0.5,
-        ease: "power2.out"
+
+    mm.add(
+      {
+        motion: '(prefers-reduced-motion: no-preference)',
+        desktop: '(min-width: 961px)',
+      },
+      (ctx) => {
+        const { motion, desktop } = ctx.conditions as { motion: boolean; desktop: boolean };
+        if (!motion) return;
+
+        /* ---- Hero exit: words drift apart, media sinks ---- */
+        const heroTl = gsap.timeline({
+          scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
+        });
+        heroTl
+          .to('.hero__media', { yPercent: 30, scale: 1.12, ease: 'none' }, 0)
+          .to('.hero__word:first-child', { xPercent: -14, ease: 'none' }, 0)
+          .to('.hero__word--indent', { xPercent: 10, ease: 'none' }, 0)
+          .to('.hero__inner', { yPercent: 18, opacity: 0.15, ease: 'none' }, 0)
+          .to('.scroll-badge', { opacity: 0, ease: 'none' }, 0);
+
+        /* ---- Section heading rules draw in ---- */
+        gsap.utils.toArray<HTMLElement>('.section-head').forEach((head) => {
+          gsap.fromTo(head, { '--head-line': 0 }, {
+            '--head-line': 1, duration: 1.6, ease: EASE,
+            scrollTrigger: { trigger: head, start: 'top 88%' },
+          });
+          gsap.from(head.children, {
+            yPercent: 100, opacity: 0, duration: DUR, stagger: 0.08, ease: EASE,
+            scrollTrigger: { trigger: head, start: 'top 88%' },
+          });
+        });
+
+        /* ---- Manifesto: words light up with the scroll ---- */
+        const manifesto = document.querySelector<HTMLElement>('[data-words]');
+        if (manifesto) {
+          const split = SplitText.create(manifesto, { type: 'words', wordsClass: 'word' });
+          gsap.fromTo(split.words, { opacity: 0.12 }, {
+            opacity: 1, stagger: 0.1, ease: 'none',
+            scrollTrigger: { trigger: manifesto, start: 'top 80%', end: 'bottom 45%', scrub: true },
+          });
+        }
+
+        /* ---- Line-by-line reveals (paragraphs + headings) ---- */
+        gsap.utils.toArray<HTMLElement>('.reveal-lines, [data-split-lines]').forEach((el) => {
+          SplitText.create(el, {
+            type: 'lines',
+            mask: 'lines',
+            autoSplit: true,
+            onSplit: (self) =>
+              gsap.from(self.lines, {
+                yPercent: 110, duration: DUR, stagger: 0.08, ease: EASE,
+                scrollTrigger: { trigger: el, start: 'top 85%' },
+              }),
+          });
+        });
+
+        /* ---- Parallax depth in the about grid ---- */
+        gsap.utils.toArray<HTMLElement>('.about__col').forEach((col, i) => {
+          gsap.fromTo(col, { y: i === 0 ? 40 : 120 }, {
+            y: i === 0 ? -20 : -40, ease: 'none',
+            scrollTrigger: { trigger: '.about__grid', start: 'top bottom', end: 'bottom top', scrub: true },
+          });
+        });
+
+        /* ---- Stats: counters + rules ---- */
+        gsap.from('.stat', {
+          y: 60, opacity: 0, duration: DUR, stagger: 0.1, ease: EASE,
+          scrollTrigger: { trigger: '.stats', start: 'top 85%' },
+        });
+        gsap.utils.toArray<HTMLElement>('.js-count').forEach((el) => {
+          const to = Number(el.dataset.to ?? el.textContent);
+          const o = { v: 0 };
+          gsap.to(o, {
+            v: to, duration: 2, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 90%' },
+            onUpdate: () => { el.textContent = String(Math.round(o.v)); },
+          });
+        });
+
+        /* ---- Expertise: horizontal pinned track on desktop ---- */
+        const track = document.querySelector<HTMLElement>('.expertise__track');
+        if (desktop && track) {
+          const distance = () => track.scrollWidth - window.innerWidth;
+          const horizontal = gsap.to(track, {
+            x: () => -distance(),
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '.expertise__pin',
+              start: 'top top',
+              end: () => `+=${distance()}`,
+              pin: true,
+              scrub: 1,
+              invalidateOnRefresh: true,
+            },
+          });
+          gsap.utils.toArray<HTMLElement>('.exp-card').forEach((card) => {
+            gsap.from(card, {
+              yPercent: 18, rotate: 3, opacity: 0.2, ease: 'none',
+              scrollTrigger: {
+                trigger: card,
+                containerAnimation: horizontal,
+                start: 'left 100%',
+                end: 'left 70%',
+                scrub: true,
+              },
+            });
+          });
+        } else {
+          gsap.utils.toArray<HTMLElement>('.exp-card').forEach((card) => {
+            gsap.from(card, {
+              y: 60, opacity: 0, duration: DUR, ease: EASE,
+              scrollTrigger: { trigger: card, start: 'top 88%' },
+            });
+          });
+        }
+
+        /* ---- Marquee reacts to scroll velocity ---- */
+        const row = document.querySelector<HTMLElement>('.marquee__row');
+        if (row && !row.dataset.cloned) {
+          row.innerHTML += row.innerHTML;
+          row.dataset.cloned = '1';
+        }
+        if (row) {
+          const loop = gsap.to(row, { xPercent: -50, duration: 40, ease: 'none', repeat: -1 });
+          const skewTo = gsap.quickTo(row, 'skewX', { duration: 0.6, ease: 'power3' });
+          ScrollTrigger.create({
+            trigger: '.marquee',
+            start: 'top bottom',
+            end: 'bottom top',
+            onUpdate: (self) => {
+              const v = self.getVelocity();
+              const dir = self.direction;
+              gsap.to(loop, { timeScale: dir * (1 + Math.min(Math.abs(v) / 300, 6)), duration: 0.3, overwrite: true });
+              gsap.to(loop, { timeScale: dir, duration: 1.2, delay: 0.3 });
+              skewTo(gsap.utils.clamp(-8, 8, v / -250));
+            },
+            onLeave: () => skewTo(0),
+            onLeaveBack: () => skewTo(0),
+          });
+        }
+
+        /* ---- Rows: jobs, works, education ---- */
+        ScrollTrigger.batch('.job, .work, .edu, .edu-side__block', {
+          start: 'top 92%',
+          onEnter: (batch) =>
+            gsap.from(batch, { y: 70, opacity: 0, duration: DUR, stagger: 0.08, ease: EASE, overwrite: true }),
+          once: true,
+        });
+
+        /* ---- Education aside floats a little slower ---- */
+        if (desktop) {
+          gsap.fromTo('.edu-side', { y: 80 }, {
+            y: -40, ease: 'none',
+            scrollTrigger: { trigger: '.edu-grid', start: 'top bottom', end: 'bottom top', scrub: true },
+          });
+        }
+
+        /* ---- Recommendations: wipe in ---- */
+        gsap.utils.toArray<HTMLElement>('.reco').forEach((reco) => {
+          gsap.from(reco.querySelector('.reco__quote'), {
+            clipPath: 'inset(0 0 100% 0)', y: 40, duration: 1.6, ease: EASE,
+            scrollTrigger: { trigger: reco, start: 'top 82%' },
+          });
+          gsap.from(reco.querySelector('.reco__meta'), {
+            opacity: 0, x: -30, duration: DUR, ease: EASE,
+            scrollTrigger: { trigger: reco, start: 'top 82%' },
+          });
+        });
+
+        /* ---- Contact: the big line rises letter by letter ---- */
+        const big = document.querySelector<HTMLElement>('.contact__big-line');
+        if (big) {
+          const split = SplitText.create(big, { type: 'chars', mask: 'chars', charsClass: 'char' });
+          gsap.from(split.chars, {
+            yPercent: 115, duration: 1.6, stagger: 0.04, ease: EASE,
+            scrollTrigger: { trigger: '.contact', start: 'top 70%' },
+          });
+          gsap.fromTo('.contact__big', { xPercent: 6 }, {
+            xPercent: -4, ease: 'none',
+            scrollTrigger: { trigger: '.contact', start: 'top bottom', end: 'bottom bottom', scrub: true },
+          });
+        }
+        gsap.from('.contact__ctas > *, .contact__eyebrow', {
+          y: 30, opacity: 0, duration: DUR, stagger: 0.08, ease: EASE,
+          scrollTrigger: { trigger: '.contact__ctas', start: 'top 95%' },
+        });
+      },
+    );
+
+    /* ---- Light / dark bands: the whole page crossfades.
+       Created last so their positions include the expertise pin spacing. ---- */
+    gsap.utils.toArray<HTMLElement>('main > section').forEach((section) => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top 50%',
+        end: 'bottom 50%',
+        onToggle: (self) => {
+          if (self.isActive) document.body.classList.toggle('is-dark', section.dataset.themeBand === 'dark');
+        },
       });
     });
   });
