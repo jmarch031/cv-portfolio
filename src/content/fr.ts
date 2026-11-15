@@ -299,7 +299,7 @@ export const fr: Content = {
     title: 'Apprendre, toujours.',
     schools: [
       { years: '2010 — 2015', from: 2010, to: 2015, name: 'EPITECH', degree: 'Master, Informatique', note: 'European Institute of Technology.' },
-      { years: '2013 — 2014', from: 2013, to: 2014, name: 'California State University San Marcos', degree: 'Master, Informatique', note: 'Une année à l’international, en Californie, pendant le cursus EPITECH.' },
+      { years: '2013 — 2014', from: 2013, to: 2014, name: 'California State University San Marcos', degree: 'Année d’échange, Informatique', note: 'Une année en Californie, qui a validé ma 4ᵉ année d’EPITECH.' },
       { years: '2009 — 2010', from: 2009, to: 2010, name: 'Institut Informatique et Entreprise', degree: 'DUT, Informatique', note: 'Premier diplôme en informatique.' },
     ],
     certTitle: 'Certification',

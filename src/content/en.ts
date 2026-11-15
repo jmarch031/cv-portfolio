@@ -299,7 +299,7 @@ export const en: Content = {
     title: 'Always learning.',
     schools: [
       { years: '2010 — 2015', from: 2010, to: 2015, name: 'EPITECH', degree: "Master's degree, Computer Science", note: 'European Institute of Technology.' },
-      { years: '2013 — 2014', from: 2013, to: 2014, name: 'California State University San Marcos', degree: "Master's degree, Computer Science", note: 'A year abroad in California, during the EPITECH programme.' },
+      { years: '2013 — 2014', from: 2013, to: 2014, name: 'California State University San Marcos', degree: 'Exchange year, Computer Science', note: 'A year in California that validated my 4th year at EPITECH.' },
       { years: '2009 — 2010', from: 2009, to: 2010, name: 'Institut Informatique et Entreprise', degree: 'DUT, Computer Science', note: 'First degree in computer science.' },
     ],
     certTitle: 'Certification',
