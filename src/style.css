@@ -466,14 +466,16 @@ ul, ol { list-style: none; }
 .journey__grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 64px; align-items: start; }
 .jobs { border-top: 1px solid var(--line); }
 .journey.is-pinned .jobs__window {
-  height: calc(100vh - 200px);
+  height: calc(100vh - 140px);
   overflow: hidden;
   -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 10%, #000 88%, transparent 100%);
   mask-image: linear-gradient(180deg, transparent 0, #000 10%, #000 88%, transparent 100%);
 }
 .journey.is-pinned .jobs { border-top: 0; padding: 12vh 0; will-change: transform; }
 .journey.is-pinned .job { cursor: pointer; }
-.journey.is-pinned .journey__panel { position: relative; top: auto; max-height: calc(100vh - 200px); }
+.journey.is-pinned .journey__panel { position: relative; top: auto; max-height: none; overflow: visible; }
+.journey.is-pinned .journey__panel-inner { height: calc(100vh - 140px); min-height: 0; overflow: hidden; }
+.journey.is-pinned .panel-item { will-change: transform; }
 .job { padding: 28px 0; border-bottom: 1px solid var(--line); color: var(--muted); transition: color 0.8s var(--ease); }
 .job.is-active { color: var(--fg); }
 .job__dates { font-size: var(--text-caption); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
@@ -488,15 +490,15 @@ ul, ol { list-style: none; }
 .panel-item { position: absolute; inset: var(--card-padding); opacity: 0; visibility: hidden; }
 .panel-item.is-active { position: relative; inset: auto; opacity: 1; visibility: visible; }
 .panel-item__company { font-size: var(--text-caption); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-.panel-item__role { font-size: var(--text-subheading); font-weight: 300; line-height: 1.15; letter-spacing: -0.03em; margin: 12px 0 28px; }
+.panel-item__role { font-size: clamp(24px, 2.4vw, 32px); font-weight: 300; line-height: 1.15; letter-spacing: -0.03em; margin: 10px 0 20px; }
 .job-detail__meta { font-size: var(--text-caption); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
 .job-detail__text { font-size: var(--text-body-sm); line-height: 1.58; }
 .job-detail__figures { display: flex; gap: 34px; margin-bottom: 20px; }
 .job-detail__figures p { display: grid; gap: 4px; }
-.job-detail__figure { font-size: var(--text-heading-sm); font-weight: 300; line-height: 1; letter-spacing: -0.04em; }
+.job-detail__figure { font-size: clamp(32px, 3.4vw, 46px); font-weight: 300; line-height: 1; letter-spacing: -0.04em; }
 .job-detail__figure-label { font-size: var(--text-caption); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .job-detail__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 24px; }
-.job-detail__points { display: grid; gap: 12px; margin-top: 20px; }
+.job-detail__points { display: grid; gap: 10px; margin-top: 18px; }
 .job-detail__points li { position: relative; padding-left: 28px; font-size: var(--text-body-sm); line-height: 1.5; color: var(--muted); }
 .job-detail__points li::before { content: ''; position: absolute; left: 0; top: 0.75em; width: 14px; height: 1px; background: currentColor; }
 
@@ -543,12 +545,20 @@ ul, ol { list-style: none; }
    ===================================================================== */
 .education { padding-top: 0; }
 .education__title { font-size: var(--text-heading); font-weight: 300; line-height: 1.1; letter-spacing: -0.035em; margin-bottom: 64px; }
-.education__grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
-.school { padding: 34px 28px 34px 0; }
-.school + .school { padding-left: 28px; border-left: 1px solid var(--line); }
+.edu-timeline { border-top: 1px solid var(--line); }
+.school { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; align-items: center; padding: 34px 0; border-bottom: 1px solid var(--line); }
 .school__years { font-size: var(--text-caption); letter-spacing: 0.06em; color: var(--muted); }
-.school__name { font-size: var(--text-subheading); font-weight: 300; line-height: 1.15; letter-spacing: -0.03em; margin: 40px 0 8px; }
-.school__degree { font-size: var(--text-body-sm); color: var(--muted); }
+.school__name { font-size: var(--text-subheading); font-weight: 300; line-height: 1.15; letter-spacing: -0.03em; margin: 10px 0 6px; }
+.school__degree { font-size: var(--text-body-sm); }
+.school__note { font-size: var(--text-body-sm); color: var(--muted); margin-top: 4px; }
+.school__track { position: relative; height: 1px; background: var(--line); }
+.school__bar { position: absolute; top: -1px; height: 3px; background: var(--iri); transform-origin: left; }
+.school__bar::before, .school__bar::after { content: ''; position: absolute; top: -4px; width: 11px; height: 11px; border-radius: 50%; background: var(--bg); border: 1px solid rgb(var(--amber)); }
+.school__bar::before { left: -5px; border-color: rgb(var(--sage)); }
+.school__bar::after { right: -5px; }
+.edu-axis { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; padding-top: 14px; }
+.edu-axis__years { position: relative; height: 16px; font-size: var(--text-caption); color: var(--muted); font-variant-numeric: tabular-nums; }
+.edu-axis__years span { position: absolute; transform: translateX(-50%); }
 .education__extra { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 64px; padding-top: 34px; border-top: 1px solid var(--line); }
 .education__cert { font-size: var(--text-body); }
 .langs li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: var(--text-body-sm); }
@@ -652,9 +662,6 @@ ul, ol { list-style: none; }
    Responsive — tablets, phones, landscape phones
    ===================================================================== */
 @media (max-width: 760px) {
-  .education__grid { grid-template-columns: 1fr; }
-  .school + .school { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
-  .school__name { margin-top: 12px; }
   .education__extra { grid-template-columns: 1fr; gap: 34px; }
   .recos__controls { flex-direction: column; align-items: flex-start; gap: 20px; }
   .recos__note { flex: none; }
@@ -704,4 +711,27 @@ ul, ol { list-style: none; }
   .writing__head { grid-template-columns: 1fr; gap: 20px; margin-bottom: 40px; }
   .work__link { grid-template-columns: 1fr 24px; gap: 14px; padding: 26px 0; }
   .work__idx { display: none; }
+}
+
+@media (max-width: 760px) {
+  .school { grid-template-columns: 1fr; gap: 20px; padding: 28px 0 40px; }
+  .edu-axis { grid-template-columns: 1fr; gap: 0; }
+  .edu-axis > span:first-child { display: none; }
+  .school__track { margin: 0 6px; }
+  .edu-axis__years { margin: 0 6px; }
+  .edu-axis__years span:nth-child(even) { display: none; }
+}
+
+/* =====================================================================
+   Performance & touch ergonomics
+   ===================================================================== */
+/* Touch devices: no heavy blur/blend/backdrop effects, comfortable tap targets */
+@media (pointer: coarse), (max-width: 960px) {
+  .glow { filter: none; mix-blend-mode: normal; opacity: calc(var(--glow-opacity) * 0.5); background: radial-gradient(closest-side, rgba(var(--amber), 0.4), rgba(var(--sage), 0.22) 45%, transparent 75%); will-change: auto; }
+  .act__tags .tag, .journey__panel-inner { backdrop-filter: none; }
+  .nav__lang-btn, .nav__theme, .nav__burger { padding: 12px 8px; margin: -12px -8px; }
+  .nav__lang { gap: 14px; }
+  .skill__head { min-height: 56px; }
+  .recos__btn { min-width: 56px; min-height: 48px; }
+  .footer__col a { padding: 6px 0; }
 }

@@ -98,7 +98,6 @@ export function initScroll(liquids: Liquids) {
         /* ---------- Story: three pinned acts ---------- */
         const acts = gsap.utils.toArray<HTMLElement>('.act');
         if (tall && acts.length) {
-          const parts = (a: HTMLElement) => a.querySelectorAll('.act__years, .act__title, .act__text, .act__tags');
           const numeral = (a: HTMLElement) => a.querySelector('.act__numeral');
           const current = document.querySelector<HTMLElement>('.story__current');
 
@@ -114,40 +113,60 @@ export function initScroll(liquids: Liquids) {
           const T = (i: number) => i * STEP;
           const total = T(last) + REST;
 
+          // Act changes are *triggered* (they always play to the end, wherever the
+          // scroll stops); everything inside an act is scrubbed, so something keeps
+          // moving for as long as the reader scrolls.
+          let shown = 0;
+          const showAct = (idx: number) => {
+            if (idx === shown) return;
+            const dir = idx > shown ? 1 : -1;
+            const prev = acts[shown];
+            const next = acts[idx];
+            shown = idx;
+            if (current) current.textContent = String(idx + 1).padStart(2, '0');
+            gsap.killTweensOf(acts);
+            acts.forEach((x) => { if (x !== prev && x !== next) gsap.set(x, { autoAlpha: 0 }); });
+            gsap.to(prev, { autoAlpha: 0, yPercent: -6 * dir, duration: 0.45, ease: 'power3.in' });
+            gsap.fromTo(next, { autoAlpha: 0, yPercent: 6 * dir }, { autoAlpha: 1, yPercent: 0, duration: 1.1, ease: EASE, delay: 0.3 });
+          };
+
           const tl = gsap.timeline({
-            defaults: { ease: 'power3.inOut' },
+            defaults: { ease: 'none' },
+            onUpdate: () => {
+              const t = tl.time();
+              let idx = 0;
+              acts.forEach((_, i) => { if (t >= T(i) - MOVE / 2) idx = i; });
+              showAct(idx);
+            },
             scrollTrigger: {
               trigger: '.story__pin',
               start: 'top top',
               end: () => `+=${window.innerHeight * acts.length * 1.2}`,
               pin: true,
-              scrub: 0.8,
-              onUpdate: () => {
-                const t = tl.time();
-                let idx = 0;
-                acts.forEach((_, i) => { if (t >= T(i) - MOVE / 2) idx = i; });
-                if (current) current.textContent = String(idx + 1).padStart(2, '0');
-              },
+              scrub: 0.6,
             },
           });
 
-          tl.fromTo('.story__bar', { scaleX: 1 / acts.length }, { scaleX: 1, ease: 'none', duration: total }, 0);
+          tl.fromTo('.story__bar', { scaleX: 1 / acts.length }, { scaleX: 1, duration: total }, 0);
           acts.forEach((a, i) => {
-            // slow drift of the numeral while its act is on screen
             const from = Math.max(0, T(i) - MOVE);
-            const to = Math.min(total, T(i) + REST);
-            tl.fromTo(numeral(a), { yPercent: 8 }, { yPercent: -8, ease: 'none', duration: to - from }, from);
+            const to = Math.min(total, T(i) + REST + MOVE / 2);
+            const span = to - from;
+            // numeral and title drift, text lights up word by word, tags arrive one by one
+            tl.fromTo(numeral(a), { yPercent: 10, scale: 0.94 }, { yPercent: -10, scale: 1.04, duration: span }, from);
+            tl.fromTo(a.querySelector('.act__title'), { xPercent: 1.5 }, { xPercent: -2.5, duration: span }, from);
+            const { words } = SplitText.create(a.querySelector('.act__text'), { type: 'words', wordsClass: 'act-word' });
+            const startWords = i === 0 ? 0 : T(i) - MOVE * 0.4;
+            tl.fromTo(words, { opacity: 0.18 }, { opacity: 1, stagger: (REST * 0.8) / words.length, duration: 0.15 }, startWords);
+            const tags = a.querySelectorAll('.act__tags .tag');
+            tl.fromTo(tags, { y: 16, opacity: 0 }, { y: 0, opacity: 1, stagger: (REST * 0.4) / tags.length, duration: 0.15, ease: 'power2.out' }, startWords + REST * 0.4);
             if (i === 0) return;
-            const prev = acts[i - 1];
-            const out = T(i) - MOVE;
-            tl.to(parts(prev), { yPercent: -50, autoAlpha: 0, stagger: 0.03, duration: MOVE * 0.45 }, out)
-              .to(numeral(prev), { autoAlpha: 0, duration: MOVE * 0.45 }, out)
-              .set(a, { autoAlpha: 1 }, out + MOVE * 0.4)
-              .fromTo(parts(a), { yPercent: 50, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, stagger: 0.04, duration: MOVE * 0.45 }, out + MOVE * 0.4)
-              .fromTo(numeral(a), { autoAlpha: 0, scale: 0.88 }, { autoAlpha: 1, scale: 1, duration: MOVE * 0.55 }, out + MOVE * 0.4)
-              .to(liquids.story.state.c, { endArray: flat(ACT_PALETTES[i % ACT_PALETTES.length]), duration: MOVE, ease: 'none' }, out)
-              .to(liquids.story.state.lens, { endArray: ACT_LENSES[i % ACT_LENSES.length], duration: MOVE }, out);
+            tl.to(liquids.story.state.c, { endArray: flat(ACT_PALETTES[i % ACT_PALETTES.length]), duration: STEP }, T(i - 1))
+              .to(liquids.story.state.lens, { endArray: ACT_LENSES[i % ACT_LENSES.length], duration: STEP, ease: 'sine.inOut' }, T(i - 1));
           });
+          // keep the lens travelling during the last act too
+          const lastLens = ACT_LENSES[last % ACT_LENSES.length];
+          tl.to(liquids.story.state.lens, { endArray: [lastLens[0] - 0.06, lastLens[1] + 0.05, lastLens[2] * 1.08], duration: REST, ease: 'sine.inOut' }, T(last));
 
           // First act enters when the section arrives (on the wrapper: the timeline owns the parts)
           gsap.from(acts[0].querySelector('.act__body'), {
@@ -207,14 +226,22 @@ export function initScroll(liquids: Liquids) {
             const y = gsap.utils.clamp(0, max, row.offsetTop - win.clientHeight / 2 + row.offsetHeight / 2);
             gsap.to(list, { y: -y, duration: 1, ease: EASE, overwrite: true });
           };
+          // Long details scroll inside the panel while the reader stays on the role
+          const panelBox = document.querySelector<HTMLElement>('.journey__panel-inner')!;
+          const pad = () => parseFloat(getComputedStyle(panelBox).paddingTop) * 2;
           const st = ScrollTrigger.create({
             trigger: '.journey__grid',
-            start: 'top 120px',
+            start: 'top 100px',
             end: () => `+=${jobs.length * window.innerHeight * 0.8}`,
             pin: true,
             onUpdate: (self) => {
-              const i = Math.min(jobs.length - 1, Math.floor(self.progress * jobs.length));
+              const pos = self.progress * jobs.length;
+              const i = Math.min(jobs.length - 1, Math.floor(pos));
               if (i !== active) { activate(i); follow(i); }
+              const item = panels[i];
+              const overflow = item.scrollHeight - (panelBox.clientHeight - pad());
+              const local = gsap.utils.clamp(0, 1, (pos - i - 0.2) / 0.6);
+              gsap.to(item, { y: overflow > 0 ? -overflow * local : 0, duration: 0.6, ease: 'power3.out', overwrite: 'auto' });
             },
           });
           jobs.forEach((job, i) => {
@@ -249,6 +276,11 @@ export function initScroll(liquids: Liquids) {
             onEnter: (batch) => gsap.from(batch, { y: 50, autoAlpha: 0, duration: DUR, stagger: 0.08, ease: EASE }),
           });
         }
+
+        /* ---------- Education: the timeline bars draw themselves ---------- */
+        gsap.utils.toArray<HTMLElement>('.school__bar').forEach((bar) => {
+          gsap.from(bar, { scaleX: 0, duration: 1.6, ease: EASE, scrollTrigger: { trigger: bar, start: 'top 85%' } });
+        });
 
         /* ---------- Contact: lines converge, letters rise ---------- */
         gsap.utils.toArray<HTMLElement>('.contact__line').forEach((line, i) => {

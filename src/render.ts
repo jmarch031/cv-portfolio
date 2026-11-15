@@ -294,17 +294,37 @@ function education(c: Content) {
     <div class="container">
       ${label('07', e.label)}
       <h2 class="education__title js-lines">${esc(e.title)}</h2>
-      <div class="education__grid">
+      <div class="edu-timeline">
         ${e.schools
-          .map(
-            (s) => `
+          .map((s) => {
+            const min = Math.min(...e.schools.map((x) => x.from));
+            const max = Math.max(...e.schools.map((x) => x.to));
+            const left = ((s.from - min) / (max - min)) * 100;
+            const width = ((s.to - s.from) / (max - min)) * 100;
+            return `
           <div class="school js-rise">
-            <p class="school__years">${esc(s.years)}</p>
-            <h3 class="school__name">${esc(s.name)}</h3>
-            <p class="school__degree">${esc(s.degree)}</p>
-          </div>`,
-          )
+            <div class="school__info">
+              <p class="school__years">${esc(s.years)}</p>
+              <h3 class="school__name">${esc(s.name)}</h3>
+              <p class="school__degree">${esc(s.degree)}</p>
+              <p class="school__note">${esc(s.note)}</p>
+            </div>
+            <div class="school__track" aria-hidden="true">
+              <span class="school__bar" style="left:${left.toFixed(2)}%;width:${width.toFixed(2)}%"></span>
+            </div>
+          </div>`;
+          })
           .join('')}
+        <div class="edu-axis" aria-hidden="true">
+          <span></span>
+          <div class="edu-axis__years">
+            ${(() => {
+              const min = Math.min(...e.schools.map((x) => x.from));
+              const max = Math.max(...e.schools.map((x) => x.to));
+              return Array.from({ length: max - min + 1 }, (_, k) => `<span style="left:${((k / (max - min)) * 100).toFixed(2)}%">${min + k}</span>`).join('');
+            })()}
+          </div>
+        </div>
       </div>
       <div class="education__extra">
         <div class="js-rise">

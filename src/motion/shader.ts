@@ -22,6 +22,7 @@ uniform vec3 uC3;      // depth accent
 uniform vec3 uLens;    // x, y (0..1, aspect corrected on x), radius (fraction of height)
 uniform float uLight;  // 0 = obsidian base, 1 = paper base
 uniform float uScale;
+uniform float uQuality; // 1 = chromatic split through the glass, 0 = single sample (phones)
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
 float noise(vec2 p) {
@@ -70,10 +71,11 @@ void main() {
     vec2 n = d / uLens.z;                        // normal (xy)
     vec2 refr = base - n * (0.55 * (1.0 - z)) * uScale + vec2(0.3, -0.2);
     // slight chromatic split through the glass
-    vec3 g;
-    g.r = liquid(refr + n * 0.025, t).r;
-    g.g = liquid(refr, t).g;
-    g.b = liquid(refr - n * 0.025, t).b;
+    vec3 g = liquid(refr, t);
+    if (uQuality > 0.5) {
+      g.r = liquid(refr + n * 0.025, t).r;
+      g.b = liquid(refr - n * 0.025, t).b;
+    }
     g *= 1.12;
     float fres = pow(1.0 - z, 3.0);
     vec3 rim = mix(uC1, uC2, 0.5 + 0.5 * sin(atan(n.y, n.x) * 2.0 + uTime * 0.3));
@@ -171,7 +173,11 @@ export function createLiquid(opts: LiquidOptions): Liquid {
   const uC1 = u('uC1'), uC2 = u('uC2'), uC3 = u('uC3'), uLens = u('uLens'), uLight = u('uLight'), uScale = u('uScale');
   gl.uniform1f(uScale, opts.scale ?? 1.6);
 
-  const SCALE = 0.5; // soft by nature: render at half resolution
+  // Soft by nature: render below native resolution. Phones and tablets get a
+  // lighter version (smaller buffer, single glass sample, 30 fps).
+  const lowPower = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 800;
+  const SCALE = lowPower ? 0.34 : 0.5;
+  gl.uniform1f(u('uQuality'), lowPower ? 0 : 1);
   const resize = () => {
     const w = Math.max(1, Math.floor(canvas.clientWidth * SCALE));
     const h = Math.max(1, Math.floor(canvas.clientHeight * SCALE));
@@ -208,7 +214,11 @@ export function createLiquid(opts: LiquidOptions): Liquid {
 
   let active = false;
   let raf = 0;
-  const loop = () => { draw(); if (active) raf = requestAnimationFrame(loop); };
+  let frame = 0;
+  const loop = () => {
+    if (!lowPower || frame++ % 2 === 0) draw();
+    if (active) raf = requestAnimationFrame(loop);
+  };
 
   return {
     canvas,

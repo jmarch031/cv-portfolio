@@ -38,8 +38,11 @@ export interface Work {
 
 export interface School {
   years: string;
+  from: number;
+  to: number;
   name: string;
   degree: string;
+  note: string;
 }
 
 export interface Stat {

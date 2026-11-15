@@ -77,9 +77,15 @@ Le reste de `design.md` s'applique toujours :
 - L'Histoire n'est épinglée que si l'écran fait au moins 620px de haut ; sinon les actes s'empilent (`.story.is-static`).
 - `prefers-reduced-motion: reduce` doit toujours donner un site lisible et statique.
 - Ne pas mettre de `transition` CSS sur une propriété animée par GSAP (conflit sur `transform`).
-- Pas de `snap` ScrollTrigger : il entre en conflit avec Lenis et fige les animations. Les sections épinglées (Histoire, Parcours) donnent à chaque étape un **plateau** de scroll où elle reste entièrement visible, avec des transitions courtes entre deux étapes.
+- Pas de `snap` ScrollTrigger : il entre en conflit avec Lenis et fige les animations. Dans les sections épinglées (Histoire, Parcours), le **changement d'étape est déclenché** (il se joue toujours en entier, où que le scroll s'arrête) et seul le mouvement à l'intérieur d'une étape suit le scroll (`scrub`) : mots qui s'allument, numéro et lentille qui dérivent, détail du poste qui défile.
 - Une animation pilotée par le scroll (`scrub`) doit se terminer à une position atteignable (attention à la dernière section).
 - Un dégradé `background-clip: text` ne traverse pas les enfants transformés : sur un texte découpé par SplitText, appliquer le dégradé lettre par lettre.
+
+## Performance
+
+- Les surfaces WebGL ne tournent que lorsqu'elles sont visibles. Sur mobile et tablette (`pointer: coarse` ou largeur < 800px), elles passent en version allégée : tampon plus petit, un seul échantillon dans la lentille, 30 images par seconde.
+- Sur écrans tactiles : pas de `filter: blur`, de `mix-blend-mode` ni de `backdrop-filter` ; zones tactiles d'au moins ~44px.
+- N'animer que `transform` et `opacity` ; pas de `content-visibility` (cela fausse les positions ScrollTrigger).
 
 ## Responsive
 

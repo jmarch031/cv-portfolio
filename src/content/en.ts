@@ -185,8 +185,16 @@ export const en: Content = {
   writing: {
     label: 'Writing & projects',
     title: 'Writing, experimenting.',
-    intro: 'Thoughts on leadership and quality, published on Medium, and a side project exploring optimization with genetic algorithms.',
+    intro: 'Thoughts on leadership and quality, published on Medium, and side projects to experiment: AI applied to software development, optimization with genetic algorithms.',
     items: [
+      {
+        kind: 'Side project · AI engineering',
+        title: 'This portfolio, built 100% with AI',
+        text: 'Art direction, content, code and animations created entirely by pair-programming with an AI (Claude Code), from the first commit to the GitHub Pages deployment. A hands-on application of AI-assisted development.',
+        meta: '2026',
+        href: 'https://github.com/jmarch031/cv-portfolio',
+        tags: ['Claude Code', 'TypeScript', 'GSAP', 'WebGL'],
+      },
       {
         kind: 'Medium article',
         title: 'Leadership: how to avoid burnout',
@@ -223,9 +231,9 @@ export const en: Content = {
     label: 'Education',
     title: 'Always learning.',
     schools: [
-      { years: '2010 — 2015', name: 'EPITECH', degree: "Master's degree, Computer Science" },
-      { years: '2013 — 2014', name: 'California State University San Marcos', degree: "Master's degree, Computer Science" },
-      { years: '2009 — 2010', name: 'Institut Informatique et Entreprise', degree: 'DUT, Computer Science' },
+      { years: '2010 — 2015', from: 2010, to: 2015, name: 'EPITECH', degree: "Master's degree, Computer Science", note: 'European Institute of Technology. Project-based learning.' },
+      { years: '2013 — 2014', from: 2013, to: 2014, name: 'California State University San Marcos', degree: "Master's degree, Computer Science", note: 'A year abroad in California, during the EPITECH programme.' },
+      { years: '2009 — 2010', from: 2009, to: 2010, name: 'Institut Informatique et Entreprise', degree: 'DUT, Computer Science', note: 'First degree in computer science.' },
     ],
     certTitle: 'Certification',
     cert: 'Professional Scrum Master I (PSM I)',

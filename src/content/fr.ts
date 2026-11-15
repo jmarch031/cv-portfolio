@@ -185,8 +185,16 @@ export const fr: Content = {
   writing: {
     label: 'Écrits & projets',
     title: 'Écrire, expérimenter.',
-    intro: "Des réflexions sur le leadership et la qualité, publiées sur Medium, et un projet personnel pour explorer l'optimisation par algorithmes génétiques.",
+    intro: "Des réflexions sur le leadership et la qualité, publiées sur Medium, et des projets personnels pour expérimenter : l'IA appliquée au développement, l'optimisation par algorithmes génétiques.",
     items: [
+      {
+        kind: 'Projet perso · AI engineering',
+        title: 'Ce portfolio, conçu 100 % avec l’IA',
+        text: "Direction artistique, contenu, code et animations réalisés entièrement en pair-programming avec une IA (Claude Code), du premier commit au déploiement sur GitHub Pages. Une mise en pratique concrète du développement assisté par l'IA.",
+        meta: '2026',
+        href: 'https://github.com/jmarch031/cv-portfolio',
+        tags: ['Claude Code', 'TypeScript', 'GSAP', 'WebGL'],
+      },
       {
         kind: 'Article Medium',
         title: "Leadership : éviter le burnout en s'écoutant",
@@ -223,9 +231,9 @@ export const fr: Content = {
     label: 'Formation',
     title: 'Apprendre, toujours.',
     schools: [
-      { years: '2010 — 2015', name: 'EPITECH', degree: 'Master, Informatique' },
-      { years: '2013 — 2014', name: 'California State University San Marcos', degree: 'Master, Informatique' },
-      { years: '2009 — 2010', name: 'Institut Informatique et Entreprise', degree: 'DUT, Informatique' },
+      { years: '2010 — 2015', from: 2010, to: 2015, name: 'EPITECH', degree: 'Master, Informatique', note: 'European Institute of Technology. Une pédagogie par projets.' },
+      { years: '2013 — 2014', from: 2013, to: 2014, name: 'California State University San Marcos', degree: 'Master, Informatique', note: 'Une année à l’international, en Californie, pendant le cursus EPITECH.' },
+      { years: '2009 — 2010', from: 2009, to: 2010, name: 'Institut Informatique et Entreprise', degree: 'DUT, Informatique', note: 'Premier diplôme en informatique.' },
     ],
     certTitle: 'Certification',
     cert: 'Professional Scrum Master I (PSM I)',
