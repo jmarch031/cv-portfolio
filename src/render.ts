@@ -29,6 +29,7 @@ const navLinks = (c: Content): [string, string][] => [
   ['#story', c.nav.story],
   ['#skills', c.nav.skills],
   ['#journey', c.nav.journey],
+  ['#writing', c.nav.writing],
   ['#education', c.nav.education],
   ['#contact', c.nav.contact],
 ];
@@ -62,7 +63,7 @@ export function renderSheet(c: Content) {
 }
 
 export function renderMain(c: Content, recos: Recommendation[]) {
-  return [hero(c), statement(c), story(c), numbers(c), skills(c), journey(c), education(c), recommendations(c, recos), contact(c)].join('');
+  return [hero(c), statement(c), story(c), numbers(c), skills(c), journey(c), writing(c), education(c), recommendations(c, recos), contact(c)].join('');
 }
 
 /* ------------------------------------------------------------------ */
@@ -152,6 +153,7 @@ function numbers(c: Content) {
           <div class="stat js-rise">
             <p class="stat__value iri">${s.prefix ? esc(s.prefix) : ''}<span class="js-count" data-to="${s.value}">${s.value}</span>${s.suffix ? esc(s.suffix) : ''}</p>
             <p class="stat__label">${esc(s.label)}</p>
+            <p class="stat__detail">${esc(s.detail)}</p>
           </div>`,
           )
           .join('')}
@@ -178,7 +180,12 @@ function skills(c: Content) {
               <span class="skill__name">${esc(it.name)}</span>
               <span class="skill__plus" aria-hidden="true"></span>
             </button>
-            <div class="skill__body"><p class="skill__text">${esc(it.text)}</p></div>
+            <div class="skill__body">
+              <div class="skill__inner">
+                <p class="skill__text">${esc(it.text)}</p>
+                <p class="skill__context">${esc(it.context)}</p>
+              </div>
+            </div>
           </li>`,
           )
           .join('')}
@@ -190,8 +197,10 @@ function skills(c: Content) {
 function jobDetail(j: Content['journey']['jobs'][number]) {
   return `
     <p class="job-detail__meta">${esc(j.place)} · ${esc(j.duration)}</p>
+    ${j.figures ? `<div class="job-detail__figures">${j.figures.map((f) => `<p><span class="job-detail__figure iri">${esc(f.value)}</span><span class="job-detail__figure-label">${esc(f.label)}</span></p>`).join('')}</div>` : ''}
     <p class="job-detail__text">${esc(j.text)}</p>
-    ${j.points ? `<ul class="job-detail__points">${j.points.map((p) => `<li>${esc(p)}</li>`).join('')}</ul>` : ''}`;
+    ${j.points ? `<ul class="job-detail__points">${j.points.map((p) => `<li>${esc(p)}</li>`).join('')}</ul>` : ''}
+    <ul class="job-detail__tags">${j.tags.map((t) => `<li class="tag">${esc(t)}</li>`).join('')}</ul>`;
 }
 
 function journey(c: Content) {
@@ -236,13 +245,55 @@ function journey(c: Content) {
   </section>`;
 }
 
+function writing(c: Content) {
+  const w = c.writing;
+  return `
+  <section class="writing section" id="writing">
+    ${glow('left')}
+    <div class="container">
+      ${label('06', w.label)}
+      <div class="writing__head">
+        <h2 class="writing__title js-lines">${esc(w.title)}</h2>
+        <p class="writing__intro js-rise">${esc(w.intro)}</p>
+      </div>
+      <ul class="works">
+        ${w.items
+          .map((it, i) => {
+            const inner = `
+              <span class="work__idx">${pad(i + 1)}</span>
+              <span class="work__main">
+                <span class="work__kind">${esc(it.kind)} · ${esc(it.meta)}</span>
+                <span class="work__title">${esc(it.title)}</span>
+                <span class="work__text">${esc(it.text)}</span>
+                ${it.tags ? `<span class="work__tags">${it.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</span>` : ''}
+              </span>
+              <span class="work__arrow" aria-hidden="true">${it.href ? '↗' : ''}</span>`;
+            return `
+          <li class="work" data-work="${i}">
+            ${it.href
+              ? `<a class="work__link" href="${esc(it.href)}" target="_blank" rel="noopener" aria-label="${esc(w.read)} : ${esc(it.title)}">${inner}</a>`
+              : `<div class="work__link">${inner}</div>`}
+          </li>`;
+          })
+          .join('')}
+      </ul>
+      <div class="writing__cta">
+        <a href="${MEDIUM}" target="_blank" rel="noopener" class="pill magnetic">${roll(w.all)}</a>
+      </div>
+    </div>
+    <div class="works__preview" aria-hidden="true">
+      ${w.items.map((_, i) => `<span class="orb orb--${i % 4}"></span>`).join('')}
+    </div>
+  </section>`;
+}
+
 function education(c: Content) {
   const e = c.education;
   return `
   <section class="education section" id="education">
     ${glow('right')}
     <div class="container">
-      ${label('06', e.label)}
+      ${label('07', e.label)}
       <h2 class="education__title js-lines">${esc(e.title)}</h2>
       <div class="education__grid">
         ${e.schools
@@ -277,7 +328,7 @@ function recommendations(c: Content, recos: Recommendation[]) {
   <section class="recos section">
     ${glow('left')}
     <div class="container">
-      ${label('07', r.label)}
+      ${label('08', r.label)}
       <div class="recos__stage">
         ${recos
           .map(
@@ -313,7 +364,7 @@ function contact(c: Content) {
   <section class="contact" id="contact">
     <div class="contact__media" aria-hidden="true"></div>
     <div class="container">
-      ${label('08', k.label)}
+      ${label('09', k.label)}
       <h2 class="contact__title">
         ${k.lines.map((l, i) => `<span class="contact__line${i === k.lines.length - 1 ? ' iri' : ''}">${esc(l)}</span>`).join('')}
       </h2>

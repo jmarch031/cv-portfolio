@@ -162,3 +162,30 @@ export function bindRecos(reduced: boolean, signal: AbortSignal) {
   }
   signal.addEventListener('abort', () => progress.kill());
 }
+
+/* ---------------- Writing: glass orb follows the cursor ---------------- */
+export function bindWorks(signal: AbortSignal) {
+  if (!finePointer() || window.innerWidth < 961) return;
+  const list = document.querySelector<HTMLElement>('.works');
+  const preview = document.querySelector<HTMLElement>('.works__preview');
+  if (!list || !preview) return;
+  const orbs = Array.from(preview.querySelectorAll<HTMLElement>('.orb'));
+  const xTo = gsap.quickTo(preview, 'x', { duration: 0.7, ease: 'power3' });
+  const yTo = gsap.quickTo(preview, 'y', { duration: 0.7, ease: 'power3' });
+  const rTo = gsap.quickTo(preview, 'rotate', { duration: 0.9, ease: 'power3' });
+  let lastX = 0;
+  list.addEventListener('pointermove', (e) => {
+    // keep the orb to the right of the text column
+    xTo(Math.max(e.clientX + 180, list.getBoundingClientRect().left + list.offsetWidth * 0.62));
+    yTo(e.clientY);
+    rTo(gsap.utils.clamp(-15, 15, (e.clientX - lastX) * 0.6));
+    lastX = e.clientX;
+  }, { signal });
+  list.addEventListener('pointerover', (e) => {
+    const work = (e.target as Element).closest<HTMLElement>('.work');
+    if (!work) return;
+    const i = Number(work.dataset.work);
+    orbs.forEach((o, k) => o.classList.toggle('is-active', k === i));
+  }, { signal });
+  list.addEventListener('pointerleave', () => orbs.forEach((o) => o.classList.remove('is-active')), { signal });
+}

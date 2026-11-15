@@ -11,6 +11,8 @@ export interface Act {
 export interface Skill {
   name: string;
   text: string;
+  /** Where it comes from (roles / companies on the LinkedIn profile) */
+  context: string;
 }
 
 export interface Job {
@@ -21,6 +23,17 @@ export interface Job {
   place: string;
   text: string;
   points?: string[];
+  figures?: { value: string; label: string }[];
+  tags: string[];
+}
+
+export interface Work {
+  kind: string;
+  title: string;
+  text: string;
+  meta: string;
+  href?: string;
+  tags?: string[];
 }
 
 export interface School {
@@ -34,11 +47,12 @@ export interface Stat {
   prefix?: string;
   suffix?: string;
   label: string;
+  detail: string;
 }
 
 export interface Content {
   meta: { title: string; description: string };
-  nav: { story: string; skills: string; journey: string; education: string; contact: string; menu: string; close: string; toLight: string; toDark: string };
+  nav: { story: string; skills: string; journey: string; education: string; contact: string; writing: string; menu: string; close: string; toLight: string; toDark: string };
   intro: { roles: string[]; caption: string };
   hero: { lines: string[]; caption: string; scroll: string };
   statement: { label: string; text: string; today: string; todayTitle: string; matters: string; mattersTitle: string };
@@ -46,6 +60,7 @@ export interface Content {
   numbers: { label: string; stats: Stat[] };
   skills: { label: string; title: string; items: Skill[] };
   journey: { label: string; title: string; jobs: Job[] };
+  writing: { label: string; title: string; intro: string; items: Work[]; all: string; read: string };
   education: {
     label: string;
     title: string;

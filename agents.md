@@ -7,6 +7,7 @@ Ce dépôt contient le **portfolio personnel** de Julien Marchand (Lead Software
 - son **histoire** : développeur, puis leader d'équipes, puis retour au code ;
 - ses **compétences** (AI engineering, back-end, full-stack, architecture, leadership, management, agilité) ;
 - son **parcours** complet (8 postes, 5 entreprises) ;
+- ses **écrits** (articles Medium) et **projets personnels** ;
 - sa **formation**, sa certification et ses langues ;
 - les **recommandations** reçues, et un moyen simple de le **contacter**.
 
@@ -45,11 +46,12 @@ src/style.css                    Tokens design.md + styles
 public/cv-julien-marchand.pdf    Export LinkedIn téléchargeable (lien « CV »)
 ```
 
-Sections, dans l'ordre : Hero « Retour au code. » → Bonjour (présentation) → Histoire (3 actes épinglés) → En chiffres → Savoir-faire → Parcours (liste + panneau collant) → Formation → Recommandations → Contact.
+Sections, dans l'ordre : Hero « Retour au code. » → Bonjour (présentation) → Histoire (3 actes épinglés) → En chiffres → Savoir-faire → Parcours (liste + panneau collant) → Écrits & projets → Formation → Recommandations → Contact.
 
 ## Contenu
 
-- **Ne rien inventer.** La source de vérité est l'export LinkedIn (`Julien Marchand Profile.pdf`, à remplacer par chaque nouvel export, et à copier dans `public/cv-julien-marchand.pdf`). Les reformulations et traductions sont permises, pas les faits nouveaux (chiffres, dates, missions, clients, technologies).
+- **Ne rien inventer.** Les sources de vérité sont l'export LinkedIn (`Julien Marchand Profile.pdf`, à remplacer par chaque nouvel export, et à copier dans `public/cv-julien-marchand.pdf`). Les articles Medium et le projet perso (Trading Bot NSGA-II) viennent du propriétaire du site. Les reformulations et traductions sont permises, pas les faits nouveaux (chiffres, dates, missions, clients, technologies).
+- Les chiffres de « En chiffres » doivent se déduire des dates et du texte LinkedIn (ex. 12 ans depuis l'alternance de 2014, 7 ans chez Decathlon Digital) et être recalculés à chaque nouvel export.
 - Toute modification de texte se fait dans `src/content/fr.ts` **et** `src/content/en.ts` (un test vérifie qu'ils ont la même structure, les mêmes entreprises et les mêmes années).
 - Les extraits de recommandations doivent être des citations exactes du texte original (test).
 
@@ -75,6 +77,15 @@ Le reste de `design.md` s'applique toujours :
 - L'Histoire n'est épinglée que si l'écran fait au moins 620px de haut ; sinon les actes s'empilent (`.story.is-static`).
 - `prefers-reduced-motion: reduce` doit toujours donner un site lisible et statique.
 - Ne pas mettre de `transition` CSS sur une propriété animée par GSAP (conflit sur `transform`).
+- Timeline épinglée avec `snap` : chaque transition doit se terminer **avant** le label sur lequel le snap s'arrête, sinon l'animation reste figée à mi-course.
+- Une animation pilotée par le scroll (`scrub`) doit se terminer à une position atteignable (attention à la dernière section).
+- Un dégradé `background-clip: text` ne traverse pas les enfants transformés : sur un texte découpé par SplitText, appliquer le dégradé lettre par lettre.
+
+## Responsive
+
+- Le site doit être parfait de 320px à 1920px+, en portrait comme en paysage, en français comme en anglais (les textes anglais et français n'ont pas la même longueur).
+- Contrôle minimal avant de livrer : aucun débordement horizontal (`scrollWidth === clientWidth`) à 320, 360, 390, 768, 1024, 1280, 1440, 1920 et 844×390, et chaque acte de l'Histoire tient entre l'en-tête et la barre de progression quand il est épinglé.
+- Les effets de survol sont réservés à `(hover: hover)` ; l'Histoire ne s'épingle que si la hauteur d'écran le permet.
 
 ## Consignes pour les agents
 

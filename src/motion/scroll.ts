@@ -39,7 +39,8 @@ export function initScroll(liquids: Liquids) {
       {
         motion: '(prefers-reduced-motion: no-preference)',
         desktop: '(min-width: 961px)',
-        tall: '(min-height: 620px)',
+        // pin the story only when an act fits on screen
+        tall: '(min-width: 961px) and (min-height: 620px), (max-width: 960px) and (min-height: 700px)',
       },
       (ctx) => {
         const { motion, desktop, tall } = ctx.conditions as Record<string, boolean>;
@@ -119,20 +120,25 @@ export function initScroll(liquids: Liquids) {
             },
           });
 
-          tl.addLabel('act0');
-          tl.fromTo('.story__bar', { scaleX: 1 / acts.length }, { scaleX: 1, ease: 'none', duration: acts.length - 1 }, 0);
+          // Act i rests at time i (a snap label). Every transition into act i runs
+          // strictly between i - 1 and i, so a snap never freezes an animation midway.
+          const last = acts.length - 1;
+          tl.addLabel('act0', 0);
+          tl.fromTo('.story__bar', { scaleX: 1 / acts.length }, { scaleX: 1, ease: 'none', duration: last }, 0);
           acts.forEach((a, i) => {
-            tl.fromTo(numeral(a), { yPercent: 12 }, { yPercent: -12, ease: 'none', duration: 1 }, Math.max(0, i - 0.5));
+            const from = Math.max(0, i - 0.5);
+            const to = Math.min(last, i + 0.5);
+            if (to > from) tl.fromTo(numeral(a), { yPercent: i === 0 ? 0 : 10 }, { yPercent: i === last ? 0 : -10, ease: 'none', duration: to - from }, from);
             if (i === 0) return;
             const prev = acts[i - 1];
-            const at = i - 0.5;
-            tl.to(parts(prev), { yPercent: -60, autoAlpha: 0, stagger: 0.04, duration: 0.4 }, at)
-              .to(numeral(prev), { autoAlpha: 0, duration: 0.3 }, at)
-              .set(a, { autoAlpha: 1 }, at + 0.3)
-              .fromTo(parts(a), { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, stagger: 0.05, duration: 0.45 }, at + 0.3)
-              .fromTo(numeral(a), { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.5 }, at + 0.3)
-              .to(liquids.story.state.c, { endArray: flat(ACT_PALETTES[i % ACT_PALETTES.length]), duration: 0.9, ease: 'none' }, at)
-              .to(liquids.story.state.lens, { endArray: ACT_LENSES[i % ACT_LENSES.length], duration: 0.9 }, at)
+            const out = i - 0.9;
+            tl.to(parts(prev), { yPercent: -60, autoAlpha: 0, stagger: 0.03, duration: 0.3 }, out)
+              .to(numeral(prev), { autoAlpha: 0, duration: 0.3 }, out)
+              .set(a, { autoAlpha: 1 }, i - 0.6)
+              .fromTo(parts(a), { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, stagger: 0.05, duration: 0.35 }, i - 0.6)
+              .fromTo(numeral(a), { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45 }, i - 0.6)
+              .to(liquids.story.state.c, { endArray: flat(ACT_PALETTES[i % ACT_PALETTES.length]), duration: 0.8, ease: 'none' }, out)
+              .to(liquids.story.state.lens, { endArray: ACT_LENSES[i % ACT_LENSES.length], duration: 0.8 }, out)
               .addLabel(`act${i}`, i);
           });
 
@@ -196,6 +202,11 @@ export function initScroll(liquids: Liquids) {
             scrollTrigger: { trigger: '.journey__grid', start: 'top 75%' },
           });
         }
+        ScrollTrigger.batch('.work', {
+          start: 'top 92%',
+          once: true,
+          onEnter: (batch) => gsap.from(batch, { y: 60, autoAlpha: 0, duration: DUR, stagger: 0.1, ease: EASE }),
+        });
         ScrollTrigger.batch('.job', {
           start: 'top 92%',
           once: true,
@@ -205,13 +216,26 @@ export function initScroll(liquids: Liquids) {
         /* ---------- Contact: lines converge, letters rise ---------- */
         gsap.utils.toArray<HTMLElement>('.contact__line').forEach((line, i) => {
           const { chars } = SplitText.create(line, { type: 'chars', mask: 'chars', charsClass: 'char' });
+          // A gradient clipped to text does not reach transformed children: give each
+          // letter its own slice of the line-wide gradient instead.
+          if (line.classList.contains('iri')) {
+            line.classList.add('is-split');
+            const lineBox = line.getBoundingClientRect();
+            (chars as HTMLElement[]).forEach((ch) => {
+              const box = ch.getBoundingClientRect();
+              ch.classList.add('iri-char');
+              ch.style.backgroundSize = `${lineBox.width}px 100%`;
+              ch.style.backgroundPosition = `${lineBox.left - box.left}px 0`;
+            });
+          }
           gsap.from(chars, {
             yPercent: 120, duration: 1.4, stagger: 0.03, ease: EASE, delay: i * 0.12,
             scrollTrigger: { trigger: '.contact__title', start: 'top 80%' },
           });
           gsap.fromTo(line, { xPercent: i % 2 ? 10 : -6 }, {
             xPercent: 0, ease: 'none',
-            scrollTrigger: { trigger: '.contact', start: 'top bottom', end: 'top 20%', scrub: true },
+            // must end at a reachable position: the contact is the last section
+            scrollTrigger: { trigger: '.contact', start: 'top bottom', end: 'bottom bottom', scrub: true },
           });
         });
         gsap.from('.contact__ctas > *', {

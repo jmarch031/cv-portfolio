@@ -17,7 +17,7 @@ describe('renderMain', () => {
 
   it('renders every section with the expected anchors', () => {
     document.querySelector('#app')!.innerHTML = renderMain(fr, recos);
-    for (const id of ['top', 'statement', 'story', 'skills', 'journey', 'education', 'contact']) {
+    for (const id of ['top', 'statement', 'story', 'skills', 'journey', 'writing', 'education', 'contact']) {
       expect(document.getElementById(id), id).not.toBeNull();
     }
     expect(document.querySelectorAll('.act')).toHaveLength(fr.story.acts.length);
@@ -25,6 +25,8 @@ describe('renderMain', () => {
     expect(document.querySelectorAll('.panel-item')).toHaveLength(fr.journey.jobs.length);
     expect(document.querySelectorAll('.skill')).toHaveLength(fr.skills.items.length);
     expect(document.querySelectorAll('.reco')).toHaveLength(recos.length);
+    expect(document.querySelectorAll('.work')).toHaveLength(fr.writing.items.length);
+    expect(document.querySelectorAll('a.work__link')).toHaveLength(fr.writing.items.filter((w) => w.href).length);
   });
 
   it('every in-page link points to an existing section', () => {
