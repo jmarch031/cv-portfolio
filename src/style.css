@@ -780,3 +780,36 @@ ul, ol { list-style: none; }
   .act__tags { margin-top: 20px; }
   .act__years { margin-bottom: 10px; }
 }
+
+/* =====================================================================
+   Responsive review — large screens, nav over content, landscape phones
+   ===================================================================== */
+/* Large screens: wider column and slightly larger text, so the page doesn't float in empty margins */
+@media (min-width: 1600px) {
+  :root {
+    --page-max-width: 1280px;
+    --text-caption: 13px;
+    --text-body-sm: 17px;
+    --text-body: 20px;
+  }
+}
+@media (min-width: 1900px) {
+  :root { --page-max-width: 1440px; --text-caption: 14px; --text-body-sm: 18px; --text-body: 21px; }
+  .footer__grid { font-size: 13px; }
+}
+/* Desktop: past the hero, the vertical menu folds into a single "Menu" button
+   so content never scrolls underneath it */
+@media (min-width: 961px) {
+  .nav__menu { transition: opacity 0.5s ease, visibility 0.5s; }
+  .nav.is-scrolled .nav__menu { opacity: 0; visibility: hidden; pointer-events: none; }
+  .nav__burger { display: block; position: absolute; right: var(--gutter); top: 22px; opacity: 0; visibility: hidden; transition: opacity 0.5s ease, visibility 0.5s; }
+  .nav.is-scrolled .nav__burger { opacity: 1; visibility: visible; }
+  .nav.is-scrolled::before { bottom: -40px; }
+  .sheet { align-items: center; padding-left: max(var(--gutter), calc((100vw - var(--page-max-width)) / 2)); }
+  .sheet__link { font-size: var(--text-heading); }
+}
+/* Landscape phones: caption and badge cannot share the bottom-left corner */
+@media (max-height: 520px) and (orientation: landscape) {
+  .badge { display: none; }
+  .hero__caption { left: var(--gutter); right: auto; bottom: 20px; text-align: left; }
+}
