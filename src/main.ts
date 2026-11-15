@@ -3,103 +3,130 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 
-import fr from '../public/locales/fr.json';
-import en from '../public/locales/en.json';
-import recommendationsData from './data/recommendations.json';
-
-import { applyTranslations, getInitialLang, saveLang, type Dictionary, type Lang } from './scripts/i18n';
-import { renderRecommendations } from './scripts/recommendations';
-import { initHeroShader } from './scripts/shader';
-import { initScrollAnimations, playIntro, prefersReducedMotion } from './scripts/animations';
-import { initAccordion, initCursor, initLetterHover, initMagnetic, initNav } from './scripts/interactions';
+import { fr } from './content/fr';
+import { en } from './content/en';
+import type { Content, Lang } from './content/types';
+import recommendations from './data/recommendations.json';
+import { renderHeader, renderMain, renderSheet } from './render';
+import { initHeroShader } from './motion/shader';
+import { playIntro } from './motion/intro';
+import { initScroll } from './motion/scroll';
+import { bindMagnetic, bindNav, bindRecos, bindSkills, initCursor } from './motion/interactions';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const dictionaries: Record<Lang, Dictionary> = { fr, en };
-let lang: Lang = getInitialLang();
-const dict = () => dictionaries[lang];
+const CONTENT: Record<Lang, Content> = { fr, en };
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function renderContent() {
-  applyTranslations(lang, dict());
-  renderRecommendations(document.querySelector('.recos__list'), recommendationsData, {
-    more: dict().rec_more,
-    less: dict().rec_less,
-  });
+function initialLang(): Lang {
+  try {
+    const saved = localStorage.getItem('lang');
+    if (saved === 'fr' || saved === 'en') return saved;
+  } catch { /* storage unavailable */ }
+  return navigator.language?.toLowerCase().startsWith('fr') ? 'fr' : 'en';
+}
+
+let lang: Lang = initialLang();
+const header = document.querySelector<HTMLElement>('.nav')!;
+const sheet = document.querySelector<HTMLElement>('.sheet')!;
+const app = document.querySelector<HTMLElement>('#app')!;
+
+/* The WebGL canvas survives re-renders: it is moved into each new hero. */
+const canvas = document.createElement('canvas');
+
+function render() {
+  const c = CONTENT[lang];
+  document.documentElement.lang = lang;
+  document.title = c.meta.title;
+  document.querySelector('meta[name="description"]')?.setAttribute('content', c.meta.description);
+  header.innerHTML = renderHeader(c, lang);
+  sheet.innerHTML = renderSheet(c);
+  app.innerHTML = renderMain(c, recommendations);
+  app.querySelector('.hero__media')?.appendChild(canvas);
 }
 
 function boot() {
   history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
+  render();
 
-  renderContent();
-
-  /* Smooth scroll driven by the GSAP ticker */
-  const lenis = new Lenis({ duration: 1.2, smoothWheel: !prefersReducedMotion() });
+  const lenis = new Lenis({ duration: 1.2, smoothWheel: !reduced });
   lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.add((t) => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);
   lenis.stop();
 
-  const shader = initHeroShader(document.querySelector('.hero__canvas')!, prefersReducedMotion());
-  const nav = initNav(lenis);
-  nav.setLabels(dict().menu_btn, dict().menu_close);
-  initCursor(dict);
-  initMagnetic();
-  initAccordion();
+  const shader = initHeroShader(canvas, reduced);
+  initCursor();
 
   let scrollCtx: gsap.Context | null = null;
+  let bindCtx: gsap.Context | null = null;
+  let abort = new AbortController();
 
-  playIntro(() => {
-    lenis.start();
-    scrollCtx = initScrollAnimations(shader);
-    initLetterHover();
-    ScrollTrigger.refresh();
-  });
-
-  /* Language switch: curtain down → swap texts → rebuild triggers → curtain up */
-  const curtain = document.createElement('div');
-  curtain.className = 'curtain';
-  document.body.appendChild(curtain);
-
-  document.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const next = btn.dataset.lang as Lang;
-      if (next === lang || document.body.classList.contains('is-loading')) return;
-      gsap.timeline()
-        .set(curtain, { transformOrigin: 'bottom' })
-        .to(curtain, { scaleY: 1, duration: 0.7, ease: 'expo.inOut' })
-        .add(() => {
-          // Remember where we are relative to the section in view, not in raw pixels:
-          // reverting the pinned section changes the page height.
-          const sections = Array.from(document.querySelectorAll<HTMLElement>('main > section'));
-          const anchor = sections.find((s) => s.getBoundingClientRect().bottom > 0) ?? sections[0];
-          const offset = -anchor.getBoundingClientRect().top;
-
-          scrollCtx?.revert();
-          lang = next;
-          saveLang(lang);
-          renderContent();
-          nav.setLabels(dict().menu_btn, dict().menu_close);
-          scrollCtx = initScrollAnimations(shader);
-          ScrollTrigger.refresh();
-          lenis.resize();
-          const y = anchor.getBoundingClientRect().top + window.scrollY + offset;
-          lenis.scrollTo(y, { immediate: true, force: true });
-          ScrollTrigger.update();
-          // Everything above the fold is already "seen": jump reveals to their end state
-          ScrollTrigger.getAll().forEach((st) => {
-            if (st.start < y + window.innerHeight * 0.5 && !st.vars.scrub && st.animation) st.animation.progress(1);
-          });
-        })
-        .set(curtain, { transformOrigin: 'top' })
-        .add(() => document.querySelector('.nav')?.classList.remove('is-hidden'))
-        .to(curtain, { scaleY: 0, duration: 0.9, ease: 'expo.inOut' }, '+=0.1');
+  const bindAll = () => {
+    const c = CONTENT[lang];
+    scrollCtx = initScroll(shader);
+    // Created after the pins so their positions are right
+    bindCtx = gsap.context(() => {
+      bindNav(lenis, { menu: c.nav.menu, close: c.nav.close }, abort.signal);
+      bindSkills(abort.signal);
+      bindRecos(reduced, abort.signal);
+      bindMagnetic(abort.signal);
     });
+    header.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach((b) =>
+      b.addEventListener('click', () => switchLang(b.dataset.lang as Lang), { signal: abort.signal }),
+    );
+    ScrollTrigger.refresh();
+  };
+
+  /* Language switch: curtain down → re-render → rebuild motion → curtain up */
+  const curtain = document.querySelector<HTMLElement>('.curtain')!;
+  let switching = false;
+  function switchLang(next: Lang) {
+    if (next === lang || switching) return;
+    switching = true;
+    gsap.timeline({ onComplete: () => { switching = false; } })
+      .set(curtain, { transformOrigin: 'bottom' })
+      .to(curtain, { scaleY: 1, duration: 0.75, ease: 'expo.inOut' })
+      .add(() => {
+        const sections = Array.from(app.querySelectorAll<HTMLElement>(':scope > section, :scope > .pin-spacer > section'));
+        const anchorIdx = Math.max(0, sections.findIndex((s) => s.getBoundingClientRect().bottom > 1));
+        const offset = -(sections[anchorIdx]?.getBoundingClientRect().top ?? 0);
+
+        abort.abort();
+        bindCtx?.revert();
+        scrollCtx?.revert();
+        abort = new AbortController();
+        lang = next;
+        try { localStorage.setItem('lang', lang); } catch { /* ignore */ }
+        render();
+        bindAll();
+
+        const target = Array.from(app.querySelectorAll<HTMLElement>('section'))[anchorIdx];
+        lenis.resize();
+        const y = target ? target.getBoundingClientRect().top + window.scrollY + offset : 0;
+        lenis.scrollTo(y, { immediate: true, force: true });
+        ScrollTrigger.update();
+        // Reveals above the reading line have already been "seen"
+        ScrollTrigger.getAll().forEach((st) => {
+          if (!st.vars.scrub && st.animation && st.start < y + window.innerHeight * 0.6) st.animation.progress(1);
+        });
+        header.classList.remove('is-hidden');
+      })
+      .set(curtain, { transformOrigin: 'top' })
+      .to(curtain, { scaleY: 0, duration: 0.95, ease: 'expo.inOut' }, '+=0.1');
+  }
+
+  playIntro({
+    roles: CONTENT[lang].intro.roles,
+    caption: CONTENT[lang].intro.caption,
+    reduced,
+    onReveal: () => {
+      lenis.start();
+      bindAll();
+    },
   });
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', boot);
-} else {
-  boot();
-}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+else boot();

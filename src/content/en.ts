@@ -1,0 +1,201 @@
+import type { Content } from './types';
+
+/** Source: LinkedIn export (Profile.pdf). Rephrased, no facts added. */
+export const en: Content = {
+  meta: {
+    title: 'Julien Marchand — Lead Software Engineer',
+    description:
+      'Julien Marchand, Lead Software Engineer at Decathlon Digital in Lille. Over 10 years of software development, technical leadership and engineering management.',
+  },
+  nav: {
+    story: 'Story',
+    skills: 'Skills',
+    journey: 'Journey',
+    education: 'Education',
+    contact: 'Contact',
+    menu: 'Menu',
+    close: 'Close',
+  },
+  intro: {
+    roles: ['Developer Intern', 'Developer', 'Software Engineer', 'Scrum Master', 'Lead Software Engineer', 'Engineering Manager'],
+    caption: 'Julien Marchand — 2011 → 2026',
+  },
+  hero: {
+    lines: ['Back', 'to code.'],
+    caption: 'Julien Marchand — Lead Software Engineer at Decathlon Digital, Lille',
+    scroll: 'SCROLL DOWN · SCROLL DOWN · SCROLL DOWN ·',
+  },
+  statement: {
+    label: 'Hello',
+    text: "I'm Julien. For over ten years I've been writing software, leading teams, and turning ideas into products that work.",
+    todayTitle: 'Today',
+    today:
+      "After several years in management, I've chosen to get back to what I enjoy most: writing code and solving technical challenges. I'm interested in software architecture, modern development practices, and how AI is changing the way we build products.",
+    mattersTitle: 'What matters',
+    matters:
+      'Building useful software, learning every day, working with great people, and enjoying what I do. Management gave me a broader perspective on engineering: collaboration, and the people behind the technology.',
+  },
+  story: {
+    label: 'Story',
+    title: 'Three acts.',
+    acts: [
+      {
+        numeral: '01',
+        title: 'Build',
+        years: '2011 — 2020',
+        text: 'An internship at MOBIVIA, an apprenticeship at Cassiop, then ELOSI, Sopra Steria and Decathlon Digital. Backend applications for insurance, Nexity, SNCF or Société Générale, a sports communities API, a Business Intelligence application. Often with a second hat: Scrum Master.',
+        tags: ['Backend', 'PHP / Laravel', 'Data', 'Scrum Master'],
+      },
+      {
+        numeral: '02',
+        title: 'Grow teams',
+        years: '2021 — 2026',
+        text: "Lead Software Engineer on a strategic Business Intelligence application, bridging Product and Engineering. Then Software Engineering Manager: recruiting, growing and leading teams, up to ~30 engineers across 5 Feature Teams to modernize Decathlon's global Warehouse Management System.",
+        tags: ['Technical leadership', 'Management', 'WMS', 'AI-assisted development'],
+      },
+      {
+        numeral: '03',
+        title: 'Back to code',
+        years: '2026 — ',
+        text: "Back to hands-on software engineering: development, architecture and AI. Building useful software, solving real problems, sharing knowledge and continuously learning, with a former manager's eye on teams and people.",
+        tags: ['Software engineering', 'Architecture', 'AI engineering'],
+      },
+    ],
+  },
+  numbers: {
+    label: 'In numbers',
+    stats: [
+      { value: 10, suffix: '+', label: 'years of experience' },
+      { value: 30, prefix: '~', label: 'engineers led' },
+      { value: 5, label: 'Feature Teams' },
+      { value: 8, label: 'roles, 5 companies' },
+    ],
+  },
+  skills: {
+    label: 'Skills',
+    title: 'What I do.',
+    items: [
+      { name: 'AI Engineering', text: 'Experimenting with and spreading AI-assisted development, and understanding how AI changes the way we build products.' },
+      { name: 'Backend', text: 'Services, APIs and data products: the core of over ten years of development.' },
+      { name: 'Full-stack', text: 'End-to-end features, ever since my PHP / Laravel beginnings.' },
+      { name: 'Architecture', text: "Technical decisions, modernizing Decathlon's global Warehouse Management System, modern development practices." },
+      { name: 'Technical leadership', text: 'Driving technical decisions and delivery, bridging Product and Engineering.' },
+      { name: 'Engineering management', text: 'Recruiting, growing and leading teams with a focus on trust, ownership and collaboration.' },
+      { name: 'Agile', text: 'Scrum Master in several teams, certified Professional Scrum Master I.' },
+    ],
+  },
+  journey: {
+    label: 'Journey',
+    title: 'Eight roles, one constant: building.',
+    jobs: [
+      {
+        dates: 'Oct 2026 — Present',
+        duration: '2 months',
+        role: 'Lead Software Engineer',
+        company: 'Decathlon Digital',
+        place: 'Lille',
+        text: 'Back to hands-on software engineering, focusing on software development, architecture, and AI.',
+        points: ['Building useful software', 'Solving real problems', 'Sharing knowledge and continuously learning'],
+      },
+      {
+        dates: 'Feb 2022 — Oct 2026',
+        duration: '4 yrs 9 mos',
+        role: 'Software Engineering Manager',
+        company: 'Decathlon Digital',
+        place: 'Lille',
+        text: 'Built, recruited, and led engineering teams, with a focus on trust, ownership, collaboration, and continuous growth.',
+        points: [
+          "Led up to ~30 engineers across 5 Feature Teams to modernize Decathlon's global Warehouse Management System",
+          'Previously led a 5-engineer Feature Team responsible for a strategic Business Intelligence application',
+          'Contributed to the adoption of AI-assisted development through experimentation, knowledge sharing, and continuous learning',
+        ],
+      },
+      {
+        dates: 'Jan 2021 — Feb 2022',
+        duration: '1 yr 2 mos',
+        role: 'Lead Software Engineer',
+        company: 'Decathlon Digital',
+        place: 'Croix',
+        text: 'Led the engineering of a strategic Business Intelligence application, driving technical decisions and software delivery while bridging Product and Engineering.',
+      },
+      {
+        dates: 'Feb 2019 — Dec 2020',
+        duration: '1 yr 11 mos',
+        role: 'Software Engineer',
+        company: 'Decathlon Digital',
+        place: 'Croix',
+        text: 'Built backend services and data products, including a sports communities API and a strategic Business Intelligence application, while also facilitating the team as Scrum Master.',
+      },
+      {
+        dates: 'Feb 2016 — Feb 2019',
+        duration: '3 yrs 1 mo',
+        role: 'Software Engineer',
+        company: 'Sopra Steria',
+        place: 'Lille',
+        text: 'Developed backend applications for major enterprise clients including Nexity, SNCF, and Société Générale, while also acting as Scrum Master.',
+      },
+      {
+        dates: 'Sep 2015 — Feb 2016',
+        duration: '6 months',
+        role: 'Developer',
+        company: 'ELOSI',
+        place: "Villeneuve-d'Ascq",
+        text: 'Developed backend applications for enterprise clients in the insurance sector.',
+      },
+      {
+        dates: 'Sep 2014 — Sep 2015',
+        duration: '1 yr 1 mo',
+        role: 'Developer Apprentice',
+        company: 'Cassiop',
+        place: 'Lille',
+        text: 'Developed full-stack features using PHP / Laravel for a gamification and digital marketing platform.',
+      },
+      {
+        dates: 'Aug 2011 — Dec 2011',
+        duration: '5 months',
+        role: 'Developer Intern',
+        company: 'MOBIVIA',
+        place: 'Lille',
+        text: 'Early professional experience focused on business-oriented engineering and data processing.',
+        points: [
+          'PHP-based tools to automate competitor data retrieval',
+          'Dashboards providing actionable insights to support business decisions',
+        ],
+      },
+    ],
+  },
+  education: {
+    label: 'Education',
+    title: 'Always learning.',
+    schools: [
+      { years: '2010 — 2015', name: 'EPITECH', degree: "Master's degree, Computer Science" },
+      { years: '2013 — 2014', name: 'California State University San Marcos', degree: "Master's degree, Computer Science" },
+      { years: '2009 — 2010', name: 'Institut Informatique et Entreprise', degree: 'DUT, Computer Science' },
+    ],
+    certTitle: 'Certification',
+    cert: 'Professional Scrum Master I (PSM I)',
+    langTitle: 'Languages',
+    langs: [
+      { name: 'French', level: 'Native' },
+      { name: 'English', level: 'Professional' },
+      { name: 'Spanish', level: 'Elementary' },
+    ],
+  },
+  recos: {
+    label: 'Kind words',
+    original: 'LinkedIn recommendation, in French',
+    readMore: 'Read in full',
+    readLess: 'Show less',
+    prev: 'Previous',
+    next: 'Next',
+  },
+  contact: {
+    label: 'Contact',
+    lines: ["Let's build", 'something', 'useful.'],
+    email: 'jmarch031@gmail.com',
+    cv: 'Resume (PDF)',
+    location: 'Lille, France',
+    rights: '© 2026 Julien Marchand',
+    top: 'Back to top ↑',
+  },
+};

@@ -37,7 +37,7 @@ void main() {
   vec2 p = (gl_FragCoord.xy - 0.5 * uRes.xy) / uRes.y;
   float t = uTime * 0.06;
 
-  p += (uMouse - 0.5) * 0.12;
+  p += (uMouse - 0.5) * 0.22;
   p *= 1.35;
 
   vec2 q = vec2(fbm(p + vec2(0.0, t)), fbm(p + vec2(5.2, 1.3) - t));
@@ -58,9 +58,9 @@ void main() {
   float sheen = pow(abs(sin((f + r.x) * 9.0 + uTime * 0.15)), 24.0);
   col += sheen * 0.18 * smoothstep(0.35, 0.8, f);
 
-  // Keep the left/bottom calmer for type legibility
-  float shade = smoothstep(1.25, 0.15, length((uv - vec2(0.72, 0.6)) * vec2(1.1, 1.4)));
-  col *= mix(0.32, 1.0, shade);
+  // Calmer edges, brighter core behind the headline
+  float shade = smoothstep(1.2, 0.1, length((uv - vec2(0.5 + (uMouse.x - 0.5) * 0.25, 0.55)) * vec2(1.0, 1.35)));
+  col *= mix(0.3, 1.0, shade);
 
   // Film grain
   col += (hash(gl_FragCoord.xy + fract(uTime)) - 0.5) * 0.035;
@@ -74,6 +74,7 @@ export interface HeroShader {
 }
 
 export function initHeroShader(canvas: HTMLCanvasElement, reducedMotion: boolean): HeroShader {
+  // A soft CSS gradient stays as fallback until (or if) WebGL takes over
   const noop: HeroShader = { setActive() {} };
   const gl = canvas.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'high-performance' });
   if (!gl) return noop;
