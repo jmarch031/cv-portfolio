@@ -86,6 +86,15 @@ Le reste de `design.md` s'applique toujours :
 - **Parcours** : rien n'est imposé par le scroll. Le visiteur choisit le poste à lire (clic) ; panneau collant sur desktop, accordéon sur mobile.
 - **Savoir-faire** : chaque compétence liste les rôles et périodes où elle a été appliquée (d'après LinkedIn) et indique si elle est toujours d'actualité.
 
+## Images
+
+- `public/portrait.webp` (+ `portrait-400.webp`) : photo de profil LinkedIn, affichée dans la section « Bonjour ».
+- `public/covers/*.webp` : une vignette par écrit ou projet (champ `cover` dans `src/content`). Celle du portfolio est une vraie capture de la Hero ; les autres sont des illustrations abstraites dans la palette iridescente. Les remplacer par de vraies couvertures si le propriétaire en fournit.
+- `public/og.jpg` (1200×630) : image de partage ; `favicon.svg` et `apple-touch-icon.png`.
+- Images à angles droits (0px), sans ombre ; toujours `width`/`height` et `loading="lazy"` hors du premier écran.
+- Les recommandations sont en français d'origine ; `src/data/recommendations.json` contient aussi leur traduction anglaise (`*_en`), affichée en anglais avec la mention « translated from French ».
+- Thème clair : fond papier chaud `#f6f3ee`, pas de blanc pur ; le liquide y vire à l'ambre et à la sauge plutôt qu'au rose.
+
 ## Performance
 
 - Les surfaces WebGL ne tournent que lorsqu'elles sont visibles. Sur mobile et tablette (`pointer: coarse` ou largeur < 800px), elles passent en version allégée : tampon plus petit, un seul échantillon dans la lentille, 30 images par seconde.

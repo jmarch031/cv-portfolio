@@ -30,6 +30,7 @@ export const en: Content = {
   },
   statement: {
     label: 'Hello',
+    portraitAlt: 'Portrait of Julien Marchand',
     text: "I'm Julien. For over ten years I've been writing software, leading teams, and turning ideas into products that work.",
     todayTitle: 'Today',
     today:
@@ -267,6 +268,7 @@ export const en: Content = {
         title: 'This portfolio, built 100% with AI',
         text: 'A complete redesign: art direction, content, code and animations created entirely by pair-programming with an AI (Claude Code). A hands-on application of AI-assisted development.',
         meta: '2026',
+        cover: 'portfolio.webp',
         href: 'https://github.com/jmarch031/cv-portfolio',
         tags: ['Claude Code', 'TypeScript', 'GSAP', 'WebGL'],
       },
@@ -275,6 +277,7 @@ export const en: Content = {
         title: 'Leadership: how to avoid burnout',
         text: 'What coming close to burnout taught me about true leadership. Learning to listen to yourself and protect your mental health.',
         meta: '5 min',
+        cover: 'burnout.webp',
         href: 'https://medium.com/@julienmarchand_83183/leadership-how-to-avoid-burnout-by-learning-to-listen-to-yourself-e4cf7b5e96f8',
       },
       {
@@ -282,6 +285,7 @@ export const en: Content = {
         title: 'From QA to QE',
         text: 'How to bring quality back to the core of the product: from a final validation step to collective ownership.',
         meta: '5 min',
+        cover: 'quality.webp',
         href: 'https://medium.com/@julienmarchand_83183/from-qa-to-qe-how-to-bring-quality-back-to-the-core-of-the-product-7aee2b169ac7',
       },
       {
@@ -289,6 +293,7 @@ export const en: Content = {
         title: 'Stop negotiating with tomorrow',
         text: 'Real speed comes from what you build right from day one. Build sustainable products today.',
         meta: '4 min',
+        cover: 'tomorrow.webp',
         href: 'https://medium.com/@julienmarchand_83183/stop-negotiating-with-tomorrow-build-sustainable-products-today-f851e2a0fe05',
       },
       {
@@ -296,6 +301,7 @@ export const en: Content = {
         title: 'Hybrid TREND + GRID trading bot',
         text: 'A multi-pair algorithmic trading bot running on OKX, live or in dry-run. Its hybrid strategy combines trend following and grid buying based on EMA and RSI indicators, and never sells a lot at a loss. Each pair is tuned by grid search, filtered by an anti-overfitting gate (walk-forward, several market phases), then validated by Monte Carlo. Telegram alerts and commands, code covered by tests.',
         meta: 'Python',
+        cover: 'trading-bot.webp',
         tags: ['Python', 'ccxt', 'pandas', 'numba', 'pytest'],
       },
     ],
@@ -321,7 +327,7 @@ export const en: Content = {
   },
   recos: {
     label: 'Kind words',
-    original: 'LinkedIn recommendation, in French',
+    original: 'LinkedIn recommendation, translated from French',
     readMore: 'Read in full',
     readLess: 'Show less',
     prev: 'Previous',

@@ -51,7 +51,7 @@ function render() {
   document.querySelector('meta[name="description"]')?.setAttribute('content', c.meta.description);
   header.innerHTML = renderHeader(c, lang, currentTheme());
   sheet.innerHTML = renderSheet(c);
-  app.innerHTML = renderMain(c, recommendations);
+  app.innerHTML = renderMain(c, recommendations, lang);
   app.querySelector('.hero__media')?.appendChild(liquids.hero.canvas);
   app.querySelector('.story__media')?.appendChild(liquids.story.canvas);
   app.querySelector('.contact__media')?.appendChild(liquids.contact.canvas);
@@ -104,6 +104,7 @@ function boot() {
       const label = btn.querySelector('.nav__theme-text');
       if (label) label.textContent = theme === 'dark' ? btn.dataset.light! : btn.dataset.dark!;
     }
+    document.getElementById('theme-color')?.setAttribute('content', theme === 'light' ? '#f6f3ee' : '#000000');
     setLiquidLight(theme);
   }
   function switchTheme(e: MouseEvent) {

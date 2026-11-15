@@ -813,3 +813,49 @@ ul, ol { list-style: none; }
   .badge { display: none; }
   .hero__caption { left: var(--gutter); right: auto; bottom: 20px; text-align: left; }
 }
+
+/* =====================================================================
+   Portrait (statement) and work covers — images keep sharp 0px corners
+   ===================================================================== */
+.statement__top { display: grid; grid-template-columns: minmax(0, 1fr) clamp(240px, 27vw, 380px); gap: clamp(28px, 5vw, 64px); align-items: end; }
+.statement__top .statement__text { max-width: none; }
+.portrait__frame { position: relative; aspect-ratio: 4 / 5; overflow: hidden; }
+.portrait__frame::after { content: ''; position: absolute; inset: 0; background: linear-gradient(200deg, rgba(var(--amber), 0.22), transparent 45%, rgba(var(--oxblood), 0.18)); mix-blend-mode: soft-light; pointer-events: none; }
+.portrait__img { display: block; width: 100%; height: 112%; object-fit: cover; object-position: 50% 20%; will-change: transform; }
+.portrait::after { content: ''; display: block; height: 2px; margin-top: 10px; background: var(--iri); }
+
+.work__link { grid-template-columns: 64px minmax(0, 1fr) clamp(140px, 17vw, 220px) 40px; align-items: center; }
+.work__idx, .work__arrow { align-self: start; }
+.work__cover { display: block; aspect-ratio: 8 / 5; overflow: hidden; background: #000; }
+.work__cover img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1.25s var(--ease); }
+@media (hover: hover) { .work:hover .work__cover img { transform: scale(1.06); } }
+
+@media (max-width: 760px) {
+  .statement__top { grid-template-columns: 1fr; }
+  .portrait { order: -1; width: min(70vw, 300px); }
+  .work__link { grid-template-columns: minmax(0, 1fr) 24px; }
+  .work__cover { grid-column: 1 / -1; grid-row: 1; margin-bottom: 6px; }
+  .work__main { grid-column: 1; grid-row: 2; }
+  .work__arrow { grid-column: 2; grid-row: 2; }
+}
+
+/* =====================================================================
+   Light theme — warm paper instead of pure white, firmer contrast
+   ===================================================================== */
+[data-theme='light'] {
+  --bg: #f6f3ee;
+  --fg: #0d0d0d;
+  --soft: rgba(13, 13, 13, 0.8);
+  --muted: #5f5b55;
+  --line: rgba(13, 13, 13, 0.14);
+  --stroke: rgba(13, 13, 13, 0.18);
+  --pill-border: rgba(13, 13, 13, 0.32);
+  --glow-opacity: 0.42;
+  --glow-blend: multiply;
+  --iri: linear-gradient(100deg, rgb(38, 122, 78) 0%, rgb(196, 112, 0) 55%, rgb(150, 38, 30) 100%);
+}
+[data-theme='light'] .glow { background: radial-gradient(closest-side, rgba(255, 184, 77, 0.6), rgba(160, 224, 171, 0.5) 50%, transparent 100%); }
+[data-theme='light'] .act__numeral { -webkit-text-stroke-color: rgba(13, 13, 13, 0.28); }
+[data-theme='light'] .hero::after { background: linear-gradient(180deg, transparent 65%, var(--bg) 100%); }
+[data-theme='light'] .work__cover, [data-theme='light'] .portrait__frame { outline: 1px solid var(--line); }
+[data-theme='light'] ::selection { background: rgb(255, 196, 110); }

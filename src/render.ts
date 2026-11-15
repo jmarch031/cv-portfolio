@@ -5,7 +5,13 @@ export interface Recommendation {
   role: string;
   quote: string;
   excerpt: string;
+  role_en?: string;
+  quote_en?: string;
+  excerpt_en?: string;
 }
+
+/** Public assets resolve against the deployment base (/cv-portfolio/ on GitHub Pages). */
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 
 /** Escape text for safe interpolation into HTML. */
 export const esc = (s: string) =>
@@ -62,8 +68,8 @@ export function renderSheet(c: Content) {
     </nav>`;
 }
 
-export function renderMain(c: Content, recos: Recommendation[]) {
-  return [hero(c), statement(c), story(c), numbers(c), skills(c), journey(c), writing(c), education(c), recommendations(c, recos), contact(c)].join('');
+export function renderMain(c: Content, recos: Recommendation[], lang: Lang = 'fr') {
+  return [hero(c), statement(c), story(c), numbers(c), skills(c), journey(c), writing(c), education(c), recommendations(c, recos, lang), contact(c)].join('');
 }
 
 /* ------------------------------------------------------------------ */
@@ -93,7 +99,12 @@ function statement(c: Content) {
     ${glow('left')}
     <div class="container">
       ${label('01', s.label)}
-      <p class="statement__text js-words">${esc(s.text)}</p>
+      <div class="statement__top">
+        <p class="statement__text js-words">${esc(s.text)}</p>
+        <figure class="portrait">
+          <div class="portrait__frame"><img class="portrait__img" src="${asset('portrait.webp')}" srcset="${asset('portrait-400.webp')} 400w, ${asset('portrait.webp')} 800w" sizes="(max-width: 760px) 70vw, 340px" width="800" height="800" alt="${esc(s.portraitAlt)}" decoding="async" /></div>
+        </figure>
+      </div>
       <div class="statement__cols">
         <div class="statement__col js-rise">
           <h3 class="statement__h">${esc(s.todayTitle)}</h3>
@@ -277,6 +288,7 @@ function writing(c: Content) {
                 <span class="work__text">${esc(it.text)}</span>
                 ${it.tags ? `<span class="work__tags">${it.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</span>` : ''}
               </span>
+              <span class="work__cover"><img src="${asset('covers/' + it.cover)}" width="800" height="500" alt="" loading="lazy" decoding="async" /></span>
               <span class="work__arrow" aria-hidden="true">${it.href ? '↗' : ''}</span>`;
             return `
           <li class="work" data-work="${i}">
@@ -348,7 +360,10 @@ function education(c: Content) {
   </section>`;
 }
 
-function recommendations(c: Content, recos: Recommendation[]) {
+const pick = (rec: Recommendation, key: 'role' | 'quote' | 'excerpt', lang: Lang) =>
+  (lang === 'en' && rec[`${key}_en`]) || rec[key];
+
+function recommendations(c: Content, recos: Recommendation[], lang: Lang) {
   const r = c.recos;
   if (!recos.length) return '';
   return `
@@ -360,13 +375,13 @@ function recommendations(c: Content, recos: Recommendation[]) {
         ${recos
           .map(
             (rec, i) => `
-          <figure class="reco${i === 0 ? ' is-active' : ''}" data-reco="${i}" lang="fr">
-            <blockquote class="reco__excerpt">« ${esc(rec.excerpt)} »</blockquote>
+          <figure class="reco${i === 0 ? ' is-active' : ''}" data-reco="${i}">
+            <blockquote class="reco__excerpt">${lang === 'en' ? '“' : '« '}${esc(pick(rec, 'excerpt', lang))}${lang === 'en' ? '”' : ' »'}</blockquote>
             <figcaption class="reco__by">
               <span class="reco__name">${esc(rec.name)}</span>
-              <span class="reco__role">${esc(rec.role)}</span>
+              <span class="reco__role">${esc(pick(rec, 'role', lang))}</span>
             </figcaption>
-            <div class="reco__full"><p>${esc(rec.quote)}</p></div>
+            <div class="reco__full"><p>${esc(pick(rec, 'quote', lang))}</p></div>
           </figure>`,
           )
           .join('')}
