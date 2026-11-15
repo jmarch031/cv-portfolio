@@ -20,7 +20,7 @@ export const fr: Content = {
     toDark: 'Sombre',
   },
   intro: {
-    roles: ['Developer Intern', 'Developer', 'Software Engineer', 'Scrum Master', 'Lead Software Engineer', 'Software Engineering Manager'],
+    roles: ['Software Engineer Intern', 'Software Engineer Apprentice', 'Software Engineer', 'Scrum Master', 'Lead Software Engineer', 'Software Engineering Manager'],
     caption: 'Julien Marchand — 2011 → 2026',
   },
   hero: {
@@ -84,8 +84,7 @@ export const fr: Content = {
         text: 'Concevoir des services, des API et des produits data robustes : le fil rouge de plus de dix ans de développement, des grands comptes aux produits Decathlon.',
         applied: [
           { role: 'Lead Software Engineer', period: '2026 → aujourd’hui' },
-          { role: 'Software Engineer · Decathlon Digital, Sopra Steria', period: '2016 → 2020' },
-          { role: 'Développeur · ELOSI', period: '2015 → 2016' },
+          { role: 'Software Engineer · Decathlon Digital, Sopra Steria, ELOSI', period: '2015 → 2020' },
         ],
         current: true,
         status: 'Aujourd’hui',
@@ -190,7 +189,7 @@ export const fr: Content = {
         duration: '1 an 2 mois',
         role: 'Lead Software Engineer',
         company: 'Decathlon Digital',
-        place: 'Croix',
+        place: 'Lille',
         text: "Responsable de l'ingénierie d'une application stratégique de Business Intelligence.",
         points: ['Pilotage des décisions techniques', 'Responsabilité de la livraison logicielle', "Lien entre Produit et Engineering"],
         tags: ['Leadership technique', 'Business Intelligence', 'Delivery'],
@@ -198,9 +197,9 @@ export const fr: Content = {
       {
         dates: 'Fév 2019 — Déc 2020',
         duration: '1 an 11 mois',
-        role: 'Software Engineer',
+        role: 'Software Engineer & Scrum Master',
         company: 'Decathlon Digital',
-        place: 'Croix',
+        place: 'Lille',
         text: 'Services back-end et produits data, avec un rôle de Scrum Master en parallèle.',
         points: ['Une API de communautés sportives', 'Une application stratégique de Business Intelligence', "Facilitation de l'équipe en tant que Scrum Master"],
         tags: ['Back-end', 'API', 'Data', 'Scrum Master'],
@@ -208,7 +207,7 @@ export const fr: Content = {
       {
         dates: 'Fév 2016 — Fév 2019',
         duration: '3 ans 1 mois',
-        role: 'Software Engineer',
+        role: 'Software Engineer & Scrum Master',
         company: 'Sopra Steria',
         place: 'Lille',
         text: 'Applications back-end pour de grands comptes, avec un rôle de Scrum Master en parallèle.',
@@ -218,16 +217,16 @@ export const fr: Content = {
       {
         dates: 'Sep 2015 — Fév 2016',
         duration: '6 mois',
-        role: 'Développeur',
+        role: 'Software Engineer',
         company: 'ELOSI',
-        place: "Villeneuve-d'Ascq",
+        place: 'Lille',
         text: "Applications back-end pour des clients grands comptes du secteur de l'assurance.",
         tags: ['Back-end', 'Assurance'],
       },
       {
         dates: 'Sep 2014 — Sep 2015',
         duration: '1 an 1 mois',
-        role: 'Développeur en alternance',
+        role: 'Software Engineer en alternance',
         company: 'Cassiop',
         place: 'Lille',
         text: 'Fonctionnalités full-stack pour une plateforme de gamification et de marketing digital.',
@@ -237,7 +236,7 @@ export const fr: Content = {
       {
         dates: 'Août 2011 — Déc 2011',
         duration: '5 mois',
-        role: 'Développeur stagiaire',
+        role: 'Software Engineer stagiaire',
         company: 'MOBIVIA',
         place: 'Lille',
         text: 'Première expérience professionnelle, orientée métier et traitement de données.',
