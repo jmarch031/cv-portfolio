@@ -279,8 +279,8 @@ ul, ol { list-style: none; }
   position: fixed;
   inset: 0;
   z-index: 400;
-  background: var(--color-obsidian);
-  color: var(--color-paper);
+  background: var(--bg);
+  color: var(--fg);
   display: flex;
   align-items: flex-end;
   padding: 96px var(--gutter) 48px;
@@ -289,7 +289,9 @@ ul, ol { list-style: none; }
 }
 .sheet__list { display: grid; gap: 8px; width: 100%; }
 .sheet__link { display: flex; align-items: baseline; gap: 16px; overflow: hidden; font-size: var(--text-heading-sm); font-weight: 300; line-height: 1.15; letter-spacing: -0.03em; }
-.sheet__idx { font-size: var(--text-caption); letter-spacing: 0.08em; color: var(--color-ash-mist); }
+.sheet__idx { font-size: var(--text-caption); letter-spacing: 0.08em; color: var(--muted); }
+.sheet__link { transition: color 0.8s var(--ease); }
+@media (hover: hover) { .sheet__list:hover .sheet__link { color: var(--muted); } .sheet__list .sheet__link:hover { color: var(--fg); } }
 
 /* =====================================================================
    Hero
