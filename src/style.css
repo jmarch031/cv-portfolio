@@ -772,3 +772,11 @@ ul, ol { list-style: none; }
 /* Recommendations: no empty stage under short quotes */
 .recos__stage { min-height: 0; }
 .recos__controls { margin-top: 48px; }
+
+/* Story on short screens: keep each act between the header and the progress bar */
+@media (max-height: 720px) {
+  .act__title { margin-bottom: 20px; }
+  .act__text { font-size: var(--text-body-sm); }
+  .act__tags { margin-top: 20px; }
+  .act__years { margin-bottom: 10px; }
+}

@@ -47,21 +47,21 @@ export const en: Content = {
         title: 'Build',
         years: '2011 — 2020',
         text: 'An internship at MOBIVIA, an apprenticeship at Cassiop, then ELOSI, Sopra Steria and Decathlon Digital. Backend applications for insurance, Nexity, SNCF or Société Générale, a sports communities API, a Business Intelligence application. Often with a second hat: Scrum Master.',
-        tags: ['Backend', 'PHP / Laravel', 'Data', 'Scrum Master'],
+        tags: ['Backend', 'Java / Spring Boot', 'PHP / Laravel', 'Scrum Master'],
       },
       {
         numeral: '02',
         title: 'Grow teams',
         years: '2021 — 2026',
-        text: "Lead Software Engineer on a strategic Business Intelligence application, bridging Product and Engineering. Then Software Engineering Manager: recruiting, growing and leading teams, up to ~30 engineers across 5 Feature Teams to modernize Decathlon's global Warehouse Management System.",
-        tags: ['Technical leadership', 'Management', 'WMS', 'AI-assisted development'],
+        text: "Lead Software Engineer on a strategic Business Intelligence application, bridging Product and Engineering. Then Software Engineering Manager: recruiting, growing and leading teams, up to ~30 engineers across 5 Feature Teams to modernize Decathlon's global Warehouse Management System, from a legacy AS400 to a modern platform.",
+        tags: ['Technical leadership', 'Management', 'WMS', 'Quality Engineering', 'AI'],
       },
       {
         numeral: '03',
         title: 'Back to code',
         years: '2026 — ',
-        text: "Back to hands-on software engineering: development, architecture and AI. Building useful software, solving real problems, sharing knowledge and continuously learning, with a former manager's eye on teams and people.",
-        tags: ['Software engineering', 'Architecture', 'AI engineering'],
+        text: "Back to hands-on software engineering, on Transport: development, architecture and AI. Building useful software, solving real problems, sharing knowledge and continuously learning, with a former manager's eye on teams and people.",
+        tags: ['Java / Spring Boot', 'Kafka', 'ReactJS', 'Architecture', 'AI'],
       },
     ],
   },
@@ -81,7 +81,7 @@ export const en: Content = {
     items: [
       {
         name: 'Backend development',
-        text: 'Designing robust services, APIs and data products: the common thread of over ten years of development, from enterprise clients to Decathlon products.',
+        text: 'Designing robust services, APIs and data products, today in Java, Spring Boot and Kafka: the common thread of over ten years of development, from enterprise clients to Decathlon products.',
         applied: [
           { role: 'Lead Software Engineer', period: '2026 → today' },
           { role: 'Software Engineer · Decathlon Digital, Sopra Steria, ELOSI', period: '2015 → 2020' },
@@ -91,7 +91,7 @@ export const en: Content = {
       },
       {
         name: 'AI Engineering',
-        text: 'Experimenting with and spreading AI-assisted development across teams, and understanding how AI is changing the way we build products.',
+        text: 'Applying AI-assisted development day to day, experimenting with it and spreading it across teams, and understanding how AI is changing the way we build products.',
         applied: [
           { role: 'Lead Software Engineer', period: '2026 → today' },
           { role: 'Software Engineering Manager', period: '2022 → 2026' },
@@ -101,14 +101,17 @@ export const en: Content = {
       },
       {
         name: 'Software architecture',
-        text: 'Driving the technical decisions of a strategic application, then making software architecture and modern development practices a central focus of my current role.',
-        applied: [{ role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → today' }],
+        text: "Driving software architecture and modern development practices, and modernizing critical systems: from a legacy AS400 to a modern platform using the Strangler Pattern for Decathlon's WMS.",
+        applied: [
+          { role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → today' },
+          { role: 'Software Engineering Manager · WMS modernization', period: '2022 → 2026' },
+        ],
         current: true,
         status: 'Today',
       },
       {
         name: 'Technical leadership',
-        text: 'Owning technical decisions and software delivery, bridging Product and Engineering.',
+        text: 'Owning technical decisions and software delivery, raising technical standards, and bridging Product and Engineering.',
         applied: [{ role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → today' }],
         current: true,
         status: 'Today',
@@ -117,15 +120,25 @@ export const en: Content = {
         name: 'Growing developers',
         text: 'Helping developers grow and improving, together, the way we build software. Sharing knowledge, learning every day.',
         applied: [
-          { role: 'Lead Software Engineer', period: '2026 → today' },
+          { role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → today' },
           { role: 'Software Engineering Manager', period: '2022 → 2026' },
         ],
         current: true,
         status: 'Today',
       },
       {
+        name: 'Quality Engineering & Delivery',
+        text: 'Making quality a team responsibility: shifting from traditional QA to Quality Engineering (test automation), 80% test coverage, CI/CD pipelines, Kubernetes, and tracking delivery with DORA metrics.',
+        applied: [
+          { role: 'Software Engineering Manager', period: '2022 → 2026' },
+          { role: 'Lead Software Engineer', period: '2021 → 2022' },
+        ],
+        current: false,
+        status: 'Until 2026',
+      },
+      {
         name: 'Engineering management',
-        text: 'Building, recruiting and leading teams, up to ~30 engineers across 5 Feature Teams, with a focus on trust, ownership and collaboration.',
+        text: 'Building, recruiting and leading teams, up to ~30 engineers organized in 5 autonomous Feature Teams, with a focus on trust, ownership and collaboration.',
         applied: [{ role: 'Software Engineering Manager', period: '2022 → 2026' }],
         current: false,
         status: 'Until 2026',
@@ -143,7 +156,7 @@ export const en: Content = {
       },
       {
         name: 'Agile & Scrum',
-        text: 'Scrum Master of my teams at Sopra Steria and Decathlon Digital. Certified Professional Scrum Master I.',
+        text: 'Scrum Master of my teams at Sopra Steria and Decathlon Digital, introduced the "3 Amigos" practice. Certified Professional Scrum Master I.',
         applied: [
           { role: 'Software Engineer & Scrum Master · Decathlon Digital', period: '2019 → 2020' },
           { role: 'Software Engineer & Scrum Master · Sopra Steria', period: '2016 → 2019' },
@@ -247,7 +260,7 @@ export const en: Content = {
   writing: {
     label: 'Writing & projects',
     title: 'Writing, experimenting.',
-    intro: 'Thoughts on leadership and quality, published on Medium, and side projects to experiment: AI applied to software development, optimization with genetic algorithms.',
+    intro: 'Thoughts on leadership and quality, published on Medium, and side projects to experiment: AI applied to software development, algorithmic trading.',
     items: [
       {
         kind: 'Side project · AI engineering',
@@ -279,11 +292,11 @@ export const en: Content = {
         href: 'https://medium.com/@julienmarchand_83183/stop-negotiating-with-tomorrow-build-sustainable-products-today-f851e2a0fe05',
       },
       {
-        kind: 'Side project · AI',
-        title: 'Trading Bot NSGA-II',
-        text: 'Multi-objective crypto portfolio optimization using genetic algorithms, with a Streamlit interface for monitoring.',
+        kind: 'Side project · Algorithmic trading',
+        title: 'Hybrid TREND + GRID trading bot',
+        text: 'A multi-pair algorithmic trading bot running on OKX, live or in dry-run. Its hybrid strategy combines trend following and grid buying based on EMA and RSI indicators, and never sells a lot at a loss. Each pair is tuned by grid search, filtered by an anti-overfitting gate (walk-forward, several market phases), then validated by Monte Carlo. Telegram alerts and commands, code covered by tests.',
         meta: 'Python',
-        tags: ['Python', 'NSGA-II', 'Streamlit'],
+        tags: ['Python', 'ccxt', 'pandas', 'numba', 'pytest'],
       },
     ],
     all: 'All articles on Medium',

@@ -47,21 +47,21 @@ export const fr: Content = {
         title: 'Construire',
         years: '2011 — 2020',
         text: "Stage chez MOBIVIA, alternance chez Cassiop, puis ELOSI, Sopra Steria et Decathlon Digital. Des applications back-end pour l'assurance, Nexity, la SNCF ou la Société Générale, une API de communautés sportives, une application de Business Intelligence. Souvent avec une seconde casquette : Scrum Master.",
-        tags: ['Back-end', 'PHP / Laravel', 'Data', 'Scrum Master'],
+        tags: ['Back-end', 'Java / Spring Boot', 'PHP / Laravel', 'Scrum Master'],
       },
       {
         numeral: '02',
         title: 'Faire grandir',
         years: '2021 — 2026',
-        text: "Lead Software Engineer d'une application stratégique de Business Intelligence, en pont entre Produit et Engineering. Puis Software Engineering Manager : recruter, accompagner et mener des équipes, jusqu'à ~30 ingénieurs répartis en 5 Feature Teams pour moderniser le Warehouse Management System mondial de Decathlon.",
-        tags: ['Leadership technique', 'Management', 'WMS', 'Développement assisté par IA'],
+        text: "Lead Software Engineer d'une application stratégique de Business Intelligence, en pont entre Produit et Engineering. Puis Software Engineering Manager : recruter, accompagner et mener des équipes, jusqu'à ~30 ingénieurs répartis en 5 Feature Teams pour moderniser le Warehouse Management System mondial de Decathlon, d'un legacy AS400 vers une plateforme moderne.",
+        tags: ['Leadership technique', 'Management', 'WMS', 'Quality Engineering', 'IA'],
       },
       {
         numeral: '03',
         title: 'Retour au code',
         years: '2026 — ',
-        text: "Retour au software engineering hands-on : développement, architecture et IA. Construire des logiciels utiles, résoudre de vrais problèmes, partager la connaissance et continuer d'apprendre, avec le regard d'un ancien manager sur les équipes et les personnes.",
-        tags: ['Software engineering', 'Architecture', 'AI engineering'],
+        text: "Retour au software engineering hands-on, sur le Transport : développement, architecture et IA. Construire des logiciels utiles, résoudre de vrais problèmes, partager la connaissance et continuer d'apprendre, avec le regard d'un ancien manager sur les équipes et les personnes.",
+        tags: ['Java / Spring Boot', 'Kafka', 'ReactJS', 'Architecture', 'IA'],
       },
     ],
   },
@@ -81,7 +81,7 @@ export const fr: Content = {
     items: [
       {
         name: 'Développement back-end',
-        text: 'Concevoir des services, des API et des produits data robustes : le fil rouge de plus de dix ans de développement, des grands comptes aux produits Decathlon.',
+        text: 'Concevoir des services, des API et des produits data robustes, aujourd’hui en Java, Spring Boot et Kafka : le fil rouge de plus de dix ans de développement, des grands comptes aux produits Decathlon.',
         applied: [
           { role: 'Lead Software Engineer', period: '2026 → aujourd’hui' },
           { role: 'Software Engineer · Decathlon Digital, Sopra Steria, ELOSI', period: '2015 → 2020' },
@@ -91,7 +91,7 @@ export const fr: Content = {
       },
       {
         name: 'AI Engineering',
-        text: "Expérimenter et diffuser le développement assisté par l'IA dans les équipes, et comprendre comment l'IA change notre façon de construire des produits.",
+        text: "Appliquer le développement assisté par l'IA au quotidien, l'expérimenter et le diffuser dans les équipes, et comprendre comment l'IA change notre façon de construire des produits.",
         applied: [
           { role: 'Lead Software Engineer', period: '2026 → aujourd’hui' },
           { role: 'Software Engineering Manager', period: '2022 → 2026' },
@@ -101,14 +101,17 @@ export const fr: Content = {
       },
       {
         name: 'Architecture logicielle',
-        text: "Porter les décisions techniques d'une application stratégique, puis faire de l'architecture logicielle et des pratiques de développement modernes un axe central de mon rôle actuel.",
-        applied: [{ role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → aujourd’hui' }],
+        text: "Porter l'architecture logicielle et les pratiques de développement modernes, et moderniser des systèmes critiques : du legacy AS400 vers une plateforme moderne via le Strangler Pattern pour le WMS de Decathlon.",
+        applied: [
+          { role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → aujourd’hui' },
+          { role: 'Software Engineering Manager · modernisation du WMS', period: '2022 → 2026' },
+        ],
         current: true,
         status: 'Aujourd’hui',
       },
       {
         name: 'Leadership technique',
-        text: 'Porter les choix techniques et la livraison logicielle, en faisant le lien entre Produit et Engineering.',
+        text: 'Porter les choix techniques et la livraison logicielle, élever les standards techniques, et faire le lien entre Produit et Engineering.',
         applied: [{ role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → aujourd’hui' }],
         current: true,
         status: 'Aujourd’hui',
@@ -117,15 +120,25 @@ export const fr: Content = {
         name: 'Faire grandir les développeurs',
         text: 'Accompagner les développeurs dans leur progression et améliorer, ensemble, notre façon de construire du logiciel. Partager la connaissance, apprendre chaque jour.',
         applied: [
-          { role: 'Lead Software Engineer', period: '2026 → aujourd’hui' },
+          { role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → aujourd’hui' },
           { role: 'Software Engineering Manager', period: '2022 → 2026' },
         ],
         current: true,
         status: 'Aujourd’hui',
       },
       {
+        name: 'Quality Engineering & Delivery',
+        text: "Faire de la qualité une responsabilité d'équipe : passage de la QA traditionnelle au Quality Engineering (automatisation des tests), 80 % de couverture de tests, pipelines CI/CD, Kubernetes, et suivi du delivery avec les métriques DORA.",
+        applied: [
+          { role: 'Software Engineering Manager', period: '2022 → 2026' },
+          { role: 'Lead Software Engineer', period: '2021 → 2022' },
+        ],
+        current: false,
+        status: 'Jusqu’en 2026',
+      },
+      {
         name: "Management d'équipes",
-        text: "Construire, recruter et mener des équipes, jusqu'à ~30 ingénieurs en 5 Feature Teams, autour de la confiance, de l'ownership et de la collaboration.",
+        text: "Construire, recruter et mener des équipes, jusqu'à ~30 ingénieurs organisés en 5 Feature Teams autonomes, autour de la confiance, de l'ownership et de la collaboration.",
         applied: [{ role: 'Software Engineering Manager', period: '2022 → 2026' }],
         current: false,
         status: 'Jusqu’en 2026',
@@ -143,7 +156,7 @@ export const fr: Content = {
       },
       {
         name: 'Agilité & Scrum',
-        text: 'Scrum Master de mes équipes chez Sopra Steria puis chez Decathlon Digital. Certifié Professional Scrum Master I.',
+        text: 'Scrum Master de mes équipes chez Sopra Steria puis chez Decathlon Digital, mise en place des « 3 Amigos ». Certifié Professional Scrum Master I.',
         applied: [
           { role: 'Software Engineer & Scrum Master · Decathlon Digital', period: '2019 → 2020' },
           { role: 'Software Engineer & Scrum Master · Sopra Steria', period: '2016 → 2019' },
@@ -247,7 +260,7 @@ export const fr: Content = {
   writing: {
     label: 'Écrits & projets',
     title: 'Écrire, expérimenter.',
-    intro: "Des réflexions sur le leadership et la qualité, publiées sur Medium, et des projets personnels pour expérimenter : l'IA appliquée au développement, l'optimisation par algorithmes génétiques.",
+    intro: "Des réflexions sur le leadership et la qualité, publiées sur Medium, et des projets personnels pour expérimenter : l'IA appliquée au développement, le trading algorithmique.",
     items: [
       {
         kind: 'Projet perso · AI engineering',
@@ -279,11 +292,11 @@ export const fr: Content = {
         href: 'https://medium.com/@julienmarchand_83183/stop-negotiating-with-tomorrow-build-sustainable-products-today-f851e2a0fe05',
       },
       {
-        kind: 'Projet perso · IA',
-        title: 'Trading Bot NSGA-II',
-        text: 'Optimisation multi-objectif de portefeuilles crypto par algorithmes génétiques, avec une interface Streamlit pour le monitoring.',
+        kind: 'Projet perso · Trading algorithmique',
+        title: 'Bot de trading hybride TREND + GRID',
+        text: "Un bot de trading algorithmique multi-paires sur OKX, en mode live ou simulation. Sa stratégie hybride combine suivi de tendance et grille d'achats à partir d'indicateurs EMA et RSI, et ne vend jamais un lot à perte. Les paramètres de chaque paire sont trouvés par grid search, filtrés par un garde-fou anti-surajustement (walk-forward, plusieurs phases de marché) puis validés par Monte Carlo. Alertes et commandes via Telegram, code couvert par des tests.",
         meta: 'Python',
-        tags: ['Python', 'NSGA-II', 'Streamlit'],
+        tags: ['Python', 'ccxt', 'pandas', 'numba', 'pytest'],
       },
     ],
     all: 'Tous les articles sur Medium',
