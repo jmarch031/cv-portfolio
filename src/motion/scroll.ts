@@ -104,42 +104,49 @@ export function initScroll(liquids: Liquids) {
 
           acts.forEach((a, i) => { if (i) gsap.set(a, { autoAlpha: 0 }); });
 
+          // No snap (it fights Lenis' smooth scroll): each act gets a plateau where it
+          // stays fully visible, and short transitions in between.
+          //   act i is complete from T(i) = i * STEP until T(i) + REST, then hands over.
+          const last = acts.length - 1;
+          const REST = 1;
+          const MOVE = 0.6;
+          const STEP = REST + MOVE;
+          const T = (i: number) => i * STEP;
+          const total = T(last) + REST;
+
           const tl = gsap.timeline({
             defaults: { ease: 'power3.inOut' },
             scrollTrigger: {
               trigger: '.story__pin',
               start: 'top top',
-              end: () => `+=${window.innerHeight * acts.length * 1.1}`,
+              end: () => `+=${window.innerHeight * acts.length * 1.2}`,
               pin: true,
-              scrub: 1,
-              snap: { snapTo: 'labels', duration: { min: 0.3, max: 0.9 }, ease: 'power2.inOut' },
-              onUpdate: (self) => {
-                const idx = Math.min(acts.length - 1, Math.round(self.progress * (acts.length - 1)));
+              scrub: 0.8,
+              onUpdate: () => {
+                const t = tl.time();
+                let idx = 0;
+                acts.forEach((_, i) => { if (t >= T(i) - MOVE / 2) idx = i; });
                 if (current) current.textContent = String(idx + 1).padStart(2, '0');
               },
             },
           });
 
-          // Act i rests at time i (a snap label). Every transition into act i runs
-          // strictly between i - 1 and i, so a snap never freezes an animation midway.
-          const last = acts.length - 1;
-          tl.addLabel('act0', 0);
-          tl.fromTo('.story__bar', { scaleX: 1 / acts.length }, { scaleX: 1, ease: 'none', duration: last }, 0);
+          tl.fromTo('.story__bar', { scaleX: 1 / acts.length }, { scaleX: 1, ease: 'none', duration: total }, 0);
           acts.forEach((a, i) => {
-            const from = Math.max(0, i - 0.5);
-            const to = Math.min(last, i + 0.5);
-            if (to > from) tl.fromTo(numeral(a), { yPercent: i === 0 ? 0 : 10 }, { yPercent: i === last ? 0 : -10, ease: 'none', duration: to - from }, from);
+            // slow drift of the numeral while its act is on screen
+            const from = Math.max(0, T(i) - MOVE);
+            const to = Math.min(total, T(i) + REST);
+            tl.fromTo(numeral(a), { yPercent: 8 }, { yPercent: -8, ease: 'none', duration: to - from }, from);
             if (i === 0) return;
             const prev = acts[i - 1];
-            const out = i - 0.9;
-            tl.to(parts(prev), { yPercent: -60, autoAlpha: 0, stagger: 0.03, duration: 0.3 }, out)
-              .to(numeral(prev), { autoAlpha: 0, duration: 0.3 }, out)
-              .set(a, { autoAlpha: 1 }, i - 0.6)
-              .fromTo(parts(a), { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, stagger: 0.05, duration: 0.35 }, i - 0.6)
-              .fromTo(numeral(a), { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45 }, i - 0.6)
-              .to(liquids.story.state.c, { endArray: flat(ACT_PALETTES[i % ACT_PALETTES.length]), duration: 0.8, ease: 'none' }, out)
-              .to(liquids.story.state.lens, { endArray: ACT_LENSES[i % ACT_LENSES.length], duration: 0.8 }, out)
-              .addLabel(`act${i}`, i);
+            const out = T(i) - MOVE;
+            tl.to(parts(prev), { yPercent: -50, autoAlpha: 0, stagger: 0.03, duration: MOVE * 0.45 }, out)
+              .to(numeral(prev), { autoAlpha: 0, duration: MOVE * 0.45 }, out)
+              .set(a, { autoAlpha: 1 }, out + MOVE * 0.4)
+              .fromTo(parts(a), { yPercent: 50, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, stagger: 0.04, duration: MOVE * 0.45 }, out + MOVE * 0.4)
+              .fromTo(numeral(a), { autoAlpha: 0, scale: 0.88 }, { autoAlpha: 1, scale: 1, duration: MOVE * 0.55 }, out + MOVE * 0.4)
+              .to(liquids.story.state.c, { endArray: flat(ACT_PALETTES[i % ACT_PALETTES.length]), duration: MOVE, ease: 'none' }, out)
+              .to(liquids.story.state.lens, { endArray: ACT_LENSES[i % ACT_LENSES.length], duration: MOVE }, out);
           });
 
           // First act enters when the section arrives (on the wrapper: the timeline owns the parts)
@@ -188,18 +195,46 @@ export function initScroll(liquids: Liquids) {
           }
           active = i;
         };
-        jobs.forEach((job, i) => {
-          ScrollTrigger.create({
-            trigger: job,
-            start: 'top 55%',
-            end: 'bottom 55%',
-            onToggle: (self) => self.isActive && activate(i),
+        if (desktop && tall) {
+          // Pinned reading: each role gets the same scroll distance, the list slides
+          // to keep the active row in view, the panel shows its full detail.
+          document.querySelector('.journey')?.classList.add('is-pinned');
+          const list = document.querySelector<HTMLElement>('.jobs')!;
+          const win = document.querySelector<HTMLElement>('.jobs__window')!;
+          const follow = (i: number) => {
+            const row = jobs[i];
+            const max = Math.max(0, list.scrollHeight - win.clientHeight);
+            const y = gsap.utils.clamp(0, max, row.offsetTop - win.clientHeight / 2 + row.offsetHeight / 2);
+            gsap.to(list, { y: -y, duration: 1, ease: EASE, overwrite: true });
+          };
+          const st = ScrollTrigger.create({
+            trigger: '.journey__grid',
+            start: 'top 120px',
+            end: () => `+=${jobs.length * window.innerHeight * 0.8}`,
+            pin: true,
+            onUpdate: (self) => {
+              const i = Math.min(jobs.length - 1, Math.floor(self.progress * jobs.length));
+              if (i !== active) { activate(i); follow(i); }
+            },
           });
-        });
-        if (desktop) {
+          jobs.forEach((job, i) => {
+            job.addEventListener('click', () => {
+              const y = st.start + ((i + 0.5) / jobs.length) * (st.end - st.start);
+              window.dispatchEvent(new CustomEvent('jm:scrollto', { detail: y }));
+            });
+          });
           gsap.from('.journey__panel', {
             autoAlpha: 0, y: 60, duration: DUR, ease: EASE,
             scrollTrigger: { trigger: '.journey__grid', start: 'top 75%' },
+          });
+        } else {
+          jobs.forEach((job, i) => {
+            ScrollTrigger.create({
+              trigger: job,
+              start: 'top 55%',
+              end: 'bottom 55%',
+              onToggle: (self) => self.isActive && activate(i),
+            });
           });
         }
         ScrollTrigger.batch('.work', {
@@ -207,11 +242,13 @@ export function initScroll(liquids: Liquids) {
           once: true,
           onEnter: (batch) => gsap.from(batch, { y: 60, autoAlpha: 0, duration: DUR, stagger: 0.1, ease: EASE }),
         });
-        ScrollTrigger.batch('.job', {
-          start: 'top 92%',
-          once: true,
-          onEnter: (batch) => gsap.from(batch, { y: 50, autoAlpha: 0, duration: DUR, stagger: 0.08, ease: EASE }),
-        });
+        if (!(desktop && tall)) {
+          ScrollTrigger.batch('.job', {
+            start: 'top 92%',
+            once: true,
+            onEnter: (batch) => gsap.from(batch, { y: 50, autoAlpha: 0, duration: DUR, stagger: 0.08, ease: EASE }),
+          });
+        }
 
         /* ---------- Contact: lines converge, letters rise ---------- */
         gsap.utils.toArray<HTMLElement>('.contact__line').forEach((line, i) => {

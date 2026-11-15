@@ -159,6 +159,10 @@ function boot() {
       .to(curtain, { scaleY: 0, duration: 0.95, ease: 'expo.inOut' }, '+=0.1');
   }
 
+  window.addEventListener('jm:scrollto', (e) => {
+    lenis.scrollTo((e as CustomEvent<number>).detail, { duration: 1.4, easing: (t) => 1 - Math.pow(1 - t, 4) });
+  });
+
   playIntro({
     roles: CONTENT[lang].intro.roles,
     caption: CONTENT[lang].intro.caption,

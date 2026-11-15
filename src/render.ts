@@ -213,6 +213,7 @@ function journey(c: Content) {
       ${label('05', s.label)}
       <h2 class="journey__title js-lines">${esc(s.title)}</h2>
       <div class="journey__grid">
+        <div class="jobs__window">
         <ol class="jobs">
           ${s.jobs
             .map(
@@ -226,6 +227,7 @@ function journey(c: Content) {
             )
             .join('')}
         </ol>
+        </div>
         <aside class="journey__panel" aria-hidden="true">
           <div class="journey__panel-inner">
             ${s.jobs
@@ -280,9 +282,6 @@ function writing(c: Content) {
       <div class="writing__cta">
         <a href="${MEDIUM}" target="_blank" rel="noopener" class="pill magnetic">${roll(w.all)}</a>
       </div>
-    </div>
-    <div class="works__preview" aria-hidden="true">
-      ${w.items.map((_, i) => `<span class="orb orb--${i % 4}"></span>`).join('')}
     </div>
   </section>`;
 }

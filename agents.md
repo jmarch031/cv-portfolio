@@ -77,7 +77,7 @@ Le reste de `design.md` s'applique toujours :
 - L'Histoire n'est épinglée que si l'écran fait au moins 620px de haut ; sinon les actes s'empilent (`.story.is-static`).
 - `prefers-reduced-motion: reduce` doit toujours donner un site lisible et statique.
 - Ne pas mettre de `transition` CSS sur une propriété animée par GSAP (conflit sur `transform`).
-- Timeline épinglée avec `snap` : chaque transition doit se terminer **avant** le label sur lequel le snap s'arrête, sinon l'animation reste figée à mi-course.
+- Pas de `snap` ScrollTrigger : il entre en conflit avec Lenis et fige les animations. Les sections épinglées (Histoire, Parcours) donnent à chaque étape un **plateau** de scroll où elle reste entièrement visible, avec des transitions courtes entre deux étapes.
 - Une animation pilotée par le scroll (`scrub`) doit se terminer à une position atteignable (attention à la dernière section).
 - Un dégradé `background-clip: text` ne traverse pas les enfants transformés : sur un texte découpé par SplitText, appliquer le dégradé lettre par lettre.
 

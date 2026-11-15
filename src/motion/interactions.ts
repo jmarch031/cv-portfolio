@@ -78,8 +78,11 @@ export function bindNav(lenis: Lenis, labels: { menu: string; close: string }, s
   ScrollTrigger.create({
     start: 'top -100',
     end: 'max',
-    onUpdate: (self) => { if (!open) nav.classList.toggle('is-hidden', self.direction === 1); },
-    onLeaveBack: () => nav.classList.remove('is-hidden'),
+    onUpdate: (self) => {
+      if (!open) nav.classList.toggle('is-hidden', self.direction === 1);
+      nav.classList.toggle('is-scrolled', self.scroll() > window.innerHeight * 0.7);
+    },
+    onLeaveBack: () => nav.classList.remove('is-hidden', 'is-scrolled'),
   });
 }
 
@@ -163,29 +166,14 @@ export function bindRecos(reduced: boolean, signal: AbortSignal) {
   signal.addEventListener('abort', () => progress.kill());
 }
 
-/* ---------------- Writing: glass orb follows the cursor ---------------- */
+/* ---------------- Writing: spotlight follows the cursor in the hovered row ---------------- */
 export function bindWorks(signal: AbortSignal) {
-  if (!finePointer() || window.innerWidth < 961) return;
-  const list = document.querySelector<HTMLElement>('.works');
-  const preview = document.querySelector<HTMLElement>('.works__preview');
-  if (!list || !preview) return;
-  const orbs = Array.from(preview.querySelectorAll<HTMLElement>('.orb'));
-  const xTo = gsap.quickTo(preview, 'x', { duration: 0.7, ease: 'power3' });
-  const yTo = gsap.quickTo(preview, 'y', { duration: 0.7, ease: 'power3' });
-  const rTo = gsap.quickTo(preview, 'rotate', { duration: 0.9, ease: 'power3' });
-  let lastX = 0;
-  list.addEventListener('pointermove', (e) => {
-    // keep the orb to the right of the text column
-    xTo(Math.max(e.clientX + 180, list.getBoundingClientRect().left + list.offsetWidth * 0.62));
-    yTo(e.clientY);
-    rTo(gsap.utils.clamp(-15, 15, (e.clientX - lastX) * 0.6));
-    lastX = e.clientX;
-  }, { signal });
-  list.addEventListener('pointerover', (e) => {
-    const work = (e.target as Element).closest<HTMLElement>('.work');
-    if (!work) return;
-    const i = Number(work.dataset.work);
-    orbs.forEach((o, k) => o.classList.toggle('is-active', k === i));
-  }, { signal });
-  list.addEventListener('pointerleave', () => orbs.forEach((o) => o.classList.remove('is-active')), { signal });
+  if (!finePointer()) return;
+  document.querySelectorAll<HTMLElement>('.work__link').forEach((link) => {
+    link.addEventListener('pointermove', (e) => {
+      const r = link.getBoundingClientRect();
+      link.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      link.style.setProperty('--my', `${e.clientY - r.top}px`);
+    }, { signal });
+  });
 }
