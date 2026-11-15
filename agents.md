@@ -81,6 +81,10 @@ Le reste de `design.md` s'applique toujours :
 - Une animation pilotée par le scroll (`scrub`) doit se terminer à une position atteignable (attention à la dernière section).
 - Un dégradé `background-clip: text` ne traverse pas les enfants transformés : sur un texte découpé par SplitText, appliquer le dégradé lettre par lettre.
 
+- Les déclencheurs situés sous une section épinglée doivent tenir compte de son espace : les pins ont un `refreshPriority` plus élevé. L'activité des canvases WebGL est pilotée par `IntersectionObserver`, pas par des positions de scroll.
+- **Parcours** : rien n'est imposé par le scroll. Le visiteur choisit le poste à lire (clic) ; panneau collant sur desktop, accordéon sur mobile.
+- **Savoir-faire** : chaque compétence liste les rôles et périodes où elle a été appliquée (d'après LinkedIn) et indique si elle est toujours d'actualité.
+
 ## Performance
 
 - Les surfaces WebGL ne tournent que lorsqu'elles sont visibles. Sur mobile et tablette (`pointer: coarse` ou largeur < 800px), elles passent en version allégée : tampon plus petit, un seul échantillon dans la lentille, 30 images par seconde.

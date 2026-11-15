@@ -178,12 +178,18 @@ function skills(c: Content) {
             <button class="skill__head" aria-expanded="false">
               <span class="skill__idx">${pad(i + 1)}</span>
               <span class="skill__name">${esc(it.name)}</span>
+              <span class="skill__status${it.current ? ' is-current' : ''}"><span class="skill__dot" aria-hidden="true"></span>${esc(it.status)}</span>
               <span class="skill__plus" aria-hidden="true"></span>
             </button>
             <div class="skill__body">
               <div class="skill__inner">
                 <p class="skill__text">${esc(it.text)}</p>
-                <p class="skill__context">${esc(it.context)}</p>
+                <div class="skill__applied">
+                  <p class="mini-label">${esc(s.appliedLabel)}</p>
+                  <ul>
+                    ${it.applied.map((a) => `<li><span>${esc(a.role)}</span><span>${esc(a.period)}</span></li>`).join('')}
+                  </ul>
+                </div>
               </div>
             </div>
           </li>`,
@@ -212,22 +218,24 @@ function journey(c: Content) {
     <div class="container">
       ${label('05', s.label)}
       <h2 class="journey__title js-lines">${esc(s.title)}</h2>
+      <p class="journey__hint js-rise"><span aria-hidden="true">↓</span> ${esc(s.hint)}</p>
       <div class="journey__grid">
-        <div class="jobs__window">
         <ol class="jobs">
           ${s.jobs
             .map(
               (j, i) => `
             <li class="job${i === 0 ? ' is-active' : ''}" data-job="${i}">
-              <p class="job__dates">${esc(j.dates)}</p>
-              <h3 class="job__role">${esc(j.role)}</h3>
-              <p class="job__company">${esc(j.company)}</p>
-              <div class="job__detail job-detail">${jobDetail(j)}</div>
+              <button class="job__head" aria-expanded="${i === 0}" aria-controls="job-detail-${i}">
+                <span class="job__dates">${esc(j.dates)}</span>
+                <span class="job__role">${esc(j.role)}</span>
+                <span class="job__company">${esc(j.company)}</span>
+                <span class="job__mark" aria-hidden="true"></span>
+              </button>
+              <div class="job__detail" id="job-detail-${i}"><div class="job-detail">${jobDetail(j)}</div></div>
             </li>`,
             )
             .join('')}
         </ol>
-        </div>
         <aside class="journey__panel" aria-hidden="true">
           <div class="journey__panel-inner">
             ${s.jobs

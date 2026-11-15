@@ -28,10 +28,6 @@ export function initScroll(liquids: Liquids) {
   return gsap.context(() => {
     const mm = gsap.matchMedia();
 
-    // Each liquid surface only renders while visible
-    ([['.hero', liquids.hero], ['.story', liquids.story], ['.contact', liquids.contact]] as const).forEach(([sel, l]) => {
-      ScrollTrigger.create({ trigger: sel, start: 'top bottom', end: 'bottom top', onToggle: (self) => l.setActive(self.isActive) });
-    });
     liquids.story.state.c = flat(ACT_PALETTES[0]);
     liquids.story.state.lens = [...ACT_LENSES[0]];
 
@@ -50,7 +46,7 @@ export function initScroll(liquids: Liquids) {
         }
 
         /* ---------- Hero: the statement slides over it ---------- */
-        ScrollTrigger.create({ trigger: '.hero', start: 'top top', end: 'bottom top', pin: true, pinSpacing: false });
+        ScrollTrigger.create({ trigger: '.hero', start: 'top top', end: 'bottom top', pin: true, pinSpacing: false, refreshPriority: 2 });
         gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } })
           .to('.hero__media', { scale: 1.18, yPercent: 8, ease: 'none' }, 0)
           .to('.hero__line:first-child', { xPercent: -18, ease: 'none' }, 0)
@@ -144,6 +140,8 @@ export function initScroll(liquids: Liquids) {
               end: () => `+=${window.innerHeight * acts.length * 1.2}`,
               pin: true,
               scrub: 0.6,
+              // refreshed before the triggers created earlier, which sit below this pin
+              refreshPriority: 1,
             },
           });
 
@@ -195,73 +193,16 @@ export function initScroll(liquids: Liquids) {
             { xPercent: 0, autoAlpha: 1, ease: 'none', scrollTrigger: { trigger: row, start: 'top 98%', end: 'top 65%', scrub: true } });
         });
 
-        /* ---------- Journey: the row in the reading line drives the panel ---------- */
-        const jobs = gsap.utils.toArray<HTMLElement>('.job');
-        const panels = gsap.utils.toArray<HTMLElement>('.panel-item');
-        let active = 0;
-        const activate = (i: number) => {
-          if (i === active) return;
-          jobs[active]?.classList.remove('is-active');
-          jobs[i]?.classList.add('is-active');
-          if (desktop && panels[i] && panels[active]) {
-            const from = panels[active];
-            const to = panels[i];
-            gsap.killTweensOf([from, to]);
-            gsap.set(from, { clearProps: 'all' });
-            from.classList.remove('is-active');
-            to.classList.add('is-active');
-            gsap.fromTo(to.children, { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.9, stagger: 0.05, ease: EASE });
-          }
-          active = i;
-        };
-        if (desktop && tall) {
-          // Pinned reading: each role gets the same scroll distance, the list slides
-          // to keep the active row in view, the panel shows its full detail.
-          document.querySelector('.journey')?.classList.add('is-pinned');
-          const list = document.querySelector<HTMLElement>('.jobs')!;
-          const win = document.querySelector<HTMLElement>('.jobs__window')!;
-          const follow = (i: number) => {
-            const row = jobs[i];
-            const max = Math.max(0, list.scrollHeight - win.clientHeight);
-            const y = gsap.utils.clamp(0, max, row.offsetTop - win.clientHeight / 2 + row.offsetHeight / 2);
-            gsap.to(list, { y: -y, duration: 1, ease: EASE, overwrite: true });
-          };
-          // Long details scroll inside the panel while the reader stays on the role
-          const panelBox = document.querySelector<HTMLElement>('.journey__panel-inner')!;
-          const pad = () => parseFloat(getComputedStyle(panelBox).paddingTop) * 2;
-          const st = ScrollTrigger.create({
-            trigger: '.journey__grid',
-            start: 'top 100px',
-            end: () => `+=${jobs.length * window.innerHeight * 0.8}`,
-            pin: true,
-            onUpdate: (self) => {
-              const pos = self.progress * jobs.length;
-              const i = Math.min(jobs.length - 1, Math.floor(pos));
-              if (i !== active) { activate(i); follow(i); }
-              const item = panels[i];
-              const overflow = item.scrollHeight - (panelBox.clientHeight - pad());
-              const local = gsap.utils.clamp(0, 1, (pos - i - 0.2) / 0.6);
-              gsap.to(item, { y: overflow > 0 ? -overflow * local : 0, duration: 0.6, ease: 'power3.out', overwrite: 'auto' });
-            },
-          });
-          jobs.forEach((job, i) => {
-            job.addEventListener('click', () => {
-              const y = st.start + ((i + 0.5) / jobs.length) * (st.end - st.start);
-              window.dispatchEvent(new CustomEvent('jm:scrollto', { detail: y }));
-            });
-          });
+        /* ---------- Journey: rows rise in; selection is the reader's (see bindJourney) ---------- */
+        ScrollTrigger.batch('.job', {
+          start: 'top 92%',
+          once: true,
+          onEnter: (batch) => gsap.from(batch, { y: 50, autoAlpha: 0, duration: DUR, stagger: 0.08, ease: EASE }),
+        });
+        if (desktop) {
           gsap.from('.journey__panel', {
             autoAlpha: 0, y: 60, duration: DUR, ease: EASE,
             scrollTrigger: { trigger: '.journey__grid', start: 'top 75%' },
-          });
-        } else {
-          jobs.forEach((job, i) => {
-            ScrollTrigger.create({
-              trigger: job,
-              start: 'top 55%',
-              end: 'bottom 55%',
-              onToggle: (self) => self.isActive && activate(i),
-            });
           });
         }
         ScrollTrigger.batch('.work', {
@@ -269,13 +210,6 @@ export function initScroll(liquids: Liquids) {
           once: true,
           onEnter: (batch) => gsap.from(batch, { y: 60, autoAlpha: 0, duration: DUR, stagger: 0.1, ease: EASE }),
         });
-        if (!(desktop && tall)) {
-          ScrollTrigger.batch('.job', {
-            start: 'top 92%',
-            once: true,
-            onEnter: (batch) => gsap.from(batch, { y: 50, autoAlpha: 0, duration: DUR, stagger: 0.08, ease: EASE }),
-          });
-        }
 
         /* ---------- Education: the timeline bars draw themselves ---------- */
         gsap.utils.toArray<HTMLElement>('.school__bar').forEach((bar) => {

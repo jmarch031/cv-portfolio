@@ -220,17 +220,21 @@ export function createLiquid(opts: LiquidOptions): Liquid {
     if (active) raf = requestAnimationFrame(loop);
   };
 
+  const setActive = (next: boolean) => {
+    if (opts.reduced) { draw(); return; }
+    if (next === active) return;
+    active = next;
+    cancelAnimationFrame(raf);
+    if (active) loop();
+  };
+  // Render only while the canvas is on screen (independent of scroll math)
+  new IntersectionObserver((entries) => setActive(entries[entries.length - 1].isIntersecting), { rootMargin: '10% 0px' }).observe(canvas);
+
   return {
     canvas,
     state,
     setPalette(p) { state.c = p.flatMap(norm); if (!active) draw(); },
     redraw() { if (!active) draw(); },
-    setActive(next) {
-      if (opts.reduced) { draw(); return; }
-      if (next === active) return;
-      active = next;
-      cancelAnimationFrame(raf);
-      if (active) loop();
-    },
+    setActive,
   };
 }

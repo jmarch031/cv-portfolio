@@ -11,8 +11,12 @@ export interface Act {
 export interface Skill {
   name: string;
   text: string;
-  /** Where it comes from (roles / companies on the LinkedIn profile) */
-  context: string;
+  /** Roles and periods where it was applied (from the LinkedIn profile) */
+  applied: { role: string; period: string }[];
+  /** Still part of the current role */
+  current: boolean;
+  /** Short status shown in the row: "Aujourd'hui" / "Jusqu'en 2026" */
+  status: string;
 }
 
 export interface Job {
@@ -61,8 +65,8 @@ export interface Content {
   statement: { label: string; text: string; today: string; todayTitle: string; matters: string; mattersTitle: string };
   story: { label: string; title: string; acts: Act[] };
   numbers: { label: string; stats: Stat[] };
-  skills: { label: string; title: string; items: Skill[] };
-  journey: { label: string; title: string; jobs: Job[] };
+  skills: { label: string; title: string; appliedLabel: string; items: Skill[] };
+  journey: { label: string; title: string; hint: string; jobs: Job[] };
   writing: { label: string; title: string; intro: string; items: Work[]; all: string; read: string };
   education: {
     label: string;

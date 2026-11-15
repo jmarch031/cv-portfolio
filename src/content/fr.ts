@@ -77,20 +77,90 @@ export const fr: Content = {
   skills: {
     label: 'Savoir-faire',
     title: 'Ce que je fais.',
+    appliedLabel: 'Appliqué en tant que',
     items: [
-      { name: 'Développement back-end', text: 'Concevoir des services, des API et des produits data robustes : le fil rouge de plus de dix ans de développement, des grands comptes aux produits Decathlon.', context: 'Decathlon Digital · Sopra Steria · ELOSI' },
-      { name: 'AI Engineering', text: "Expérimenter et diffuser le développement assisté par l'IA dans les équipes, et comprendre comment l'IA change notre façon de construire des produits.", context: 'Decathlon Digital · 2022 → aujourd’hui' },
-      { name: 'Architecture logicielle', text: "Prendre les décisions techniques et moderniser des systèmes à grande échelle, comme le Warehouse Management System mondial de Decathlon, avec des pratiques de développement modernes.", context: 'Lead Software Engineer · Software Engineering Manager' },
-      { name: 'Data & Business Intelligence', text: "Construire des produits data et une application stratégique de Business Intelligence, d'abord comme ingénieur, puis comme lead.", context: 'Software Engineer · Lead Software Engineer · Decathlon Digital' },
-      { name: 'Leadership technique', text: 'Porter les choix techniques et la livraison logicielle, en faisant le lien entre Produit et Engineering.', context: 'Lead Software Engineer · 2021 → 2022, 2026 → aujourd’hui' },
-      { name: "Management d'équipes", text: "Construire, recruter et mener des équipes, jusqu'à ~30 ingénieurs en 5 Feature Teams, autour de la confiance, de l'ownership et de la collaboration.", context: 'Software Engineering Manager · 2022 → 2026' },
-      { name: 'Faire grandir les développeurs', text: 'Accompagner les développeurs dans leur progression et améliorer, ensemble, notre façon de construire du logiciel. Partager la connaissance, apprendre chaque jour.', context: 'Tout au long du parcours' },
-      { name: 'Agilité & Scrum', text: 'Scrum Master de mes équipes chez Sopra Steria puis chez Decathlon Digital. Certifié Professional Scrum Master I.', context: 'PSM I · 2016 → 2020' },
+      {
+        name: 'Développement back-end',
+        text: 'Concevoir des services, des API et des produits data robustes : le fil rouge de plus de dix ans de développement, des grands comptes aux produits Decathlon.',
+        applied: [
+          { role: 'Lead Software Engineer', period: '2026 → aujourd’hui' },
+          { role: 'Software Engineer · Decathlon Digital, Sopra Steria', period: '2016 → 2020' },
+          { role: 'Développeur · ELOSI', period: '2015 → 2016' },
+        ],
+        current: true,
+        status: 'Aujourd’hui',
+      },
+      {
+        name: 'AI Engineering',
+        text: "Expérimenter et diffuser le développement assisté par l'IA dans les équipes, et comprendre comment l'IA change notre façon de construire des produits.",
+        applied: [
+          { role: 'Lead Software Engineer', period: '2026 → aujourd’hui' },
+          { role: 'Software Engineering Manager', period: '2022 → 2026' },
+        ],
+        current: true,
+        status: 'Aujourd’hui',
+      },
+      {
+        name: 'Architecture logicielle',
+        text: 'Prendre les décisions techniques et moderniser des systèmes à grande échelle, comme le Warehouse Management System mondial de Decathlon, avec des pratiques de développement modernes.',
+        applied: [
+          { role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → aujourd’hui' },
+          { role: 'Software Engineering Manager', period: '2022 → 2026' },
+        ],
+        current: true,
+        status: 'Aujourd’hui',
+      },
+      {
+        name: 'Leadership technique',
+        text: 'Porter les choix techniques et la livraison logicielle, en faisant le lien entre Produit et Engineering.',
+        applied: [{ role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → aujourd’hui' }],
+        current: true,
+        status: 'Aujourd’hui',
+      },
+      {
+        name: 'Faire grandir les développeurs',
+        text: 'Accompagner les développeurs dans leur progression et améliorer, ensemble, notre façon de construire du logiciel. Partager la connaissance, apprendre chaque jour.',
+        applied: [
+          { role: 'Lead Software Engineer', period: '2026 → aujourd’hui' },
+          { role: 'Software Engineering Manager', period: '2022 → 2026' },
+        ],
+        current: true,
+        status: 'Aujourd’hui',
+      },
+      {
+        name: "Management d'équipes",
+        text: "Construire, recruter et mener des équipes, jusqu'à ~30 ingénieurs en 5 Feature Teams, autour de la confiance, de l'ownership et de la collaboration.",
+        applied: [{ role: 'Software Engineering Manager', period: '2022 → 2026' }],
+        current: false,
+        status: 'Jusqu’en 2026',
+      },
+      {
+        name: 'Data & Business Intelligence',
+        text: "Construire des produits data et une application stratégique de Business Intelligence : comme ingénieur, comme lead, puis à la tête de l'équipe.",
+        applied: [
+          { role: 'Software Engineering Manager', period: 'en début de poste, dès 2022' },
+          { role: 'Lead Software Engineer', period: '2021 → 2022' },
+          { role: 'Software Engineer', period: '2019 → 2020' },
+        ],
+        current: false,
+        status: 'Précédemment',
+      },
+      {
+        name: 'Agilité & Scrum',
+        text: 'Scrum Master de mes équipes chez Sopra Steria puis chez Decathlon Digital. Certifié Professional Scrum Master I.',
+        applied: [
+          { role: 'Software Engineer & Scrum Master · Decathlon Digital', period: '2019 → 2020' },
+          { role: 'Software Engineer & Scrum Master · Sopra Steria', period: '2016 → 2019' },
+        ],
+        current: false,
+        status: 'Jusqu’en 2020',
+      },
     ],
   },
   journey: {
     label: 'Parcours',
     title: 'Huit postes, une constante : construire.',
+    hint: 'Sélectionnez un poste pour voir le détail',
     jobs: [
       {
         dates: 'Oct 2026 — Aujourd’hui',

@@ -433,7 +433,7 @@ ul, ol { list-style: none; }
 .skill__head {
   width: 100%;
   display: grid;
-  grid-template-columns: 64px 1fr 24px;
+  grid-template-columns: 64px 1fr auto 24px;
   align-items: center;
   gap: 28px;
   padding: 22px 0;
@@ -456,36 +456,41 @@ ul, ol { list-style: none; }
 .skill__body { height: 0; overflow: hidden; }
 .skill__inner { padding: 0 0 28px calc(64px + 28px + 14px); max-width: calc(64px + 28px + 600px); }
 .skill__text { color: var(--soft); font-size: var(--text-body-sm); }
-.skill__context { margin-top: 12px; font-size: var(--text-caption); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.skill__applied { margin-top: 24px; }
+.skill__applied li { display: flex; justify-content: space-between; gap: 28px; padding: 10px 0; border-top: 1px solid var(--line); font-size: var(--text-body-sm); }
+.skill__applied li span:last-child { color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.skill__status { display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-caption); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.skill__dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid currentColor; }
+.skill__status.is-current { color: var(--fg); }
+.skill__status.is-current .skill__dot { border: 0; background: var(--iri); animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(1.5); opacity: 0.55; } }
 
 /* =====================================================================
    Journey — list + sticky panel
    ===================================================================== */
 .journey { padding-top: 0; }
-.journey__title { font-size: var(--text-heading); font-weight: 300; line-height: 1.1; letter-spacing: -0.035em; max-width: 14ch; margin-bottom: 96px; }
+.journey__title { font-size: var(--text-heading); font-weight: 300; line-height: 1.1; letter-spacing: -0.035em; max-width: 14ch; margin-bottom: 40px; }
+.journey__hint { font-size: var(--text-caption); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; }
 .journey__grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 64px; align-items: start; }
 .jobs { border-top: 1px solid var(--line); }
-.journey.is-pinned .jobs__window {
-  height: calc(100vh - 140px);
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 10%, #000 88%, transparent 100%);
-  mask-image: linear-gradient(180deg, transparent 0, #000 10%, #000 88%, transparent 100%);
-}
-.journey.is-pinned .jobs { border-top: 0; padding: 12vh 0; will-change: transform; }
-.journey.is-pinned .job { cursor: pointer; }
-.journey.is-pinned .journey__panel { position: relative; top: auto; max-height: none; overflow: visible; }
-.journey.is-pinned .journey__panel-inner { height: calc(100vh - 140px); min-height: 0; overflow: hidden; }
-.journey.is-pinned .panel-item { will-change: transform; }
-.job { padding: 28px 0; border-bottom: 1px solid var(--line); color: var(--muted); transition: color 0.8s var(--ease); }
+.job { position: relative; border-bottom: 1px solid var(--line); color: var(--muted); transition: color 0.8s var(--ease); }
+.job::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--iri); transform: scaleX(0); transform-origin: left; transition: transform 1.25s var(--ease); }
+.job.is-active::after { transform: scaleX(1); }
+.job__head { position: relative; display: grid; gap: 6px; width: 100%; padding: 24px 40px 24px 0; }
+.job__mark { position: absolute; right: 4px; top: 50%; width: 14px; height: 14px; margin-top: -7px; }
+.job__mark::before, .job__mark::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background: currentColor; transition: transform 0.8s var(--ease); }
+.job__mark::after { transform: rotate(90deg); }
+.job.is-active .job__mark::after { transform: rotate(0); }
+@media (hover: hover) { .job:hover { color: var(--fg); } }
 .job.is-active { color: var(--fg); }
-.job__dates { font-size: var(--text-caption); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+.job__dates { font-size: var(--text-caption); letter-spacing: 0.06em; text-transform: uppercase; }
 .job__role { font-size: var(--text-subheading); font-weight: 300; line-height: 1.15; letter-spacing: -0.03em; transition: transform 0.8s var(--ease); }
 .job.is-active .job__role { transform: translateX(14px); }
-.job__company { font-size: var(--text-body-sm); margin-top: 4px; }
-.job__detail { display: none; }
-.journey__panel { position: sticky; top: 120px; max-height: calc(100vh - 160px); overflow: auto; scrollbar-width: none; }
-.journey__panel::-webkit-scrollbar { display: none; }
-.journey__panel-inner { position: relative; border: 1px solid var(--line); padding: var(--card-padding); min-height: 52vh; background: color-mix(in srgb, var(--bg) 55%, transparent); backdrop-filter: blur(18px); }
+.job__company { font-size: var(--text-body-sm); }
+.job__detail { display: none; overflow: hidden; }
+.job__detail .job-detail { padding: 0 0 28px; }
+.journey__panel { position: sticky; top: var(--panel-top, 100px); }
+.journey__panel-inner { position: relative; border: 1px solid var(--line); padding: var(--card-padding); min-height: 0; background: color-mix(in srgb, var(--bg) 55%, transparent); backdrop-filter: blur(18px); }
 .journey__panel-inner::before { content: ''; position: absolute; left: -1px; right: -1px; top: -1px; height: 2px; background: var(--iri); }
 .panel-item { position: absolute; inset: var(--card-padding); opacity: 0; visibility: hidden; }
 .panel-item.is-active { position: relative; inset: auto; opacity: 1; visibility: visible; }
@@ -619,14 +624,18 @@ ul, ol { list-style: none; }
   .story__media::after { background: linear-gradient(180deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 55%, transparent) 30%, color-mix(in srgb, var(--bg) 55%, transparent) 70%, var(--bg) 100%); }
   .glow { filter: blur(40px); }
   .job.is-active .job__role { transform: none; }
-  .job__detail { display: block; margin-top: 20px; }
+  .job__detail { display: block; height: 0; }
+  .job.is-active .job__detail { height: auto; }
   .statement__cols { margin-left: 0; max-width: none; }
   .hero__caption { left: var(--gutter); right: auto; text-align: left; bottom: 150px; }
 }
 @media (max-width: 600px) {
   .label { margin-bottom: 40px; }
-  .skill__head { grid-template-columns: 32px 1fr 16px; gap: 14px; }
-  .skill__inner { padding-left: 46px; }
+  .skill__head { grid-template-columns: 1fr auto 16px; gap: 14px; }
+  .skill__idx { display: none; }
+  .skill__name { font-size: 26px; }
+  .skill__inner { padding-left: 0; }
+  .skill__applied li { flex-direction: column; gap: 2px; }
   .story__head { top: 80px; }
   .act__numeral { right: auto; left: var(--gutter); top: auto; bottom: 64px; margin: 0; font-size: 46vw; }
   .act__title { margin-bottom: 24px; }
@@ -681,7 +690,6 @@ ul, ol { list-style: none; }
   .stat + .stat { padding-left: 14px; }
   .stat__label { margin-top: 12px; }
   .skill__head { padding: 18px 0; }
-  .job { padding: 22px 0; }
   .job-detail__figures { gap: 24px; }
   .reco__excerpt { font-size: clamp(26px, 7.4vw, 34px); }
   .recos__stage { min-height: 0; }
@@ -734,4 +742,11 @@ ul, ol { list-style: none; }
   .skill__head { min-height: 56px; }
   .recos__btn { min-width: 56px; min-height: 48px; }
   .footer__col a { padding: 6px 0; }
+}
+
+@media (max-width: 600px) {
+  .skill__head { grid-template-columns: minmax(0, 1fr) 16px; row-gap: 6px; }
+  .skill__name { grid-column: 1; overflow-wrap: anywhere; }
+  .skill__status { grid-column: 1; grid-row: 2; }
+  .skill__plus { grid-column: 2; grid-row: 1 / span 2; }
 }

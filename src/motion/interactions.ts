@@ -177,3 +177,59 @@ export function bindWorks(signal: AbortSignal) {
     }, { signal });
   });
 }
+
+/* ---------------- Journey: the reader picks the role to read ---------------- */
+export function bindJourney(signal: AbortSignal) {
+  const jobs = Array.from(document.querySelectorAll<HTMLElement>('.job'));
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('.panel-item'));
+  const panel = document.querySelector<HTMLElement>('.journey__panel');
+  if (!jobs.length) return;
+  const isDesktop = () => window.matchMedia('(min-width: 961px)').matches;
+  let active = 0;
+
+  // A detail taller than the screen sticks by its bottom edge, so all of it can be read
+  const fitPanel = () => {
+    if (!panel) return;
+    const top = Math.min(100, window.innerHeight - panel.offsetHeight - 24);
+    panel.style.setProperty('--panel-top', `${top}px`);
+  };
+  fitPanel();
+  window.addEventListener('resize', fitPanel, { signal });
+
+  const select = (i: number) => {
+    const same = i === active;
+    if (isDesktop()) {
+      if (same) return;
+      const from = panels[active];
+      const to = panels[i];
+      gsap.killTweensOf([from.children, to.children]);
+      from.classList.remove('is-active');
+      to.classList.add('is-active');
+      gsap.fromTo(to.children, { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.9, stagger: 0.05, ease: EASE });
+      fitPanel();
+    } else {
+      // accordion: tapping the open role closes it
+      const closing = same && jobs[i].classList.contains('is-active');
+      jobs.forEach((job, k) => {
+        const detail = job.querySelector<HTMLElement>('.job__detail')!;
+        const open = k === i && !closing;
+        if (open === job.classList.contains('is-active') && k !== i) return;
+        // explicit start height: the class toggles right after and would change the computed value
+        gsap.fromTo(detail, { height: detail.offsetHeight }, { height: open ? 'auto' : 0, duration: open ? 1 : 0.7, ease: open ? EASE : 'expo.inOut', overwrite: true, onComplete: () => { gsap.set(detail, { clearProps: 'height' }); ScrollTrigger.refresh(); } });
+        if (open) gsap.fromTo(detail.firstElementChild!.children, { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.9, stagger: 0.04, ease: EASE, delay: 0.1 });
+      });
+      if (closing) {
+        jobs[i].classList.remove('is-active');
+        jobs[i].querySelector('.job__head')?.setAttribute('aria-expanded', 'false');
+        return;
+      }
+    }
+    jobs.forEach((job, k) => {
+      job.classList.toggle('is-active', k === i);
+      job.querySelector('.job__head')?.setAttribute('aria-expanded', String(k === i));
+    });
+    active = i;
+  };
+
+  jobs.forEach((job, i) => job.querySelector('.job__head')?.addEventListener('click', () => select(i), { signal }));
+}

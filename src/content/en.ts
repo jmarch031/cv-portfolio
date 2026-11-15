@@ -77,20 +77,90 @@ export const en: Content = {
   skills: {
     label: 'Skills',
     title: 'What I do.',
+    appliedLabel: 'Applied as',
     items: [
-      { name: 'Backend development', text: 'Designing robust services, APIs and data products: the common thread of over ten years of development, from enterprise clients to Decathlon products.', context: 'Decathlon Digital · Sopra Steria · ELOSI' },
-      { name: 'AI Engineering', text: 'Experimenting with and spreading AI-assisted development across teams, and understanding how AI is changing the way we build products.', context: 'Decathlon Digital · 2022 → today' },
-      { name: 'Software architecture', text: "Driving technical decisions and modernizing large-scale systems such as Decathlon's global Warehouse Management System, with modern development practices.", context: 'Lead Software Engineer · Software Engineering Manager' },
-      { name: 'Data & Business Intelligence', text: 'Building data products and a strategic Business Intelligence application, first as an engineer, then as the lead.', context: 'Software Engineer · Lead Software Engineer · Decathlon Digital' },
-      { name: 'Technical leadership', text: 'Owning technical decisions and software delivery, bridging Product and Engineering.', context: 'Lead Software Engineer · 2021 → 2022, 2026 → today' },
-      { name: 'Engineering management', text: 'Building, recruiting and leading teams, up to ~30 engineers across 5 Feature Teams, with a focus on trust, ownership and collaboration.', context: 'Software Engineering Manager · 2022 → 2026' },
-      { name: 'Growing developers', text: 'Helping developers grow and improving, together, the way we build software. Sharing knowledge, learning every day.', context: 'Throughout my career' },
-      { name: 'Agile & Scrum', text: 'Scrum Master of my teams at Sopra Steria and Decathlon Digital. Certified Professional Scrum Master I.', context: 'PSM I · 2016 → 2020' },
+      {
+        name: 'Backend development',
+        text: 'Designing robust services, APIs and data products: the common thread of over ten years of development, from enterprise clients to Decathlon products.',
+        applied: [
+          { role: 'Lead Software Engineer', period: '2026 → today' },
+          { role: 'Software Engineer · Decathlon Digital, Sopra Steria', period: '2016 → 2020' },
+          { role: 'Developer · ELOSI', period: '2015 → 2016' },
+        ],
+        current: true,
+        status: 'Today',
+      },
+      {
+        name: 'AI Engineering',
+        text: 'Experimenting with and spreading AI-assisted development across teams, and understanding how AI is changing the way we build products.',
+        applied: [
+          { role: 'Lead Software Engineer', period: '2026 → today' },
+          { role: 'Software Engineering Manager', period: '2022 → 2026' },
+        ],
+        current: true,
+        status: 'Today',
+      },
+      {
+        name: 'Software architecture',
+        text: "Driving technical decisions and modernizing large-scale systems such as Decathlon's global Warehouse Management System, with modern development practices.",
+        applied: [
+          { role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → today' },
+          { role: 'Software Engineering Manager', period: '2022 → 2026' },
+        ],
+        current: true,
+        status: 'Today',
+      },
+      {
+        name: 'Technical leadership',
+        text: 'Owning technical decisions and software delivery, bridging Product and Engineering.',
+        applied: [{ role: 'Lead Software Engineer', period: '2021 → 2022, 2026 → today' }],
+        current: true,
+        status: 'Today',
+      },
+      {
+        name: 'Growing developers',
+        text: 'Helping developers grow and improving, together, the way we build software. Sharing knowledge, learning every day.',
+        applied: [
+          { role: 'Lead Software Engineer', period: '2026 → today' },
+          { role: 'Software Engineering Manager', period: '2022 → 2026' },
+        ],
+        current: true,
+        status: 'Today',
+      },
+      {
+        name: 'Engineering management',
+        text: 'Building, recruiting and leading teams, up to ~30 engineers across 5 Feature Teams, with a focus on trust, ownership and collaboration.',
+        applied: [{ role: 'Software Engineering Manager', period: '2022 → 2026' }],
+        current: false,
+        status: 'Until 2026',
+      },
+      {
+        name: 'Data & Business Intelligence',
+        text: 'Building data products and a strategic Business Intelligence application: as an engineer, as the lead, then heading the team.',
+        applied: [
+          { role: 'Software Engineering Manager', period: 'early in the role, from 2022' },
+          { role: 'Lead Software Engineer', period: '2021 → 2022' },
+          { role: 'Software Engineer', period: '2019 → 2020' },
+        ],
+        current: false,
+        status: 'Previously',
+      },
+      {
+        name: 'Agile & Scrum',
+        text: 'Scrum Master of my teams at Sopra Steria and Decathlon Digital. Certified Professional Scrum Master I.',
+        applied: [
+          { role: 'Software Engineer & Scrum Master · Decathlon Digital', period: '2019 → 2020' },
+          { role: 'Software Engineer & Scrum Master · Sopra Steria', period: '2016 → 2019' },
+        ],
+        current: false,
+        status: 'Until 2020',
+      },
     ],
   },
   journey: {
     label: 'Journey',
     title: 'Eight roles, one constant: building.',
+    hint: 'Select a role to see the details',
     jobs: [
       {
         dates: 'Oct 2026 — Present',
