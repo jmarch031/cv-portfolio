@@ -24,6 +24,9 @@ describe('content', () => {
   });
 
   it('recommendation excerpts are verbatim quotes', () => {
-    recos.forEach((r) => expect(r.quote).toContain(r.excerpt));
+    recos.forEach((r) => {
+      expect(r.quote).toContain(r.excerpt);
+      expect(r.quote_en).toContain(r.excerpt_en);
+    });
   });
 });

@@ -70,6 +70,19 @@ export function initScroll(liquids: Liquids) {
           });
         });
 
+        /* ---------- Portrait: wipe in, then drift inside its frame ---------- */
+        const frame = document.querySelector<HTMLElement>('.portrait__frame');
+        if (frame) {
+          gsap.fromTo(frame, { clipPath: 'inset(100% 0 0 0)' }, {
+            clipPath: 'inset(0% 0 0 0)', duration: 1.6, ease: EASE,
+            scrollTrigger: { trigger: frame, start: 'top 85%' },
+          });
+          gsap.fromTo(frame.querySelector('.portrait__img'), { yPercent: -10, scale: 1.08 }, {
+            yPercent: 0, scale: 1, ease: 'none',
+            scrollTrigger: { trigger: frame, start: 'top bottom', end: 'bottom top', scrub: true },
+          });
+        }
+
         /* ---------- Line reveals ---------- */
         gsap.utils.toArray<HTMLElement>('.js-lines').forEach((el) => {
           SplitText.create(el, {

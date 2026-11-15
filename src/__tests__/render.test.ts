@@ -53,6 +53,21 @@ describe('renderMain', () => {
     expect(document.querySelector('.reco__name')?.textContent).toBe('<b>x</b>');
   });
 
+  it('shows translated recommendations in English, originals in French', () => {
+    const app = document.querySelector('#app')!;
+    app.innerHTML = renderMain(en, recos, 'en');
+    expect(app.querySelector('.reco__excerpt')?.textContent).toContain(recos[0].excerpt_en);
+    app.innerHTML = renderMain(fr, recos, 'fr');
+    expect(app.querySelector('.reco__excerpt')?.textContent).toContain(recos[0].excerpt);
+  });
+
+  it('gives every work a cover and the statement a portrait', () => {
+    const app = document.querySelector('#app')!;
+    app.innerHTML = renderMain(fr, recos, 'fr');
+    expect(app.querySelectorAll('.work__cover img')).toHaveLength(fr.writing.items.length);
+    expect(app.querySelector('.portrait__img')?.getAttribute('alt')).toBe(fr.statement.portraitAlt);
+  });
+
   it('omits the recommendations section when there are none', () => {
     document.querySelector('#app')!.innerHTML = renderMain(fr, []);
     expect(document.querySelector('.recos')).toBeNull();

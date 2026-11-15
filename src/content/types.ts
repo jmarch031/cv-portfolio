@@ -38,6 +38,8 @@ export interface Work {
   meta: string;
   href?: string;
   tags?: string[];
+  /** file name in public/covers */
+  cover: string;
 }
 
 export interface School {
@@ -62,7 +64,7 @@ export interface Content {
   nav: { story: string; skills: string; journey: string; education: string; contact: string; writing: string; menu: string; close: string; toLight: string; toDark: string };
   intro: { roles: string[]; caption: string };
   hero: { lines: string[]; caption: string; scroll: string };
-  statement: { label: string; text: string; today: string; todayTitle: string; matters: string; mattersTitle: string };
+  statement: { label: string; portraitAlt: string; text: string; today: string; todayTitle: string; matters: string; mattersTitle: string };
   story: { label: string; title: string; acts: Act[] };
   numbers: { label: string; stats: Stat[] };
   skills: { label: string; title: string; appliedLabel: string; items: Skill[] };

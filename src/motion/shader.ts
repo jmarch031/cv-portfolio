@@ -96,8 +96,13 @@ void main() {
 
   // Light theme: paint the light onto paper instead of obsidian
   float lum = max(col.r, max(col.g, col.b));
-  vec3 paper = vec3(0.985);
-  vec3 tint = mix(paper, col / max(lum, 0.001) * 0.92, clamp(lum * 0.85, 0.0, 0.85));
+  vec3 paper = vec3(0.965, 0.953, 0.933);
+  vec3 pig = col / max(lum, 0.001);
+  // reds turn to warm amber/terracotta instead of washing out to pink
+  float redness = smoothstep(0.15, 0.6, pig.r - pig.g);
+  pig = mix(pig, vec3(0.93, 0.56, 0.24), redness * 0.75);
+  pig = mix(vec3(dot(pig, vec3(0.3, 0.59, 0.11))), pig, 1.25) * 0.9;   // a bit more saturation, a bit deeper
+  vec3 tint = mix(paper, pig, smoothstep(0.04, 0.8, lum) * 0.82);
   col = mix(col, tint, uLight);
 
   gl_FragColor = vec4(col, 1.0);

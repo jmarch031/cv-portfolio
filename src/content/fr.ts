@@ -30,6 +30,7 @@ export const fr: Content = {
   },
   statement: {
     label: 'Bonjour',
+    portraitAlt: 'Portrait de Julien Marchand',
     text: "Je suis Julien. Depuis plus de dix ans, j'écris du logiciel, je mène des équipes, et je transforme des idées en produits qui fonctionnent.",
     todayTitle: "Aujourd'hui",
     today:
@@ -267,6 +268,7 @@ export const fr: Content = {
         title: 'Ce portfolio, conçu 100 % avec l’IA',
         text: "Une refonte complète : direction artistique, contenu, code et animations réalisés entièrement en pair-programming avec une IA (Claude Code). Une mise en pratique concrète du développement assisté par l'IA.",
         meta: '2026',
+        cover: 'portfolio.webp',
         href: 'https://github.com/jmarch031/cv-portfolio',
         tags: ['Claude Code', 'TypeScript', 'GSAP', 'WebGL'],
       },
@@ -275,6 +277,7 @@ export const fr: Content = {
         title: "Leadership : éviter le burnout en s'écoutant",
         text: "Ce que le fait de frôler le burnout m'a appris sur le véritable leadership. Reconnaître les signaux, s'écouter et protéger sa santé mentale.",
         meta: '5 min',
+        cover: 'burnout.webp',
         href: 'https://medium.com/@julienmarchand_83183/leadership-how-to-avoid-burnout-by-learning-to-listen-to-yourself-e4cf7b5e96f8',
       },
       {
@@ -282,6 +285,7 @@ export const fr: Content = {
         title: 'De la QA à la QE : au cœur du produit',
         text: "La qualité n'est plus une simple étape de validation finale, mais une responsabilité collective intégrée dès la conception.",
         meta: '5 min',
+        cover: 'quality.webp',
         href: 'https://medium.com/@julienmarchand_83183/from-qa-to-qe-how-to-bring-quality-back-to-the-core-of-the-product-7aee2b169ac7',
       },
       {
@@ -289,6 +293,7 @@ export const fr: Content = {
         title: 'Cessez de négocier avec demain',
         text: "La véritable vitesse naît de ce que vous construisez correctement dès le premier jour. Bâtir des produits durables dès aujourd'hui.",
         meta: '4 min',
+        cover: 'tomorrow.webp',
         href: 'https://medium.com/@julienmarchand_83183/stop-negotiating-with-tomorrow-build-sustainable-products-today-f851e2a0fe05',
       },
       {
@@ -296,6 +301,7 @@ export const fr: Content = {
         title: 'Bot de trading hybride TREND + GRID',
         text: "Un bot de trading algorithmique multi-paires sur OKX, en mode live ou simulation. Sa stratégie hybride combine suivi de tendance et grille d'achats à partir d'indicateurs EMA et RSI, et ne vend jamais un lot à perte. Les paramètres de chaque paire sont trouvés par grid search, filtrés par un garde-fou anti-surajustement (walk-forward, plusieurs phases de marché) puis validés par Monte Carlo. Alertes et commandes via Telegram, code couvert par des tests.",
         meta: 'Python',
+        cover: 'trading-bot.webp',
         tags: ['Python', 'ccxt', 'pandas', 'numba', 'pytest'],
       },
     ],
