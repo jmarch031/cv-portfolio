@@ -6,12 +6,20 @@
   <title>Julien Marchand — Lead Software Engineer</title>
   <meta name="description" content="Julien Marchand, Lead Software Engineer chez Decathlon Digital à Lille. Plus de 10 ans de développement logiciel, de leadership technique et de management d'équipes d'ingénierie." />
   <meta name="theme-color" content="#000000" />
+  <script>
+    // Theme before first paint (dark by default)
+    (function () {
+      var t = 'dark';
+      try { var s = localStorage.getItem('theme'); if (s === 'light' || s === 'dark') t = s; } catch (e) {}
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Raleway:wght@400&display=swap" rel="stylesheet">
 </head>
-<body class="is-loading is-dark">
+<body class="is-loading">
   <a class="skip" href="#statement">Aller au contenu</a>
 
   <!-- Intro: the career in fast-forward, then the hero opens -->

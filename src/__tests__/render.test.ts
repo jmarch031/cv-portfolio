@@ -28,12 +28,21 @@ describe('renderMain', () => {
   });
 
   it('every in-page link points to an existing section', () => {
-    document.querySelector('.nav')!.innerHTML = renderHeader(en, 'en');
+    document.querySelector('.nav')!.innerHTML = renderHeader(en, 'en', 'dark');
     document.querySelector('#app')!.innerHTML = renderMain(en, recos);
     document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
       expect(document.querySelector(a.getAttribute('href')!), a.getAttribute('href')!).not.toBeNull();
     });
     expect(document.querySelector('[data-lang="en"]')?.classList.contains('is-active')).toBe(true);
+  });
+
+  it('labels the theme toggle with the theme it switches to', () => {
+    document.querySelector('.nav')!.innerHTML = renderHeader(fr, 'fr', 'dark');
+    const btn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]')!;
+    expect(btn.textContent?.trim()).toBe(fr.nav.toLight);
+    expect(btn.getAttribute('aria-pressed')).toBe('false');
+    document.querySelector('.nav')!.innerHTML = renderHeader(fr, 'fr', 'light');
+    expect(document.querySelector('[data-theme-toggle]')?.textContent?.trim()).toBe(fr.nav.toDark);
   });
 
   it('escapes recommendation content', () => {

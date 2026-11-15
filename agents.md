@@ -24,7 +24,7 @@ Le portfolio est hébergé sur **GitHub Pages** (`https://jmarch031.github.io/cv
 
 - **Vite + TypeScript** (pas de framework UI).
 - **GSAP 3** avec **ScrollTrigger** et **SplitText** pour toutes les animations ; **Lenis** pour le smooth scroll (synchronisé sur le ticker GSAP).
-- Fond de la Hero : petit shader **WebGL** maison (`src/motion/shader.ts`), avec repli CSS si WebGL est indisponible.
+- Visuels : petit moteur **WebGL** maison (`src/motion/shader.ts`, « liquid light » + lentille de verre), trois surfaces (Hero, Histoire, Contact) qui ne tournent que lorsqu'elles sont visibles, avec repli CSS si WebGL est indisponible.
 - Polices : **Inter** (substitut documenté de Roobert) et **Raleway** pour un unique titre d'accent, via Google Fonts.
 - Tests : **Vitest** + jsdom (`npm run test:run`). Un hook Husky lance les tests au commit.
 
@@ -40,7 +40,7 @@ src/main.ts                      Orchestration : rendu, Lenis, intro, animations
 src/motion/intro.ts              Intro : les rôles de la carrière défilent, puis la Hero s'ouvre
 src/motion/scroll.ts             Toutes les animations ScrollTrigger (dans un gsap.context)
 src/motion/interactions.ts       Curseur, pilules magnétiques, navigation, compétences, recommandations
-src/motion/shader.ts             Fond iridescent WebGL de la Hero
+src/motion/shader.ts             Liquide lumineux WebGL (palette, lentille, thème clair/sombre)
 src/style.css                    Tokens design.md + styles
 public/cv-julien-marchand.pdf    Export LinkedIn téléchargeable (lien « CV »)
 ```
@@ -55,12 +55,17 @@ Sections, dans l'ordre : Hero « Retour au code. » → Bonjour (présentation) 
 
 ## Design
 
-Le style visuel est décrit dans [`design.md`](./design.md). Toute modification d'interface doit le respecter, en particulier :
+Le style visuel est décrit dans [`design.md`](./design.md), avec deux écarts voulus par le propriétaire du site :
 
-- interface strictement **noir / blanc / gris** ; la seule couleur est le fond iridescent de la Hero (média, jamais un contrôle) ;
-- rayons de **0px** partout, sauf les boutons / tags en pilule (**75px**) ; aucune ombre ;
+- **Thèmes sombre et clair**, au choix du visiteur, **sombre par défaut** (`data-theme` sur `<html>`, mémorisé dans `localStorage`, appliqué avant le premier rendu par le script de `index.html`). Plus d'alternance de bandes noires et blanches.
+- **La couleur iridescente circule dans tout le site** (inspiration monopo.vn), pas seulement dans la Hero : liquide lumineux WebGL avec sphère de verre (Hero, Histoire avec une palette par acte, Contact), traînées de lumière (`.glow`) qui dérivent dans les sections, texte iridescent (`.iri`) pour quelques accents (chiffres, fin du titre de contact, compétence ouverte), barres de progression et filets dégradés.
+
+Le reste de `design.md` s'applique toujours :
+
+- les **contrôles restent monochromes** (pilules, liens, navigation) : la couleur est de la lumière, jamais un bouton ;
+- rayons de **0px** partout, sauf les pilules / tags (**75px**) ; aucune ombre ;
 - grands titres en graisse **300 ou 400** uniquement ;
-- alternance de bandes claires et sombres : les sections avec `data-band="dark"` font basculer toute la page en sombre (classe `is-dark` sur `body`).
+- toute nouvelle couleur passe par les tokens `--sage`, `--amber`, `--oxblood` et `--iri` (dont une variante plus soutenue pour le thème clair, pour le contraste).
 
 ## Animations
 

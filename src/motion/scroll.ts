@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
-import type { HeroShader } from './shader';
+import { AMBER, OXBLOOD, SAGE, TAN, type Liquid, type RGB } from './shader';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -13,16 +13,27 @@ const DUR = 1.25;
  * Every ScrollTrigger lives in this context so the whole set can be reverted
  * and rebuilt when the page is re-rendered (language switch).
  */
-export function initScroll(shader: HeroShader) {
+export interface Liquids { hero: Liquid; story: Liquid; contact: Liquid }
+
+/** One palette per act: the light changes colour with the story. */
+const ACT_PALETTES: [RGB, RGB, RGB][] = [
+  [SAGE, AMBER, OXBLOOD],
+  [AMBER, OXBLOOD, TAN],
+  [SAGE, TAN, AMBER],
+];
+const ACT_LENSES = [[0.74, 0.52, 0.34], [0.8, 0.42, 0.42], [0.7, 0.55, 0.3]];
+const flat = (p: [RGB, RGB, RGB]) => p.flatMap((c) => c.map((v) => v / 255));
+
+export function initScroll(liquids: Liquids) {
   return gsap.context(() => {
     const mm = gsap.matchMedia();
 
-    ScrollTrigger.create({
-      trigger: '.hero',
-      start: 'top top',
-      end: 'bottom top',
-      onToggle: (self) => shader.setActive(self.isActive),
+    // Each liquid surface only renders while visible
+    ([['.hero', liquids.hero], ['.story', liquids.story], ['.contact', liquids.contact]] as const).forEach(([sel, l]) => {
+      ScrollTrigger.create({ trigger: sel, start: 'top bottom', end: 'bottom top', onToggle: (self) => l.setActive(self.isActive) });
     });
+    liquids.story.state.c = flat(ACT_PALETTES[0]);
+    liquids.story.state.lens = [...ACT_LENSES[0]];
 
     mm.add(
       {
@@ -120,6 +131,8 @@ export function initScroll(shader: HeroShader) {
               .set(a, { autoAlpha: 1 }, at + 0.3)
               .fromTo(parts(a), { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, stagger: 0.05, duration: 0.45 }, at + 0.3)
               .fromTo(numeral(a), { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.5 }, at + 0.3)
+              .to(liquids.story.state.c, { endArray: flat(ACT_PALETTES[i % ACT_PALETTES.length]), duration: 0.9, ease: 'none' }, at)
+              .to(liquids.story.state.lens, { endArray: ACT_LENSES[i % ACT_LENSES.length], duration: 0.9 }, at)
               .addLabel(`act${i}`, i);
           });
 
@@ -208,16 +221,14 @@ export function initScroll(shader: HeroShader) {
       },
     );
 
-    /* ---------- Light / dark bands (last: positions must include pin spacing) ---------- */
-    gsap.utils.toArray<HTMLElement>('#app > section').forEach((section) => {
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top 50%',
-        end: 'bottom 50%',
-        onToggle: (self) => {
-          if (self.isActive) document.body.classList.toggle('is-dark', section.dataset.band === 'dark');
-        },
+    /* ---------- Light leaks drift through their section ---------- */
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.utils.toArray<HTMLElement>('.glow').forEach((g, i) => {
+        gsap.fromTo(g, { yPercent: 60, xPercent: i % 2 ? 10 : -10, rotate: -40 }, {
+          yPercent: -80, xPercent: i % 2 ? -12 : 14, rotate: -22, ease: 'none',
+          scrollTrigger: { trigger: g.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
+        });
       });
-    });
+    }
   });
 }

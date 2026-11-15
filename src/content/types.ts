@@ -38,7 +38,7 @@ export interface Stat {
 
 export interface Content {
   meta: { title: string; description: string };
-  nav: { story: string; skills: string; journey: string; education: string; contact: string; menu: string; close: string };
+  nav: { story: string; skills: string; journey: string; education: string; contact: string; menu: string; close: string; toLight: string; toDark: string };
   intro: { roles: string[]; caption: string };
   hero: { lines: string[]; caption: string; scroll: string };
   statement: { label: string; text: string; today: string; todayTitle: string; matters: string; mattersTitle: string };

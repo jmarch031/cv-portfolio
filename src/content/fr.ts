@@ -15,6 +15,8 @@ export const fr: Content = {
     contact: 'Contact',
     menu: 'Menu',
     close: 'Fermer',
+    toLight: 'Clair',
+    toDark: 'Sombre',
   },
   intro: {
     roles: ['Developer Intern', 'Developer', 'Software Engineer', 'Scrum Master', 'Lead Software Engineer', 'Engineering Manager'],

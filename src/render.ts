@@ -33,7 +33,9 @@ const navLinks = (c: Content): [string, string][] => [
   ['#contact', c.nav.contact],
 ];
 
-export function renderHeader(c: Content, lang: Lang) {
+const glow = (variant: string) => `<div class="glow glow--${variant}" aria-hidden="true"></div>`;
+
+export function renderHeader(c: Content, lang: Lang, theme: 'dark' | 'light') {
   const links = navLinks(c);
   return `
     <a href="#top" class="nav__logo js-scroll roll">${roll('julien marchand')}</a>
@@ -41,6 +43,10 @@ export function renderHeader(c: Content, lang: Lang) {
       <button class="nav__lang-btn${lang === 'fr' ? ' is-active' : ''}" data-lang="fr" lang="fr">FR</button>
       <span class="nav__lang-sep">/</span>
       <button class="nav__lang-btn${lang === 'en' ? ' is-active' : ''}" data-lang="en" lang="en">EN</button>
+      <span class="nav__lang-sep">·</span>
+      <button class="nav__theme" data-theme-toggle aria-pressed="${theme === 'light'}" data-light="${esc(c.nav.toLight)}" data-dark="${esc(c.nav.toDark)}">
+        <span class="nav__theme-dot" aria-hidden="true"></span><span class="nav__theme-text">${esc(theme === 'dark' ? c.nav.toLight : c.nav.toDark)}</span>
+      </button>
     </div>
     <nav class="nav__menu" aria-label="Menu">
       ${links.map(([href, text]) => `<a href="${href}" class="nav__link js-scroll roll">${roll(text)}</a>`).join('')}
@@ -63,7 +69,7 @@ export function renderMain(c: Content, recos: Recommendation[]) {
 
 function hero(c: Content) {
   return `
-  <section class="hero" id="top" data-band="dark">
+  <section class="hero" id="top">
     <div class="hero__media" aria-hidden="true"></div>
     <h1 class="hero__title">
       ${c.hero.lines.map((l) => `<span class="hero__line">${esc(l)}</span>`).join('')}
@@ -82,7 +88,8 @@ function hero(c: Content) {
 function statement(c: Content) {
   const s = c.statement;
   return `
-  <section class="statement section" id="statement" data-band="light">
+  <section class="statement section" id="statement">
+    ${glow('left')}
     <div class="container">
       ${label('01', s.label)}
       <p class="statement__text js-words">${esc(s.text)}</p>
@@ -103,8 +110,9 @@ function statement(c: Content) {
 function story(c: Content) {
   const s = c.story;
   return `
-  <section class="story" id="story" data-band="dark">
+  <section class="story" id="story">
     <div class="story__pin">
+      <div class="story__media" aria-hidden="true"></div>
       <div class="story__head container">
         ${label('02', s.label)}
         <p class="story__count"><span class="story__current">01</span> / ${pad(s.acts.length)}</p>
@@ -133,7 +141,8 @@ function story(c: Content) {
 
 function numbers(c: Content) {
   return `
-  <section class="numbers section" data-band="light">
+  <section class="numbers section">
+    ${glow('right')}
     <div class="container">
       ${label('03', c.numbers.label)}
       <div class="numbers__grid">
@@ -141,7 +150,7 @@ function numbers(c: Content) {
           .map(
             (s) => `
           <div class="stat js-rise">
-            <p class="stat__value">${s.prefix ? esc(s.prefix) : ''}<span class="js-count" data-to="${s.value}">${s.value}</span>${s.suffix ? esc(s.suffix) : ''}</p>
+            <p class="stat__value iri">${s.prefix ? esc(s.prefix) : ''}<span class="js-count" data-to="${s.value}">${s.value}</span>${s.suffix ? esc(s.suffix) : ''}</p>
             <p class="stat__label">${esc(s.label)}</p>
           </div>`,
           )
@@ -154,7 +163,8 @@ function numbers(c: Content) {
 function skills(c: Content) {
   const s = c.skills;
   return `
-  <section class="skills section" id="skills" data-band="light">
+  <section class="skills section" id="skills">
+    ${glow('right')}
     <div class="container">
       ${label('04', s.label)}
       <h2 class="skills__title js-lines">${esc(s.title)}</h2>
@@ -187,7 +197,9 @@ function jobDetail(j: Content['journey']['jobs'][number]) {
 function journey(c: Content) {
   const s = c.journey;
   return `
-  <section class="journey section" id="journey" data-band="light">
+  <section class="journey section" id="journey">
+    ${glow('left')}
+    ${glow('right glow--low')}
     <div class="container">
       ${label('05', s.label)}
       <h2 class="journey__title js-lines">${esc(s.title)}</h2>
@@ -227,7 +239,8 @@ function journey(c: Content) {
 function education(c: Content) {
   const e = c.education;
   return `
-  <section class="education section" id="education" data-band="light">
+  <section class="education section" id="education">
+    ${glow('right')}
     <div class="container">
       ${label('06', e.label)}
       <h2 class="education__title js-lines">${esc(e.title)}</h2>
@@ -261,7 +274,8 @@ function recommendations(c: Content, recos: Recommendation[]) {
   const r = c.recos;
   if (!recos.length) return '';
   return `
-  <section class="recos section" data-band="dark">
+  <section class="recos section">
+    ${glow('left')}
     <div class="container">
       ${label('07', r.label)}
       <div class="recos__stage">
@@ -281,11 +295,11 @@ function recommendations(c: Content, recos: Recommendation[]) {
       </div>
       <div class="recos__controls">
         <p class="recos__note">${esc(r.original)}</p>
-        <button class="recos__more pill pill--light" data-more="${esc(r.readMore)}" data-less="${esc(r.readLess)}" aria-expanded="false">${roll(r.readMore)}</button>
+        <button class="recos__more pill" data-more="${esc(r.readMore)}" data-less="${esc(r.readLess)}" aria-expanded="false">${roll(r.readMore)}</button>
         <div class="recos__nav">
-          <button class="recos__btn pill pill--light" data-dir="-1" aria-label="${esc(r.prev)}">←</button>
+          <button class="recos__btn pill" data-dir="-1" aria-label="${esc(r.prev)}">←</button>
           <span class="recos__count"><span class="recos__current">01</span> / ${pad(recos.length)}</span>
-          <button class="recos__btn pill pill--light" data-dir="1" aria-label="${esc(r.next)}">→</button>
+          <button class="recos__btn pill" data-dir="1" aria-label="${esc(r.next)}">→</button>
         </div>
       </div>
       <div class="recos__progress" aria-hidden="true"><span class="recos__bar"></span></div>
@@ -296,16 +310,17 @@ function recommendations(c: Content, recos: Recommendation[]) {
 function contact(c: Content) {
   const k = c.contact;
   return `
-  <section class="contact" id="contact" data-band="dark">
+  <section class="contact" id="contact">
+    <div class="contact__media" aria-hidden="true"></div>
     <div class="container">
       ${label('08', k.label)}
       <h2 class="contact__title">
-        ${k.lines.map((l) => `<span class="contact__line">${esc(l)}</span>`).join('')}
+        ${k.lines.map((l, i) => `<span class="contact__line${i === k.lines.length - 1 ? ' iri' : ''}">${esc(l)}</span>`).join('')}
       </h2>
       <div class="contact__ctas">
-        <a href="mailto:${esc(k.email)}" class="pill pill--light magnetic">${roll(k.email)}</a>
-        <a href="${LINKEDIN}" target="_blank" rel="noopener" class="pill pill--light magnetic">${roll('LinkedIn')}</a>
-        <a href="cv-julien-marchand.pdf" target="_blank" rel="noopener" class="pill pill--light magnetic">${roll(k.cv)}</a>
+        <a href="mailto:${esc(k.email)}" class="pill magnetic">${roll(k.email)}</a>
+        <a href="${LINKEDIN}" target="_blank" rel="noopener" class="pill magnetic">${roll('LinkedIn')}</a>
+        <a href="cv-julien-marchand.pdf" target="_blank" rel="noopener" class="pill magnetic">${roll(k.cv)}</a>
       </div>
     </div>
     <footer class="footer">
