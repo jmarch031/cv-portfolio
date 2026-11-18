@@ -21,6 +21,11 @@ describe('content', () => {
       expect(en.journey.jobs[i].dates.match(/\d{4}/g)).toEqual(job.dates.match(/\d{4}/g));
     });
     expect(en.education.schools.map((s) => s.years)).toEqual(fr.education.schools.map((s) => s.years));
+    // stack: same technologies flagged "now" in both languages
+    const nowFlags = (c: typeof fr) => c.skills.stack.flatMap((g) => g.items.map((i) => i.now));
+    expect(nowFlags(en)).toEqual(nowFlags(fr));
+    expect(fr.skills.convictions.length).toBeGreaterThanOrEqual(3);
+    expect(fr.skills.convictions.length).toBeLessThanOrEqual(4);
   });
 
   it('recommendation excerpts are verbatim quotes', () => {

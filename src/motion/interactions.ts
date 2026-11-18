@@ -86,23 +86,6 @@ export function bindNav(lenis: Lenis, labels: { menu: string; close: string }, s
   });
 }
 
-/* ---------------- Skills accordion ---------------- */
-export function bindSkills(signal: AbortSignal) {
-  document.querySelectorAll<HTMLElement>('.skill').forEach((skill) => {
-    const head = skill.querySelector<HTMLButtonElement>('.skill__head')!;
-    const body = skill.querySelector<HTMLElement>('.skill__body')!;
-    const toggle = (force?: boolean) => {
-      const isOpen = force ?? !skill.classList.contains('is-open');
-      if (isOpen === skill.classList.contains('is-open')) return;
-      skill.classList.toggle('is-open', isOpen);
-      head.setAttribute('aria-expanded', String(isOpen));
-      gsap.to(body, { height: isOpen ? 'auto' : 0, duration: isOpen ? 1 : 0.8, ease: isOpen ? EASE : 'expo.inOut', overwrite: true, onComplete: () => ScrollTrigger.refresh() });
-      if (isOpen) gsap.fromTo(body.firstElementChild, { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, ease: EASE, delay: 0.1 });
-    };
-    head.addEventListener('click', () => toggle(), { signal });
-  });
-}
-
 /* ---------------- Recommendations slider ---------------- */
 export function bindRecos(reduced: boolean, signal: AbortSignal) {
   const section = document.querySelector<HTMLElement>('.recos');
@@ -232,4 +215,42 @@ export function bindJourney(signal: AbortSignal) {
   };
 
   jobs.forEach((job, i) => job.querySelector('.job__head')?.addEventListener('click', () => select(i), { signal }));
+}
+
+/* ---------------- Stack wall: hover / focus / tap reveals when it was used ---------------- */
+export function bindWall(signal: AbortSignal) {
+  const list = document.querySelector<HTMLElement>('.wall__words');
+  const caption = document.querySelector<HTMLElement>('.wall__caption');
+  if (!list || !caption) return;
+  const words = Array.from(list.querySelectorAll<HTMLButtonElement>('.wall__word'));
+  let current: HTMLButtonElement | null = null;
+
+  const show = (w: HTMLButtonElement | null) => {
+    if (w === current) return;
+    current?.classList.remove('is-on');
+    current = w;
+    list.classList.toggle('is-hovering', !!w);
+    caption.classList.toggle('is-on', !!w);
+    if (!w) { caption.textContent = caption.dataset.hint ?? ''; return; }
+    w.classList.add('is-on');
+    const name = document.createElement('b');
+    name.textContent = w.childNodes[0]?.textContent ?? '';
+    caption.replaceChildren(name, document.createTextNode(` — ${w.dataset.meta ?? ''}`));
+    gsap.fromTo(caption, { y: 8, autoAlpha: 0.4 }, { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' });
+  };
+
+  // a tap focuses the button before the click: only keyboard focus should reveal on its own
+  let pointerDown = false;
+  words.forEach((w) => {
+    w.addEventListener('pointerdown', () => { pointerDown = true; }, { signal });
+    w.addEventListener('pointerenter', (e) => { if ((e as PointerEvent).pointerType === 'mouse') show(w); }, { signal });
+    w.addEventListener('focus', () => { if (!pointerDown) show(w); }, { signal });
+    w.addEventListener('click', () => {
+      pointerDown = false;
+      // on touch, tapping the active word again hides it
+      show(current === w && !finePointer() ? null : w);
+    }, { signal });
+  });
+  list.addEventListener('pointerleave', (e) => { if ((e as PointerEvent).pointerType === 'mouse') show(null); }, { signal });
+  list.addEventListener('focusout', (e) => { if (!list.contains((e as FocusEvent).relatedTarget as Node)) show(null); }, { signal });
 }

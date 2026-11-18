@@ -23,7 +23,14 @@ describe('renderMain', () => {
     expect(document.querySelectorAll('.act')).toHaveLength(fr.story.acts.length);
     expect(document.querySelectorAll('.job')).toHaveLength(fr.journey.jobs.length);
     expect(document.querySelectorAll('.panel-item')).toHaveLength(fr.journey.jobs.length);
-    expect(document.querySelectorAll('.skill')).toHaveLength(fr.skills.items.length);
+    const allTech = fr.skills.stack.flatMap((g) => g.items);
+    const wall = Array.from(document.querySelectorAll('.wall__item'));
+    expect(wall).toHaveLength(allTech.length);
+    // current technologies come first, then the earlier ones
+    const firstPast = wall.findIndex((li) => !li.classList.contains('is-now'));
+    expect(wall.slice(firstPast).every((li) => !li.classList.contains('is-now'))).toBe(true);
+    expect(firstPast).toBe(allTech.filter((t) => t.now).length);
+    expect(document.querySelectorAll('.conviction')).toHaveLength(fr.skills.convictions.length);
     expect(document.querySelectorAll('.reco')).toHaveLength(recos.length);
     expect(document.querySelectorAll('.work')).toHaveLength(fr.writing.items.length);
     expect(document.querySelectorAll('a.work__link')).toHaveLength(fr.writing.items.filter((w) => w.href).length);

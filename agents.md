@@ -51,6 +51,7 @@ Sections, dans l'ordre : Hero « Retour au code. » → Bonjour (présentation) 
 ## Contenu
 
 - **Ne rien inventer.** Les sources de vérité sont l'export LinkedIn (`Julien Marchand Profile.pdf`, à remplacer par chaque nouvel export, et à copier dans `public/cv-julien-marchand.pdf`). Les articles Medium et les projets perso viennent du propriétaire du site. Le bot de trading est décrit d'après son dépôt (`jmarch031/btc-bot`) : **ne pas mettre de lien vers ce dépôt** ni de chiffres de performance. Les reformulations et traductions sont permises, pas les faits nouveaux (chiffres, dates, missions, clients, technologies).
+- Précision du propriétaire (prime sur LinkedIn) : CI/CD est d'actualité (pipelines GitHub Actions de build, test et déploiement d'images, maintenus par l'équipe).
 - Précision du propriétaire (prime sur LinkedIn) : California State University San Marcos était une **année d'échange** validant la 4ᵉ année d'EPITECH, pas un diplôme distinct.
 - Les chiffres de « En chiffres » doivent se déduire des dates et du texte LinkedIn (ex. 12 ans depuis l'alternance de 2014, 7 ans chez Decathlon Digital) et être recalculés à chaque nouvel export.
 - Toute modification de texte se fait dans `src/content/fr.ts` **et** `src/content/en.ts` (un test vérifie qu'ils ont la même structure, les mêmes entreprises et les mêmes années).
@@ -84,7 +85,7 @@ Le reste de `design.md` s'applique toujours :
 
 - Les déclencheurs situés sous une section épinglée doivent tenir compte de son espace : les pins ont un `refreshPriority` plus élevé. L'activité des canvases WebGL est pilotée par `IntersectionObserver`, pas par des positions de scroll.
 - **Parcours** : rien n'est imposé par le scroll. Le visiteur choisit le poste à lire (clic) ; panneau collant sur desktop, accordéon sur mobile.
-- **Savoir-faire** : chaque compétence liste les rôles et périodes où elle a été appliquée (d'après LinkedIn) et indique si elle est toujours d'actualité.
+- **Savoir-faire** : ne répète pas le Parcours. Une grille de stack (technologies et pratiques, marquées « aujourd'hui » ou « précédemment » d'après LinkedIn) et 3 à 4 convictions courtes, tirées des écrits du propriétaire (articles Medium, résumé LinkedIn) et validées par lui.
 
 ## Images
 

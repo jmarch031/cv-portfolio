@@ -199,12 +199,19 @@ export function initScroll(liquids: Liquids) {
           });
         });
 
-        /* ---------- Skills: rows glide in from alternating sides ---------- */
-        gsap.utils.toArray<HTMLElement>('.skill').forEach((row, i) => {
-          gsap.fromTo(row.querySelector('.skill__name'),
-            // horizontal glide only where there is room for it
-            { xPercent: desktop ? (i % 2 ? 5 : -3) : 0, autoAlpha: 0.15 },
-            { xPercent: 0, autoAlpha: 1, ease: 'none', scrollTrigger: { trigger: row, start: 'top 98%', end: 'top 65%', scrub: true } });
+        /* ---------- Skills: stack groups rise, items follow; convictions arrive one by one ---------- */
+        // the wall lights up word by word as it scrolls into view
+        const words = gsap.utils.toArray<HTMLElement>('.wall__item');
+        if (words.length) {
+          gsap.fromTo(words, { autoAlpha: 0.08, y: 24 }, {
+            autoAlpha: 1, y: 0, stagger: 0.08, ease: 'none',
+            scrollTrigger: { trigger: '.wall__words', start: 'top 88%', end: 'bottom 55%', scrub: true },
+          });
+        }
+        ScrollTrigger.batch('.conviction', {
+          start: 'top 88%',
+          once: true,
+          onEnter: (batch) => gsap.from(batch, { y: 60, autoAlpha: 0, duration: DUR, stagger: 0.12, ease: EASE }),
         });
 
         /* ---------- Journey: rows rise in; selection is the reader's (see bindJourney) ---------- */

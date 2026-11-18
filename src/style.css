@@ -428,44 +428,6 @@ ul, ol { list-style: none; }
 /* =====================================================================
    Skills
    ===================================================================== */
-.skills { padding-top: 0; }
-.skills__title { font-family: var(--font-raleway); font-size: var(--text-heading-sm); font-weight: 400; line-height: 1.39; margin-bottom: 48px; }
-.skills__list { border-top: 1px solid var(--line); }
-.skill { border-bottom: 1px solid var(--line); }
-.skill__head {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 64px 1fr auto 24px;
-  align-items: center;
-  gap: 28px;
-  padding: 22px 0;
-}
-.skill__idx { font-size: var(--text-caption); letter-spacing: 0.08em; color: var(--muted); font-variant-numeric: tabular-nums; }
-.skill__name {
-  font-size: var(--text-heading-sm);
-  font-weight: 300;
-  line-height: 1.1;
-  letter-spacing: -0.035em;
-  transition: transform 0.8s var(--ease), color 0.8s var(--ease);
-}
-@media (hover: hover) { .skills__list:hover .skill__name { color: var(--muted); } }
-.skills__list .skill:hover .skill__name, .skill.is-open .skill__name { color: var(--fg); transform: translateX(14px); }
-.skill.is-open .skill__name { background-image: var(--iri); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.skill__plus { position: relative; width: 16px; height: 16px; }
-.skill__plus::before, .skill__plus::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background: currentColor; transition: transform 0.8s var(--ease); }
-.skill__plus::after { transform: rotate(90deg); }
-.skill.is-open .skill__plus::after { transform: rotate(0); }
-.skill__body { height: 0; overflow: hidden; }
-.skill__inner { padding: 0 0 28px calc(64px + 28px + 14px); max-width: calc(64px + 28px + 600px); }
-.skill__text { color: var(--soft); font-size: var(--text-body-sm); }
-.skill__applied { margin-top: 24px; }
-.skill__applied li { display: flex; justify-content: space-between; gap: 28px; padding: 10px 0; border-top: 1px solid var(--line); font-size: var(--text-body-sm); }
-.skill__applied li span:last-child { color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
-.skill__status { display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-caption); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-.skill__dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid currentColor; }
-.skill__status.is-current { color: var(--fg); }
-.skill__status.is-current .skill__dot { border: 0; background: var(--iri); animation: pulse 2.4s ease-in-out infinite; }
-@keyframes pulse { 50% { transform: scale(1.5); opacity: 0.55; } }
 
 /* =====================================================================
    Journey — list + sticky panel
@@ -633,11 +595,6 @@ ul, ol { list-style: none; }
 }
 @media (max-width: 600px) {
   .label { margin-bottom: 40px; }
-  .skill__head { grid-template-columns: 1fr auto 16px; gap: 14px; }
-  .skill__idx { display: none; }
-  .skill__name { font-size: 26px; }
-  .skill__inner { padding-left: 0; }
-  .skill__applied li { flex-direction: column; gap: 2px; }
   .story__head { top: 80px; }
   .act__numeral { right: auto; left: var(--gutter); top: auto; bottom: 64px; margin: 0; font-size: 46vw; }
   .act__title { margin-bottom: 24px; }
@@ -691,7 +648,6 @@ ul, ol { list-style: none; }
   .stat { padding-right: 14px; }
   .stat + .stat { padding-left: 14px; }
   .stat__label { margin-top: 12px; }
-  .skill__head { padding: 18px 0; }
   .job-detail__figures { gap: 24px; }
   .reco__excerpt { font-size: clamp(26px, 7.4vw, 34px); }
   .recos__stage { min-height: 0; }
@@ -741,16 +697,11 @@ ul, ol { list-style: none; }
   .act__tags .tag, .journey__panel-inner { backdrop-filter: none; }
   .nav__lang-btn, .nav__theme, .nav__burger { padding: 12px 8px; margin: -12px -8px; }
   .nav__lang { gap: 14px; }
-  .skill__head { min-height: 56px; }
   .recos__btn { min-width: 56px; min-height: 48px; }
   .footer__col a { padding: 6px 0; }
 }
 
 @media (max-width: 600px) {
-  .skill__head { grid-template-columns: minmax(0, 1fr) 16px; row-gap: 6px; }
-  .skill__name { grid-column: 1; overflow-wrap: anywhere; }
-  .skill__status { grid-column: 1; grid-row: 2; }
-  .skill__plus { grid-column: 2; grid-row: 1 / span 2; }
 }
 
 /* =====================================================================
@@ -861,3 +812,50 @@ ul, ol { list-style: none; }
 [data-theme='light'] .hero::after { background: linear-gradient(180deg, transparent 65%, var(--bg) 100%); }
 [data-theme='light'] .work__cover, [data-theme='light'] .portrait__frame { outline: 1px solid var(--line); }
 [data-theme='light'] ::selection { background: rgb(255, 196, 110); }
+
+/* =====================================================================
+   Skills: stack grid + convictions
+   ===================================================================== */
+.wall { border-top: 1px solid var(--line); padding-top: 28px; }
+.wall__head { display: flex; justify-content: space-between; align-items: baseline; gap: 28px; flex-wrap: wrap; margin-bottom: 40px; }
+.wall__head .mini-label { margin: 0; }
+.wall__legend { display: flex; align-items: baseline; gap: 10px; font-size: var(--text-caption); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.wall__key { font-size: 20px; font-weight: 400; letter-spacing: -0.02em; text-transform: none; color: transparent; -webkit-text-stroke: 1px var(--muted); }
+.wall__key.is-now { color: var(--fg); -webkit-text-stroke: 0; }
+.wall__key + .wall__key, .wall__legend .wall__key:nth-of-type(2) { margin-left: 18px; }
+.wall__words { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.32em; row-gap: 0.06em; font-size: clamp(30px, 5.2vw, 78px); line-height: 1.08; letter-spacing: -0.04em; }
+.wall__item { display: inline-flex; align-items: baseline; }
+.wall__item:not(:last-child)::after { content: '·'; margin-left: 0.32em; font-weight: 300; color: var(--muted); opacity: 0.5; }
+.wall__word {
+  font: inherit; letter-spacing: inherit; text-align: left; padding: 0; cursor: default;
+  font-weight: 400; color: transparent; -webkit-text-stroke: 1px var(--muted);
+  transition: color 0.6s var(--ease), -webkit-text-stroke-color 0.6s var(--ease), opacity 0.6s var(--ease);
+}
+.wall__item.is-now .wall__word { font-weight: 400; color: var(--fg); -webkit-text-stroke: 0; }
+.wall__word:focus-visible { outline: 1px solid currentColor; outline-offset: 6px; }
+.wall__word.is-on,
+.wall__item.is-now .wall__word.is-on {
+  -webkit-text-stroke: 0; color: transparent;
+  background-image: var(--iri); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.wall__words.is-hovering .wall__word:not(.is-on) { opacity: 0.35; }
+.wall__caption { margin-top: 34px; min-height: 1.5em; font-size: var(--text-caption); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.wall__caption.is-on { color: var(--fg); }
+.wall__caption b { font-weight: 400; background-image: var(--iri); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+@media (pointer: coarse) { .wall__word { cursor: pointer; } }
+@media (max-width: 480px) { .wall__words { font-size: clamp(28px, 9vw, 40px); } }
+
+.convictions { margin-top: var(--section-gap); border-top: 1px solid var(--line); padding-top: 28px; }
+.convictions__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px 64px; margin-top: 34px; }
+.conviction { display: grid; grid-template-columns: 48px minmax(0, 1fr); column-gap: 14px; align-content: start; }
+.conviction__idx { grid-row: 1 / span 2; font-size: var(--text-caption); letter-spacing: 0.08em; color: var(--muted); padding-top: 0.7em; font-variant-numeric: tabular-nums; }
+.conviction__title { font-size: var(--text-subheading); font-weight: 300; line-height: 1.15; letter-spacing: -0.03em; }
+.conviction__text { margin-top: 14px; font-size: var(--text-body-sm); line-height: 1.58; color: var(--soft); max-width: 36em; }
+.conviction:hover .conviction__title { background-image: var(--iri); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+@media (max-width: 760px) {
+  .convictions__list { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 480px) {
+  .conviction { grid-template-columns: 36px minmax(0, 1fr); }
+}
