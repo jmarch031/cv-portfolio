@@ -26,7 +26,7 @@ Le portfolio est hébergé sur **GitHub Pages** (`https://jmarch031.github.io/cv
 
 - **Vite + TypeScript** (pas de framework UI).
 - **GSAP 3** avec **ScrollTrigger** et **SplitText** pour toutes les animations ; **Lenis** pour le smooth scroll (synchronisé sur le ticker GSAP).
-- Visuels : petit moteur **WebGL** maison (`src/motion/shader.ts`, « liquid light » + lentille de verre), trois surfaces (Hero, Histoire, Contact) qui ne tournent que lorsqu'elles sont visibles, avec repli CSS si WebGL est indisponible.
+- Visuels : petit moteur **WebGL** maison (`src/motion/shader.ts`, « liquid light » + lentille de verre), trois surfaces (Hero, Histoire, Contact) qui ne tournent que lorsqu'elles sont visibles, plus une **lumière ambiante** fixe derrière toute la page (sans lentille, tampon réduit), avec repli CSS si WebGL est indisponible.
 - Polices : **Inter** (substitut documenté de Roobert) et **Raleway** pour un unique titre d'accent, via Google Fonts.
 - Tests : **Vitest** + jsdom (`npm run test:run`). Un hook Husky lance les tests au commit.
 
@@ -49,7 +49,7 @@ src/style.css                    Tokens design.md + styles
 public/cv-julien-marchand.pdf    Export LinkedIn téléchargeable (lien « CV »)
 ```
 
-Sections, dans l'ordre : Hero « Retour au code. » → Bonjour (présentation) → Histoire (3 actes épinglés) → En chiffres → Savoir-faire → Parcours (liste + panneau collant) → Écrits & projets → Formation → Recommandations → Contact.
+Sections, dans l'ordre : Hero « Retour au code. » → Bonjour (présentation) → Histoire (3 actes épinglés) → En chiffres → *bandeau* → Savoir-faire → Parcours (liste + panneau collant) → *bandeau* → Écrits & projets → Formation → Recommandations → Contact. Les bandeaux sont de la typographie géante qui défile avec le scroll ; ils reprennent du texte existant (titres des actes, rôles de l'intro).
 
 ## Contenu
 
@@ -66,7 +66,7 @@ Sections, dans l'ordre : Hero « Retour au code. » → Bonjour (présentation) 
 Le style visuel est décrit dans [`design.md`](./design.md), avec deux écarts voulus par le propriétaire du site :
 
 - **Thèmes sombre et clair**, au choix du visiteur, **sombre par défaut** (`data-theme` sur `<html>`, mémorisé dans `localStorage`, appliqué avant le premier rendu par le script de `index.html`). Plus d'alternance de bandes noires et blanches.
-- **La couleur iridescente circule dans tout le site** (inspiration monopo.vn), pas seulement dans la Hero : liquide lumineux WebGL avec sphère de verre (Hero, Histoire avec une palette par acte, Contact), traînées de lumière (`.glow`) qui dérivent dans les sections, texte iridescent (`.iri`) pour quelques accents (chiffres, fin du titre de contact, compétence ouverte), barres de progression et filets dégradés.
+- **La couleur iridescente circule dans tout le site** (inspiration monopo.vn), pas seulement dans la Hero : lumière ambiante WebGL qui change de palette à chaque section (elle se met en pause là où la Hero, l'Histoire ou le Contact couvrent l'écran), halo qui suit la souris sur desktop, grain animé ; liquide lumineux WebGL avec sphère de verre (Hero, Histoire avec une palette par acte, Contact), traînées de lumière (`.glow`) qui dérivent dans les sections, texte iridescent (`.iri`) pour quelques accents (chiffres, fin du titre de contact, compétence ouverte), barres de progression et filets dégradés.
 
 Le reste de `design.md` s'applique toujours :
 
@@ -91,7 +91,8 @@ Le reste de `design.md` s'applique toujours :
 - **Parcours** : rien n'est imposé par le scroll. Le visiteur choisit le poste à lire (clic) ; panneau collant sur desktop, accordéon sur mobile, où les postes d'avant Decathlon Digital se replient derrière « Voir le début de carrière ».
 - **Intro** : jouée en entier une fois par session (`sessionStorage`), puis réduite à l'ouverture de la Hero ; « Passer » (clic ou Échap) pendant la première.
 - **Repères** : barre de progression de lecture en haut de l'en-tête, section courante mise en lumière dans le menu, raccourci « Me contacter » flottant entre la Hero et le Contact. Chaque section a un titre `h2` (le libellé fait office de titre quand il n'y en a pas d'autre).
-- **Savoir-faire** : ne répète pas le Parcours. Trois blocs : les **outils** (grille de logos officiels, groupés par catégorie, uniquement l'actuel), les **pratiques** (mur typographique, le détail s'affiche au survol ou au toucher) et 3 à 4 **convictions** courtes, tirées des écrits du propriétaire (articles Medium, résumé LinkedIn) et validées par lui.
+- **Contre l'effet « liste »** : peu de texte par écran. Une ligne-clé par poste dans le Parcours (`headline`, le détail reste au clic), actes de l'Histoire en une ou deux phrases, convictions en plein écran, une par une, écrits en cartes qu'on fait glisser horizontalement.
+- **Savoir-faire** : ne répète pas le Parcours. Trois blocs : les **outils** (trois bandeaux de logos officiels qui défilent en sens opposés, accélérés par le scroll, en pause au survol, avec les catégories en pastilles ; sans animation, ils passent à la ligne), les **pratiques** (mur typographique, le détail s'affiche au survol ou au toucher) et 3 à 4 **convictions** courtes, tirées des écrits du propriétaire (articles Medium, résumé LinkedIn) et validées par lui.
 - Logos : tracés officiels monochromes dans `src/content/logos.ts` (Simple Icons, CC0 ; Devicon, MIT, pour Java ; dépôts officiels `gravitee-io/gravitee-api-management`, `kafbat/kafka-ui` et `dbeaver/cloudbeaver` pour Gravitee, Kafbat et CloudBeaver). Cloud SQL et Artifact Registry portent la marque Google Cloud ; Wiz, faute de source accessible, est composé en mot-symbole (`logo` absent). Ils servent de masque CSS : ils prennent la couleur du texte, et la lumière iridescente au survol, jamais les couleurs de marque.
 
 ## Images

@@ -11,7 +11,7 @@ import { renderHeader, renderMain, renderSheet } from './render';
 import { AMBER, OXBLOOD, SAGE, TAN, createLiquid } from './motion/shader';
 import { playIntro } from './motion/intro';
 import { initScroll } from './motion/scroll';
-import { bindContact, bindJourney, bindMagnetic, bindNav, bindRecos, bindWall, bindWorks, initCursor } from './motion/interactions';
+import { bindContact, bindJourney, bindMarquees, bindMagnetic, bindNav, bindRecos, bindWall, bindWorks, initCursor } from './motion/interactions';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,7 +42,10 @@ const liquids = {
   hero: createLiquid({ palette: [SAGE, AMBER, OXBLOOD], lens: [0.78, 0.68, 0.46], scale: 1.5, reduced }),
   story: createLiquid({ palette: [SAGE, AMBER, OXBLOOD], lens: [0.74, 0.52, 0.34], scale: 1.7, reduced }),
   contact: createLiquid({ palette: [AMBER, OXBLOOD, TAN], lens: [0.18, 0.3, 0.38], scale: 1.4, reduced }),
+  // Ambient light behind the whole page: no lens, small buffer, colour set by the section in view
+  ambient: createLiquid({ palette: [SAGE, AMBER, OXBLOOD], lens: [0.5, 0.5, 0.0001], scale: 1.1, reduced, resolution: 0.22, manual: true }),
 };
+document.querySelector('.ambient')?.appendChild(liquids.ambient.canvas);
 const allLiquids = Object.values(liquids);
 const setLiquidLight = (theme: Theme) => allLiquids.forEach((l) => { l.state.light = theme === 'light' ? 1 : 0; l.redraw(); });
 setLiquidLight(currentTheme());
@@ -89,6 +92,7 @@ function boot() {
       bindWall(abort.signal);
       bindJourney(abort.signal);
       bindContact(abort.signal);
+      bindMarquees(reduced, abort.signal);
       bindMagnetic(abort.signal);
     });
     header.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach((b) =>

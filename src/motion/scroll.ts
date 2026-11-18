@@ -13,7 +13,18 @@ const DUR = 1.25;
  * Every ScrollTrigger lives in this context so the whole set can be reverted
  * and rebuilt when the page is re-rendered (language switch).
  */
-export interface Liquids { hero: Liquid; story: Liquid; contact: Liquid }
+export interface Liquids { hero: Liquid; story: Liquid; contact: Liquid; ambient: Liquid }
+
+/** Ambient light: one colour mood per section. */
+const SECTION_PALETTES: Record<string, [RGB, RGB, RGB]> = {
+  statement: [SAGE, AMBER, OXBLOOD],
+  numbers: [AMBER, OXBLOOD, TAN],
+  skills: [SAGE, TAN, AMBER],
+  journey: [AMBER, OXBLOOD, SAGE],
+  writing: [OXBLOOD, AMBER, TAN],
+  education: [SAGE, AMBER, TAN],
+  recommendations: [TAN, SAGE, OXBLOOD],
+};
 
 /** One palette per act: the light changes colour with the story. */
 const ACT_PALETTES: [RGB, RGB, RGB][] = [
@@ -30,6 +41,33 @@ export function initScroll(liquids: Liquids) {
 
     liquids.story.state.c = flat(ACT_PALETTES[0]);
     liquids.story.state.lens = [...ACT_LENSES[0]];
+
+    /* ---------- Ambient light: runs only where no other light covers the screen ---------- */
+    const ambient = liquids.ambient;
+    const cover = { hero: true, story: false, contact: false };
+    const updateAmbient = () => ambient.setActive(!cover.hero && !cover.story && !cover.contact);
+    const statement = document.querySelector<HTMLElement>('.statement');
+    const onHero = (self: ScrollTrigger) => { cover.hero = self.isActive; updateAmbient(); };
+    // once the hero has fully left (its pin is over), the statement no longer has to hide it
+    if (statement) {
+      const clear = (self: ScrollTrigger) => statement.classList.toggle('is-clear', self.isActive);
+      ScrollTrigger.create({ trigger: statement, start: 'top -15%', end: 'max', onToggle: clear, onRefresh: clear });
+    }
+    const onStory = (self: ScrollTrigger) => { cover.story = self.isActive; updateAmbient(); };
+    const onContact = (self: ScrollTrigger) => { cover.contact = self.isActive; updateAmbient(); };
+    // onRefresh as well: after a language switch the page may already be scrolled
+    ScrollTrigger.create({ start: 0, end: () => window.innerHeight * 0.9, onToggle: onHero, onRefresh: onHero });
+    ScrollTrigger.create({ trigger: '.story', start: 'top top', end: 'bottom bottom', onToggle: onStory, onRefresh: onStory });
+    ScrollTrigger.create({ trigger: '#contact', start: 'top top', end: 'max', onToggle: onContact, onRefresh: onContact });
+    Object.entries(SECTION_PALETTES).forEach(([id, palette]) => {
+      const section = document.getElementById(id);
+      if (!section) return;
+      const tint = (self: ScrollTrigger) => {
+        if (self.isActive) gsap.to(ambient.state.c, { endArray: flat(palette), duration: 2.4, ease: 'sine.inOut', overwrite: true, onUpdate: ambient.redraw });
+      };
+      ScrollTrigger.create({ trigger: section, start: 'top 60%', end: 'bottom 60%', onToggle: tint, onRefresh: tint });
+    });
+    updateAmbient();
 
     mm.add(
       {
@@ -200,6 +238,14 @@ export function initScroll(liquids: Liquids) {
           });
         });
 
+        /* ---------- Bands: the two lines slide past each other with the scroll ---------- */
+        gsap.utils.toArray<HTMLElement>('.band').forEach((band) => {
+          const [solid, outline] = band.querySelectorAll<HTMLElement>('.band__line');
+          const st = { trigger: band, start: 'top bottom', end: 'bottom top', scrub: true };
+          gsap.fromTo(solid, { xPercent: -4 }, { xPercent: -26, ease: 'none', scrollTrigger: st });
+          gsap.fromTo(outline, { xPercent: -30 }, { xPercent: -8, ease: 'none', scrollTrigger: { ...st } });
+        });
+
         /* ---------- Skills: technologies rise, practices light up, convictions arrive one by one ---------- */
         // the wall lights up word by word as it scrolls into view
         const words = gsap.utils.toArray<HTMLElement>('.wall__item');
@@ -215,10 +261,12 @@ export function initScroll(liquids: Liquids) {
           once: true,
           onEnter: (batch) => gsap.from(batch, { y: 40, autoAlpha: 0, duration: DUR, stagger: 0.06, ease: EASE }),
         });
-        ScrollTrigger.batch('.conviction', {
-          start: 'top 88%',
-          once: true,
-          onEnter: (batch) => gsap.from(batch, { y: 60, autoAlpha: 0, duration: DUR, stagger: 0.12, ease: EASE }),
+        // each conviction holds the screen: the title lights up word by word (js-words), then the text rises
+        gsap.utils.toArray<HTMLElement>('.conviction').forEach((cv) => {
+          gsap.from(cv.querySelectorAll('.conviction__idx, .conviction__text'), {
+            y: 40, autoAlpha: 0, duration: DUR, stagger: 0.15, ease: EASE,
+            scrollTrigger: { trigger: cv, start: 'top 55%' },
+          });
         });
 
         /* ---------- Journey: rows rise in; selection is the reader's (see bindJourney) ---------- */

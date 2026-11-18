@@ -42,6 +42,8 @@ export interface Job {
   role: string;
   company: string;
   place: string;
+  /** One line that sums the role up, shown in the list */
+  headline: string;
   text: string;
   points?: string[];
   figures?: { value: string; label: string }[];
@@ -98,7 +100,7 @@ export interface Content {
     convictions: Conviction[];
   };
   journey: { label: string; title: string; hint: string; more: string; less: string; jobs: Job[] };
-  writing: { label: string; title: string; intro: string; items: Work[]; all: string; read: string };
+  writing: { label: string; title: string; intro: string; items: Work[]; all: string; read: string; prev: string; next: string };
   education: {
     label: string;
     title: string;

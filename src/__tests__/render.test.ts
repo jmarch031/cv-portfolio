@@ -25,8 +25,9 @@ describe('renderMain', () => {
     expect(document.querySelectorAll('.panel-item')).toHaveLength(fr.journey.jobs.length);
     // every technology has its mark
     const tools = fr.skills.tech.flatMap((g) => g.items);
-    expect(document.querySelectorAll('.tech')).toHaveLength(tools.length);
-    expect(document.querySelectorAll('.tech__logo[style*="data:image/svg+xml"]')).toHaveLength(tools.filter((t) => t.logo).length);
+    // the marquee repeats its list once; only the first copy is exposed
+    expect(document.querySelectorAll('.marquee__list:not([aria-hidden]) .tech')).toHaveLength(tools.length);
+    expect(document.querySelectorAll('.marquee__list:not([aria-hidden]) .tech__logo[style*="data:image/svg+xml"]')).toHaveLength(tools.filter((t) => t.logo).length);
     // practices: current ones come first, then the earlier ones
     const wall = Array.from(document.querySelectorAll('.wall__item'));
     expect(wall).toHaveLength(fr.skills.practices.length);
