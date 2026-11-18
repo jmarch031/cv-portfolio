@@ -104,7 +104,7 @@ export const fr: Content = {
         items: [
           { name: 'Kubernetes', now: true, period: '2021 → 2022 · 2026 → aujourd’hui' },
           { name: 'GitHub', now: true, period: '2026 → aujourd’hui' },
-          { name: 'CI/CD', now: false, period: '2021 → 2022' },
+          { name: 'CI/CD', now: true, period: '2021 → 2022 · 2026 → aujourd’hui, GitHub Actions' },
           { name: 'Rancher', now: false, period: 'jusqu’en 2022' },
         ],
       },
@@ -153,7 +153,7 @@ export const fr: Content = {
         place: 'Lille',
         text: "Retour au software engineering hands-on après plusieurs années de management, avec un focus sur le développement logiciel, l'architecture et l'IA.",
         points: ['Construire des logiciels utiles et résoudre de vrais problèmes pour le Transport', "Porter l'architecture logicielle et les pratiques de développement modernes", "Appliquer le développement assisté par l'IA au quotidien", "Partager la connaissance et apprendre en continu avec l'équipe"],
-        tags: ['Java', 'Spring Boot', 'Kafka', 'ReactJS', 'GitHub', 'Kubernetes'],
+        tags: ['Java', 'Spring Boot', 'Kafka', 'ReactJS', 'GitHub Actions', 'Kubernetes'],
       },
       {
         dates: 'Fév 2022 — Oct 2026',

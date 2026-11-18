@@ -104,7 +104,7 @@ export const en: Content = {
         items: [
           { name: 'Kubernetes', now: true, period: '2021 → 2022 · 2026 → today' },
           { name: 'GitHub', now: true, period: '2026 → today' },
-          { name: 'CI/CD', now: false, period: '2021 → 2022' },
+          { name: 'CI/CD', now: true, period: '2021 → 2022 · 2026 → today, GitHub Actions' },
           { name: 'Rancher', now: false, period: 'until 2022' },
         ],
       },
@@ -153,7 +153,7 @@ export const en: Content = {
         place: 'Lille',
         text: 'Back to hands-on software engineering after several years in management, with a focus on software development, architecture, and AI.',
         points: ['Building useful software and solving real problems on Transport', 'Driving software architecture and modern development practices', 'Applying AI-assisted development in day-to-day engineering', 'Sharing knowledge and continuously learning with the team'],
-        tags: ['Java', 'Spring Boot', 'Kafka', 'ReactJS', 'GitHub', 'Kubernetes'],
+        tags: ['Java', 'Spring Boot', 'Kafka', 'ReactJS', 'GitHub Actions', 'Kubernetes'],
       },
       {
         dates: 'Feb 2022 — Oct 2026',
