@@ -23,13 +23,17 @@ describe('renderMain', () => {
     expect(document.querySelectorAll('.act')).toHaveLength(fr.story.acts.length);
     expect(document.querySelectorAll('.job')).toHaveLength(fr.journey.jobs.length);
     expect(document.querySelectorAll('.panel-item')).toHaveLength(fr.journey.jobs.length);
-    const allTech = fr.skills.stack.flatMap((g) => g.items);
+    // every technology has its mark, current ones in the first group
+    const tiles = document.querySelectorAll('.tech');
+    expect(tiles).toHaveLength(fr.skills.tech.length);
+    expect(document.querySelectorAll('.techs__group.is-now .tech')).toHaveLength(fr.skills.tech.filter((t) => t.now).length);
+    document.querySelectorAll<HTMLElement>('.tech__logo').forEach((l) => expect(l.getAttribute('style')).toContain('data:image/svg+xml'));
+    // practices: current ones come first, then the earlier ones
     const wall = Array.from(document.querySelectorAll('.wall__item'));
-    expect(wall).toHaveLength(allTech.length);
-    // current technologies come first, then the earlier ones
+    expect(wall).toHaveLength(fr.skills.practices.length);
     const firstPast = wall.findIndex((li) => !li.classList.contains('is-now'));
     expect(wall.slice(firstPast).every((li) => !li.classList.contains('is-now'))).toBe(true);
-    expect(firstPast).toBe(allTech.filter((t) => t.now).length);
+    expect(firstPast).toBe(fr.skills.practices.filter((p) => p.now).length);
     expect(document.querySelectorAll('.conviction')).toHaveLength(fr.skills.convictions.length);
     expect(document.querySelectorAll('.reco')).toHaveLength(recos.length);
     expect(document.querySelectorAll('.work')).toHaveLength(fr.writing.items.length);

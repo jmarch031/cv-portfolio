@@ -816,6 +816,28 @@ ul, ol { list-style: none; }
 /* =====================================================================
    Skills: stack grid + convictions
    ===================================================================== */
+.techs { border-top: 1px solid var(--line); padding-top: 28px; margin-bottom: var(--section-gap); }
+.techs__group { display: grid; grid-template-columns: minmax(120px, 200px) minmax(0, 1fr); gap: 28px; margin-top: 44px; }
+.techs__when { font-size: var(--text-caption); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 22px; }
+.techs__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 40px 28px; }
+.tech { display: flex; flex-direction: column; gap: 18px; border-top: 1px solid var(--line); padding-top: 22px; }
+.tech__logo { display: block; width: 40px; height: 40px; background: currentColor; -webkit-mask: var(--logo) left center / contain no-repeat; mask: var(--logo) left center / contain no-repeat; }
+.tech__name { font-size: var(--text-body-sm); letter-spacing: -0.01em; }
+.techs__group:not(.is-now) .tech { color: var(--muted); }
+.techs__group:not(.is-now) .tech__logo { opacity: 0.6; }
+@media (hover: hover) {
+  .tech:hover .tech__logo { background: var(--iri); opacity: 1; }
+  .tech:hover { color: var(--fg); }
+}
+@media (max-width: 760px) {
+  .techs__group { grid-template-columns: 1fr; gap: 18px; margin-top: 34px; }
+  .techs__when { padding-top: 0; }
+  .techs__grid { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 24px 16px; }
+  .tech { gap: 12px; padding-top: 16px; }
+  .tech__logo { width: 28px; height: 28px; }
+  .tech__name { font-size: 14px; }
+}
+.wall__sub { margin-left: 0.3em; font-size: 0.32em; font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); -webkit-text-stroke: 0; vertical-align: super; }
 .wall { border-top: 1px solid var(--line); padding-top: 28px; }
 .wall__head { display: flex; justify-content: space-between; align-items: baseline; gap: 28px; flex-wrap: wrap; margin-bottom: 40px; }
 .wall__head .mini-label { margin: 0; }
@@ -823,7 +845,7 @@ ul, ol { list-style: none; }
 .wall__key { font-size: 20px; font-weight: 400; letter-spacing: -0.02em; text-transform: none; color: transparent; -webkit-text-stroke: 1px var(--muted); }
 .wall__key.is-now { color: var(--fg); -webkit-text-stroke: 0; }
 .wall__key + .wall__key, .wall__legend .wall__key:nth-of-type(2) { margin-left: 18px; }
-.wall__words { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.32em; row-gap: 0.06em; font-size: clamp(30px, 5.2vw, 78px); line-height: 1.08; letter-spacing: -0.04em; }
+.wall__words { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.32em; row-gap: 0.06em; font-size: clamp(30px, 4.7vw, 72px); line-height: 1.08; letter-spacing: -0.04em; }
 .wall__item { display: inline-flex; align-items: baseline; }
 .wall__item:not(:last-child)::after { content: '·'; margin-left: 0.32em; font-weight: 300; color: var(--muted); opacity: 0.5; }
 .wall__word {

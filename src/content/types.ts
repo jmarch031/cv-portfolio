@@ -1,3 +1,5 @@
+import type { LogoKey } from './logos';
+
 export type Lang = 'fr' | 'en';
 
 export interface Act {
@@ -9,16 +11,20 @@ export interface Act {
 }
 
 /** One technology or practice; `now` = part of the current role (LinkedIn). */
-export interface StackItem {
+export interface TechItem {
   name: string;
+  /** Key of the official mark in src/content/logos.ts */
+  logo: LogoKey;
   now: boolean;
-  /** When it was used, from the LinkedIn export (shown on hover / tap) */
-  period: string;
 }
 
-export interface StackGroup {
+export interface Practice {
   name: string;
-  items: StackItem[];
+  /** Small aside next to the name (e.g. the flavours of Agile) */
+  sub?: string;
+  now: boolean;
+  /** Context or period, shown on hover / tap */
+  period: string;
 }
 
 export interface Conviction {
@@ -77,11 +83,13 @@ export interface Content {
   skills: {
     label: string;
     title: string;
-    stackTitle: string;
+    techTitle: string;
+    practicesTitle: string;
     legendNow: string;
     legendBefore: string;
     hint: string;
-    stack: StackGroup[];
+    tech: TechItem[];
+    practices: Practice[];
     convictionsTitle: string;
     convictions: Conviction[];
   };
