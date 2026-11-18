@@ -234,7 +234,7 @@ export function bindWall(signal: AbortSignal) {
     if (!w) { caption.textContent = caption.dataset.hint ?? ''; return; }
     w.classList.add('is-on');
     const name = document.createElement('b');
-    name.textContent = w.childNodes[0]?.textContent ?? '';
+    name.textContent = w.dataset.name ?? '';
     caption.replaceChildren(name, document.createTextNode(` — ${w.dataset.meta ?? ''}`));
     gsap.fromTo(caption, { y: 8, autoAlpha: 0.4 }, { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' });
   };

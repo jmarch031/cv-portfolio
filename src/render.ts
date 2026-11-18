@@ -1,4 +1,5 @@
 import type { Content, Lang } from './content/types';
+import { LOGOS } from './content/logos';
 
 export interface Recommendation {
   name: string;
@@ -182,19 +183,41 @@ function skills(c: Content) {
       ${label('04', s.label)}
       <h2 class="skills__title js-lines">${esc(s.title)}</h2>
 
+      <div class="techs">
+        <h3 class="mini-label">${esc(s.techTitle)}</h3>
+        ${[true, false]
+          .map(
+            (now) => `
+        <div class="techs__group${now ? ' is-now' : ''}">
+          <p class="techs__when">${esc(now ? s.legendNow : s.legendBefore)}</p>
+          <ul class="techs__grid">
+            ${s.tech
+              .filter((it) => it.now === now)
+              .map((it) => {
+                const logo = LOGOS[it.logo];
+                const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${logo.box}"><path d="${logo.d}"/></svg>`;
+                // the mark is a mask: it takes the text colour, and the iridescent light on hover
+                return `<li class="tech"><span class="tech__logo" aria-hidden="true" style="--logo:url('data:image/svg+xml,${encodeURIComponent(svg)}')"></span><span class="tech__name">${esc(it.name)}</span></li>`;
+              })
+              .join('')}
+          </ul>
+        </div>`,
+          )
+          .join('')}
+      </div>
+
       <div class="wall">
         <div class="wall__head">
-          <h3 class="mini-label">${esc(s.stackTitle)}</h3>
+          <h3 class="mini-label">${esc(s.practicesTitle)}</h3>
           <p class="wall__legend">
             <span class="wall__key is-now">Aa</span>${esc(s.legendNow)}
             <span class="wall__key">Aa</span>${esc(s.legendBefore)}
           </p>
         </div>
         <ul class="wall__words">
-          ${[true, false]
-            .flatMap((now) => s.stack.flatMap((g) => g.items.filter((it) => it.now === now).map((it) => ({ ...it, group: g.name }))))
+          ${[...s.practices.filter((p) => p.now), ...s.practices.filter((p) => !p.now)]
             .map(
-              (it) => `<li class="wall__item${it.now ? ' is-now' : ''}"><button class="wall__word" type="button" data-meta="${esc(`${it.group} · ${it.period}`)}">${esc(it.name)}<span class="visually-hidden"> (${esc(it.now ? s.legendNow : s.legendBefore)}, ${esc(it.period)})</span></button></li>`,
+              (it) => `<li class="wall__item${it.now ? ' is-now' : ''}"><button class="wall__word" type="button" data-name="${esc(it.name)}" data-meta="${esc(it.period)}">${esc(it.name)}${it.sub ? `<span class="wall__sub">${esc(it.sub)}</span>` : ''}<span class="visually-hidden"> (${esc(it.now ? s.legendNow : s.legendBefore)}, ${esc(it.period)})</span></button></li>`,
             )
             .join('')}
         </ul>

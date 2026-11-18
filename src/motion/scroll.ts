@@ -199,7 +199,7 @@ export function initScroll(liquids: Liquids) {
           });
         });
 
-        /* ---------- Skills: stack groups rise, items follow; convictions arrive one by one ---------- */
+        /* ---------- Skills: technologies rise, practices light up, convictions arrive one by one ---------- */
         // the wall lights up word by word as it scrolls into view
         const words = gsap.utils.toArray<HTMLElement>('.wall__item');
         if (words.length) {
@@ -208,6 +208,12 @@ export function initScroll(liquids: Liquids) {
             scrollTrigger: { trigger: '.wall__words', start: 'top 88%', end: 'bottom 55%', scrub: true },
           });
         }
+        // technologies arrive tile by tile, each row in turn
+        ScrollTrigger.batch('.tech', {
+          start: 'top 90%',
+          once: true,
+          onEnter: (batch) => gsap.from(batch, { y: 40, autoAlpha: 0, duration: DUR, stagger: 0.06, ease: EASE }),
+        });
         ScrollTrigger.batch('.conviction', {
           start: 'top 88%',
           once: true,
