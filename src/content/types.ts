@@ -13,9 +13,13 @@ export interface Act {
 /** One technology or practice; `now` = part of the current role (LinkedIn). */
 export interface TechItem {
   name: string;
-  /** Key of the official mark in src/content/logos.ts */
-  logo: LogoKey;
-  now: boolean;
+  /** Key of the official mark in src/content/logos.ts (none: the name is set as a wordmark) */
+  logo?: LogoKey;
+}
+
+export interface TechGroup {
+  name: string;
+  items: TechItem[];
 }
 
 export interface Practice {
@@ -74,9 +78,9 @@ export interface Stat {
 
 export interface Content {
   meta: { title: string; description: string };
-  nav: { story: string; skills: string; journey: string; education: string; contact: string; writing: string; menu: string; close: string; toLight: string; toDark: string };
-  intro: { roles: string[]; caption: string };
-  hero: { lines: string[]; caption: string; scroll: string };
+  nav: { story: string; skills: string; journey: string; education: string; contact: string; writing: string; menu: string; close: string; toLight: string; toDark: string; recos: string; cta: string; progress: string };
+  intro: { roles: string[]; caption: string; skip: string };
+  hero: { lines: string[]; caption: string; scroll: string; contact: string; cv: string };
   statement: { label: string; portraitAlt: string; text: string; today: string; todayTitle: string; matters: string; mattersTitle: string };
   story: { label: string; title: string; acts: Act[] };
   numbers: { label: string; stats: Stat[] };
@@ -88,12 +92,12 @@ export interface Content {
     legendNow: string;
     legendBefore: string;
     hint: string;
-    tech: TechItem[];
+    tech: TechGroup[];
     practices: Practice[];
     convictionsTitle: string;
     convictions: Conviction[];
   };
-  journey: { label: string; title: string; hint: string; jobs: Job[] };
+  journey: { label: string; title: string; hint: string; more: string; less: string; jobs: Job[] };
   writing: { label: string; title: string; intro: string; items: Work[]; all: string; read: string };
   education: {
     label: string;
@@ -105,5 +109,5 @@ export interface Content {
     langs: { name: string; level: string }[];
   };
   recos: { label: string; original: string; readMore: string; readLess: string; prev: string; next: string };
-  contact: { label: string; lines: string[]; email: string; cv: string; location: string; rights: string; top: string };
+  contact: { label: string; lines: string[]; email: string; cv: string; copy: string; copied: string; location: string; rights: string; top: string };
 }

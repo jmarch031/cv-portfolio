@@ -1,5 +1,5 @@
 import type { Content, Lang } from './content/types';
-import { LOGOS } from './content/logos';
+import { logoSvg } from './content/logos';
 
 export interface Recommendation {
   name: string;
@@ -24,11 +24,15 @@ const pad = (n: number) => String(n).padStart(2, '0');
 const roll = (text: string) =>
   `<span class="rl"><span class="rl__a">${esc(text)}</span><span class="rl__b" aria-hidden="true">${esc(text)}</span></span>`;
 
-const label = (idx: string, text: string) =>
-  `<div class="label"><span class="label__idx">${idx}</span><span class="label__text">${esc(text)}</span></div>`;
+/** Section label; as the section's heading when it has no other title. */
+const label = (idx: string, text: string, heading = false) => {
+  const tag = heading ? 'h2' : 'div';
+  return `<${tag} class="label"><span class="label__idx">${idx}</span><span class="label__text">${esc(text)}</span></${tag}>`;
+};
 
 const LINKEDIN = 'https://www.linkedin.com/in/julien-marchand-0256186a';
 const MEDIUM = 'https://medium.com/@julienmarchand_83183';
+const GITHUB = 'https://github.com/jmarch031';
 
 /* ------------------------------------------------------------------ */
 
@@ -38,6 +42,7 @@ const navLinks = (c: Content): [string, string][] => [
   ['#journey', c.nav.journey],
   ['#writing', c.nav.writing],
   ['#education', c.nav.education],
+  ['#recommendations', c.nav.recos],
   ['#contact', c.nav.contact],
 ];
 
@@ -59,7 +64,8 @@ export function renderHeader(c: Content, lang: Lang, theme: 'dark' | 'light') {
     <nav class="nav__menu" aria-label="Menu">
       ${links.map(([href, text]) => `<a href="${href}" class="nav__link js-scroll roll">${roll(text)}</a>`).join('')}
     </nav>
-    <button class="nav__burger" aria-expanded="false" aria-controls="sheet">${esc(c.nav.menu)}</button>`;
+    <button class="nav__burger" aria-expanded="false" aria-controls="sheet">${esc(c.nav.menu)}</button>
+    <span class="nav__progress" role="progressbar" aria-label="${esc(c.nav.progress)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="nav__progress-bar"></span></span>`;
 }
 
 export function renderSheet(c: Content) {
@@ -70,7 +76,12 @@ export function renderSheet(c: Content) {
 }
 
 export function renderMain(c: Content, recos: Recommendation[], lang: Lang = 'fr') {
-  return [hero(c), statement(c), story(c), numbers(c), skills(c), journey(c), writing(c), education(c), recommendations(c, recos, lang), contact(c)].join('');
+  return [hero(c), statement(c), story(c), numbers(c), skills(c), journey(c), writing(c), education(c), recommendations(c, recos, lang), contact(c), floatingCta(c)].join('');
+}
+
+/** Contact shortcut, shown once the hero is passed and hidden again at the contact section. */
+function floatingCta(c: Content) {
+  return `<a href="#contact" class="cta-float pill js-scroll">${roll(c.nav.cta)}</a>`;
 }
 
 /* ------------------------------------------------------------------ */
@@ -79,10 +90,16 @@ function hero(c: Content) {
   return `
   <section class="hero" id="top">
     <div class="hero__media" aria-hidden="true"></div>
-    <h1 class="hero__title">
-      ${c.hero.lines.map((l) => `<span class="hero__line">${esc(l)}</span>`).join('')}
-    </h1>
-    <p class="hero__caption">${esc(c.hero.caption)}</p>
+    <div class="hero__inner">
+      <h1 class="hero__title">
+        ${c.hero.lines.map((l) => `<span class="hero__line">${esc(l)}</span>`).join('')}
+      </h1>
+      <p class="hero__caption">${esc(c.hero.caption)}</p>
+      <div class="hero__cta">
+        <a href="#contact" class="pill magnetic js-scroll">${roll(c.hero.contact)}</a>
+        <a href="${asset('cv-julien-marchand.pdf')}" target="_blank" rel="noopener" class="pill magnetic">${roll(c.hero.cv)}</a>
+      </div>
+    </div>
     <a href="#statement" class="badge js-scroll" aria-label="Scroll">
       <svg viewBox="0 0 120 120" class="badge__ring" aria-hidden="true">
         <defs><path id="badge-path" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" /></defs>
@@ -99,7 +116,7 @@ function statement(c: Content) {
   <section class="statement section" id="statement">
     ${glow('left')}
     <div class="container">
-      ${label('01', s.label)}
+      ${label('01', s.label, true)}
       <div class="statement__top">
         <p class="statement__text js-words">${esc(s.text)}</p>
         <figure class="portrait">
@@ -124,6 +141,7 @@ function story(c: Content) {
   const s = c.story;
   return `
   <section class="story" id="story">
+    <h2 class="visually-hidden">${esc(s.title)}</h2>
     <div class="story__pin">
       <div class="story__media" aria-hidden="true"></div>
       <div class="story__head container">
@@ -147,17 +165,16 @@ function story(c: Content) {
           .join('')}
       </div>
       <div class="story__progress" aria-hidden="true"><span class="story__bar"></span></div>
-      <h2 class="visually-hidden">${esc(s.title)}</h2>
     </div>
   </section>`;
 }
 
 function numbers(c: Content) {
   return `
-  <section class="numbers section">
+  <section class="numbers section" id="numbers">
     ${glow('right')}
     <div class="container">
-      ${label('03', c.numbers.label)}
+      ${label('03', c.numbers.label, true)}
       <div class="numbers__grid">
         ${c.numbers.stats
           .map(
@@ -185,19 +202,19 @@ function skills(c: Content) {
 
       <div class="techs">
         <h3 class="mini-label">${esc(s.techTitle)}</h3>
-        ${[true, false]
+        ${s.tech
           .map(
-            (now) => `
-        <div class="techs__group${now ? ' is-now' : ''}">
-          <p class="techs__when">${esc(now ? s.legendNow : s.legendBefore)}</p>
+            (g) => `
+        <div class="techs__group">
+          <p class="techs__name">${esc(g.name)}</p>
           <ul class="techs__grid">
-            ${s.tech
-              .filter((it) => it.now === now)
+            ${g.items
               .map((it) => {
-                const logo = LOGOS[it.logo];
-                const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${logo.box}"><path d="${logo.d}"/></svg>`;
                 // the mark is a mask: it takes the text colour, and the iridescent light on hover
-                return `<li class="tech"><span class="tech__logo" aria-hidden="true" style="--logo:url('data:image/svg+xml,${encodeURIComponent(svg)}')"></span><span class="tech__name">${esc(it.name)}</span></li>`;
+                const mark = it.logo
+                  ? `<span class="tech__logo" aria-hidden="true" style="--logo:url('data:image/svg+xml,${encodeURIComponent(logoSvg(it.logo))}')"></span>`
+                  : `<span class="tech__logo tech__logo--word" aria-hidden="true">${esc(it.name.toLowerCase())}</span>`;
+                return `<li class="tech">${mark}<span class="tech__name">${esc(it.name)}</span></li>`;
               })
               .join('')}
           </ul>
@@ -252,6 +269,9 @@ function jobDetail(j: Content['journey']['jobs'][number]) {
     <ul class="job-detail__tags">${j.tags.map((t) => `<li class="tag">${esc(t)}</li>`).join('')}</ul>`;
 }
 
+/** On phones, the first roles (before Decathlon Digital) fold behind a button. */
+const EARLY_FROM = 4;
+
 function journey(c: Content) {
   const s = c.journey;
   return `
@@ -267,7 +287,7 @@ function journey(c: Content) {
           ${s.jobs
             .map(
               (j, i) => `
-            <li class="job${i === 0 ? ' is-active' : ''}" data-job="${i}">
+            <li class="job${i === 0 ? ' is-active' : ''}${i >= EARLY_FROM ? ' job--early' : ''}" data-job="${i}">
               <button class="job__head" aria-expanded="${i === 0}" aria-controls="job-detail-${i}">
                 <span class="job__dates">${esc(j.dates)}</span>
                 <span class="job__role">${esc(j.role)}</span>
@@ -279,6 +299,7 @@ function journey(c: Content) {
             )
             .join('')}
         </ol>
+        <button class="journey__more pill" type="button" aria-expanded="false" data-more="${esc(s.more)}" data-less="${esc(s.less)}">${esc(s.more)} (${s.jobs.length - EARLY_FROM})</button>
         <aside class="journey__panel" aria-live="polite">
           <div class="journey__panel-inner">
             ${s.jobs
@@ -399,10 +420,10 @@ function recommendations(c: Content, recos: Recommendation[], lang: Lang) {
   const r = c.recos;
   if (!recos.length) return '';
   return `
-  <section class="recos section">
+  <section class="recos section" id="recommendations">
     ${glow('left')}
     <div class="container">
-      ${label('08', r.label)}
+      ${label('08', r.label, true)}
       <div class="recos__stage">
         ${recos
           .map(
@@ -444,9 +465,12 @@ function contact(c: Content) {
       </h2>
       <div class="contact__ctas">
         <a href="mailto:${esc(k.email)}" class="pill magnetic">${roll(k.email)}</a>
+        <button type="button" class="pill magnetic contact__copy" data-email="${esc(k.email)}" data-copied="${esc(k.copied)}">${roll(k.copy)}</button>
         <a href="${LINKEDIN}" target="_blank" rel="noopener" class="pill magnetic">${roll('LinkedIn')}</a>
-        <a href="cv-julien-marchand.pdf" target="_blank" rel="noopener" class="pill magnetic">${roll(k.cv)}</a>
+        <a href="${GITHUB}" target="_blank" rel="noopener" class="pill magnetic">${roll('GitHub')}</a>
+        <a href="${asset('cv-julien-marchand.pdf')}" target="_blank" rel="noopener" class="pill magnetic">${roll(k.cv)}</a>
       </div>
+      <p class="contact__status visually-hidden" aria-live="polite"></p>
     </div>
     <footer class="footer">
       <div class="container footer__grid">
@@ -457,6 +481,7 @@ function contact(c: Content) {
         <div class="footer__col">
           <a href="mailto:${esc(k.email)}" class="roll">${roll(k.email)}</a>
           <a href="${LINKEDIN}" target="_blank" rel="noopener" class="roll">${roll('LinkedIn')}</a>
+          <a href="${GITHUB}" target="_blank" rel="noopener" class="roll">${roll('GitHub')}</a>
           <a href="${MEDIUM}" target="_blank" rel="noopener" class="roll">${roll('Medium')}</a>
         </div>
         <div class="footer__col footer__col--end">

@@ -131,6 +131,7 @@ ul, ol { list-style: none; }
 
 /* SplitText masks get a little room for descenders */
 .js-lines > div, .hero__line > .line-mask { padding-bottom: 0.1em; margin-bottom: -0.1em; }
+.contact__line > *, .hero__line > * { padding-bottom: 0.16em; margin-bottom: -0.16em; }
 
 .label {
   display: flex;
@@ -327,18 +328,10 @@ ul, ol { list-style: none; }
   text-align: center;
 }
 .hero__line { display: block; white-space: nowrap; will-change: transform; }
-.hero__caption {
-  position: absolute;
-  z-index: 2;
-  right: var(--gutter);
-  bottom: 40px;
-  max-width: 300px;
-  text-align: right;
-  font-size: var(--text-caption);
-  line-height: 1.36;
-  letter-spacing: 0.04em;
-  color: var(--soft);
-}
+.hero__inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 var(--gutter); }
+.hero__caption { margin-top: clamp(28px, 4vh, 44px); max-width: 44em; font-size: var(--text-body-sm); line-height: 1.45; letter-spacing: 0.01em; color: var(--fg); }
+.hero__cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 24px; }
+.hero__cta .pill { background: color-mix(in srgb, var(--bg) 45%, transparent); }
 .badge {
   position: absolute;
   z-index: 2;
@@ -591,7 +584,6 @@ ul, ol { list-style: none; }
   .job__detail { display: block; height: 0; }
   .job.is-active .job__detail { height: auto; }
   .statement__cols { margin-left: 0; max-width: none; }
-  .hero__caption { left: var(--gutter); right: auto; text-align: left; bottom: 150px; }
 }
 @media (max-width: 600px) {
   .label { margin-bottom: 40px; }
@@ -817,21 +809,21 @@ ul, ol { list-style: none; }
    Skills: stack grid + convictions
    ===================================================================== */
 .techs { border-top: 1px solid var(--line); padding-top: 28px; margin-bottom: var(--section-gap); }
-.techs__group { display: grid; grid-template-columns: minmax(120px, 200px) minmax(0, 1fr); gap: 28px; margin-top: 44px; }
-.techs__when { font-size: var(--text-caption); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 22px; }
+.techs__group { display: grid; grid-template-columns: minmax(140px, 220px) minmax(0, 1fr); gap: 28px; margin-top: 40px; }
+.techs__name { font-size: var(--text-caption); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 22px; }
+.tech .tech__logo--word { width: auto; height: 40px; background: none; -webkit-mask: none; mask: none; font-size: 30px; font-weight: 600; line-height: 40px; letter-spacing: -0.05em; }
+@media (hover: hover) { .tech:hover .tech__logo.tech__logo--word { background: var(--iri); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; } }
 .techs__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 40px 28px; }
 .tech { display: flex; flex-direction: column; gap: 18px; border-top: 1px solid var(--line); padding-top: 22px; }
 .tech__logo { display: block; width: 40px; height: 40px; background: currentColor; -webkit-mask: var(--logo) left center / contain no-repeat; mask: var(--logo) left center / contain no-repeat; }
 .tech__name { font-size: var(--text-body-sm); letter-spacing: -0.01em; }
-.techs__group:not(.is-now) .tech { color: var(--muted); }
-.techs__group:not(.is-now) .tech__logo { opacity: 0.6; }
 @media (hover: hover) {
-  .tech:hover .tech__logo { background: var(--iri); opacity: 1; }
-  .tech:hover { color: var(--fg); }
+  .tech:hover .tech__logo { background: var(--iri); }
 }
 @media (max-width: 760px) {
-  .techs__group { grid-template-columns: 1fr; gap: 18px; margin-top: 34px; }
-  .techs__when { padding-top: 0; }
+  .techs__group { grid-template-columns: 1fr; gap: 16px; margin-top: 32px; }
+  .techs__name { padding-top: 0; }
+  .tech .tech__logo--word { height: 28px; line-height: 28px; font-size: 22px; }
   .techs__grid { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 24px 16px; }
   .tech { gap: 12px; padding-top: 16px; }
   .tech__logo { width: 28px; height: 28px; }
@@ -881,3 +873,49 @@ ul, ol { list-style: none; }
 @media (max-width: 480px) {
   .conviction { grid-template-columns: 36px minmax(0, 1fr); }
 }
+
+/* =====================================================================
+   UX pass — header legibility, progress, shortcuts, early career
+   ===================================================================== */
+/* The header stays legible over the brightest part of the hero light */
+.hero::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 160px; z-index: 1; pointer-events: none; background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 55%, transparent), transparent); }
+.nav::before { inset: 0 0 -72px 0; background: linear-gradient(180deg, var(--bg) 0%, var(--bg) 45%, color-mix(in srgb, var(--bg) 80%, transparent) 70%, transparent 100%); }
+
+/* Reading progress, under the header */
+.nav__progress { position: absolute; left: 0; right: 0; top: 0; height: 2px; opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }
+.nav.is-scrolled .nav__progress { opacity: 1; }
+.nav__progress-bar { position: absolute; inset: 0; background: var(--iri); transform-origin: left; transform: scaleX(0); }
+
+/* Current section in the menus */
+.nav__link.is-current .rl__a, .sheet__link.is-current .sheet__text { background-image: var(--iri); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.sheet__link.is-current .sheet__idx { color: var(--fg); }
+
+/* Contact shortcut */
+.cta-float { position: fixed; right: var(--gutter); bottom: 24px; z-index: 400; background: color-mix(in srgb, var(--bg) 70%, transparent); visibility: hidden; opacity: 0; }
+@media (min-width: 961px) { .cta-float { backdrop-filter: blur(10px); } }
+body.is-loading .cta-float { display: none; }
+
+/* Early career folds behind a button on phones and tablets */
+.journey__more { display: none; }
+@media (max-width: 960px) {
+  .journey__grid { row-gap: 0; }
+  .journey__more { display: inline-flex; justify-self: start; margin-top: 32px; }
+  .cta-float { bottom: 16px; padding: 10px 18px; background: color-mix(in srgb, var(--bg) 92%, transparent); font-size: var(--text-caption); letter-spacing: 0.04em; }
+  .journey:not(.is-expanded) .job--early { display: none; }
+}
+
+/* Story: the active numeral stays in the background */
+.act__numeral { opacity: 0.55; }
+.act__text { color: var(--fg); }
+
+/* Tap targets of at least 44px on touch screens */
+@media (pointer: coarse) {
+  .nav__lang-btn, .nav__theme, .nav__burger { padding: 14px 10px; margin: -14px -10px; }
+  .footer__col a { padding: 12px 0; margin: -6px 0; }
+  .footer__col { gap: 4px; }
+}
+.intro__skip { position: fixed; right: var(--gutter); top: 16px; z-index: 1001; padding: 12px 0; font-size: var(--text-caption); letter-spacing: 0.08em; text-transform: uppercase; color: #fff; opacity: 0.7; }
+.intro__skip:hover, .intro__skip:focus-visible { opacity: 1; }
+
+/* Phones: a tighter rhythm between sections */
+@media (max-width: 600px) { :root { --section-gap: 80px; } }

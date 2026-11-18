@@ -84,6 +84,82 @@ export function bindNav(lenis: Lenis, labels: { menu: string; close: string }, s
     },
     onLeaveBack: () => nav.classList.remove('is-hidden', 'is-scrolled'),
   });
+
+  // Reading progress
+  const bar = nav.querySelector<HTMLElement>('.nav__progress-bar');
+  const progress = nav.querySelector<HTMLElement>('.nav__progress');
+  if (bar && progress) {
+    ScrollTrigger.create({
+      start: 0,
+      end: 'max',
+      onUpdate: (self) => {
+        gsap.set(bar, { scaleX: self.progress });
+        progress.setAttribute('aria-valuenow', String(Math.round(self.progress * 100)));
+      },
+    });
+  }
+
+  // Current section, in the desktop menu and the sheet
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.nav__link, .sheet__link'));
+  const setCurrent = (id: string | null) =>
+    links.forEach((a) => {
+      const on = a.getAttribute('href') === `#${id}`;
+      a.classList.toggle('is-current', on);
+      if (on) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
+    });
+  new Set(links.map((a) => a.getAttribute('href'))).forEach((href) => {
+    const section = href ? document.querySelector<HTMLElement>(href) : null;
+    if (!section) return;
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top 50%',
+      end: 'bottom 50%',
+      onToggle: (self) => { if (self.isActive) setCurrent(section.id); },
+      onLeaveBack: (self) => { if (self.trigger === document.querySelector('#story')) setCurrent(null); },
+    });
+  });
+
+  // Contact shortcut: after the hero, until the contact section shows up
+  const cta = document.querySelector<HTMLElement>('.cta-float');
+  const contact = document.querySelector<HTMLElement>('#contact');
+  if (cta && contact) {
+    let pastHero = false;
+    let atContact = false;
+    let shown = false;
+    const update = () => {
+      const show = pastHero && !atContact;
+      if (show === shown) return;
+      shown = show;
+      gsap.to(cta, { autoAlpha: show ? 1 : 0, y: show ? 0 : 16, duration: 0.8, ease: EASE, overwrite: true });
+    };
+    gsap.set(cta, { autoAlpha: 0, y: 16 });
+    ScrollTrigger.create({ start: () => window.innerHeight * 0.8, end: 'max', onToggle: (self) => { pastHero = self.isActive; update(); } });
+    ScrollTrigger.create({ trigger: contact, start: 'top 85%', end: 'max', onToggle: (self) => { atContact = self.isActive; update(); } });
+  }
+}
+
+/* ---------------- Contact: copy the email address ---------------- */
+export function bindContact(signal: AbortSignal) {
+  const btn = document.querySelector<HTMLButtonElement>('.contact__copy');
+  const status = document.querySelector<HTMLElement>('.contact__status');
+  if (!btn) return;
+  const labels = Array.from(btn.querySelectorAll<HTMLElement>('.rl__a, .rl__b'));
+  const initial = labels[0]?.textContent ?? '';
+  let timer = 0;
+  btn.addEventListener('click', async () => {
+    const email = btn.dataset.email ?? '';
+    try {
+      await navigator.clipboard.writeText(email);
+    } catch {
+      window.location.href = `mailto:${email}`;
+      return;
+    }
+    labels.forEach((l) => { l.textContent = `${btn.dataset.copied} ✓`; });
+    if (status) status.textContent = btn.dataset.copied ?? '';
+    clearTimeout(timer);
+    timer = window.setTimeout(() => { labels.forEach((l) => { l.textContent = initial; }); if (status) status.textContent = ''; }, 2400);
+  }, { signal });
+  signal.addEventListener('abort', () => clearTimeout(timer));
 }
 
 /* ---------------- Recommendations slider ---------------- */
@@ -169,6 +245,23 @@ export function bindJourney(signal: AbortSignal) {
   if (!jobs.length) return;
   const isDesktop = () => window.matchMedia('(min-width: 961px)').matches;
   let active = 0;
+
+  // Phones and tablets: early career folds behind a button
+  const section = document.querySelector<HTMLElement>('.journey');
+  const more = document.querySelector<HTMLButtonElement>('.journey__more');
+  if (section && more) {
+    const count = more.textContent?.match(/\(\d+\)/)?.[0] ?? '';
+    more.addEventListener('click', () => {
+      const expanded = !section.classList.contains('is-expanded');
+      section.classList.toggle('is-expanded', expanded);
+      more.setAttribute('aria-expanded', String(expanded));
+      more.textContent = expanded ? more.dataset.less! : `${more.dataset.more} ${count}`;
+      const early = jobs.filter((j) => j.classList.contains('job--early'));
+      if (expanded) gsap.fromTo(early, { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.9, stagger: 0.06, ease: EASE });
+      else more.scrollIntoView({ block: 'center' });
+      ScrollTrigger.refresh();
+    }, { signal });
+  }
 
   // A detail taller than the screen sticks by its bottom edge, so all of it can be read
   const fitPanel = () => {

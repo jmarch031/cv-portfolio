@@ -52,7 +52,7 @@ export function initScroll(liquids: Liquids) {
           .to('.hero__line:first-child', { xPercent: -18, ease: 'none' }, 0)
           .to('.hero__line:last-child', { xPercent: 18, ease: 'none' }, 0)
           .to('.hero__title', { scale: 0.86, autoAlpha: 0.2, ease: 'none' }, 0)
-          .to(['.hero__caption', '.badge'], { autoAlpha: 0, ease: 'none', duration: 0.4 }, 0);
+          .to(['.hero__caption', '.hero__cta', '.badge'], { autoAlpha: 0, ease: 'none', duration: 0.4 }, 0);
 
         /* ---------- Section labels: rule draws, text rises ---------- */
         gsap.utils.toArray<HTMLElement>('.label').forEach((el) => {
@@ -64,9 +64,10 @@ export function initScroll(liquids: Liquids) {
         /* ---------- Statement: words light up with the scroll ---------- */
         gsap.utils.toArray<HTMLElement>('.js-words').forEach((el) => {
           const { words } = SplitText.create(el, { type: 'words', wordsClass: 'word' });
-          gsap.fromTo(words, { autoAlpha: 0.1 }, {
+          gsap.fromTo(words, { autoAlpha: 0.3 }, {
             autoAlpha: 1, stagger: 0.1, ease: 'none',
-            scrollTrigger: { trigger: el, start: 'top 82%', end: 'bottom 50%', scrub: true },
+            // lit before the reader gets there: never read a half-faded sentence
+            scrollTrigger: { trigger: el, start: 'top 85%', end: 'center 60%', scrub: true },
           });
         });
 
@@ -168,7 +169,7 @@ export function initScroll(liquids: Liquids) {
             tl.fromTo(a.querySelector('.act__title'), { xPercent: 1.5 }, { xPercent: -2.5, duration: span }, from);
             const { words } = SplitText.create(a.querySelector('.act__text'), { type: 'words', wordsClass: 'act-word' });
             const startWords = i === 0 ? 0 : T(i) - MOVE * 0.4;
-            tl.fromTo(words, { opacity: 0.18 }, { opacity: 1, stagger: (REST * 0.8) / words.length, duration: 0.15 }, startWords);
+            tl.fromTo(words, { opacity: 0.35 }, { opacity: 1, stagger: (REST * 0.8) / words.length, duration: 0.15 }, startWords);
             const tags = a.querySelectorAll('.act__tags .tag');
             tl.fromTo(tags, { y: 16, opacity: 0 }, { y: 0, opacity: 1, stagger: (REST * 0.4) / tags.length, duration: 0.15, ease: 'power2.out' }, startWords + REST * 0.4);
             if (i === 0) return;

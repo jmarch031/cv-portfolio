@@ -23,11 +23,10 @@ describe('renderMain', () => {
     expect(document.querySelectorAll('.act')).toHaveLength(fr.story.acts.length);
     expect(document.querySelectorAll('.job')).toHaveLength(fr.journey.jobs.length);
     expect(document.querySelectorAll('.panel-item')).toHaveLength(fr.journey.jobs.length);
-    // every technology has its mark, current ones in the first group
-    const tiles = document.querySelectorAll('.tech');
-    expect(tiles).toHaveLength(fr.skills.tech.length);
-    expect(document.querySelectorAll('.techs__group.is-now .tech')).toHaveLength(fr.skills.tech.filter((t) => t.now).length);
-    document.querySelectorAll<HTMLElement>('.tech__logo').forEach((l) => expect(l.getAttribute('style')).toContain('data:image/svg+xml'));
+    // every technology has its mark
+    const tools = fr.skills.tech.flatMap((g) => g.items);
+    expect(document.querySelectorAll('.tech')).toHaveLength(tools.length);
+    expect(document.querySelectorAll('.tech__logo[style*="data:image/svg+xml"]')).toHaveLength(tools.filter((t) => t.logo).length);
     // practices: current ones come first, then the earlier ones
     const wall = Array.from(document.querySelectorAll('.wall__item'));
     expect(wall).toHaveLength(fr.skills.practices.length);
