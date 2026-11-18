@@ -8,15 +8,20 @@ export interface Act {
   tags: string[];
 }
 
-export interface Skill {
+/** One technology or practice; `now` = part of the current role (LinkedIn). */
+export interface StackItem {
   name: string;
+  now: boolean;
+}
+
+export interface StackGroup {
+  name: string;
+  items: StackItem[];
+}
+
+export interface Conviction {
+  title: string;
   text: string;
-  /** Roles and periods where it was applied (from the LinkedIn profile) */
-  applied: { role: string; period: string }[];
-  /** Still part of the current role */
-  current: boolean;
-  /** Short status shown in the row: "Aujourd'hui" / "Jusqu'en 2026" */
-  status: string;
 }
 
 export interface Job {
@@ -67,7 +72,16 @@ export interface Content {
   statement: { label: string; portraitAlt: string; text: string; today: string; todayTitle: string; matters: string; mattersTitle: string };
   story: { label: string; title: string; acts: Act[] };
   numbers: { label: string; stats: Stat[] };
-  skills: { label: string; title: string; appliedLabel: string; items: Skill[] };
+  skills: {
+    label: string;
+    title: string;
+    stackTitle: string;
+    legendNow: string;
+    legendBefore: string;
+    stack: StackGroup[];
+    convictionsTitle: string;
+    convictions: Conviction[];
+  };
   journey: { label: string; title: string; hint: string; jobs: Job[] };
   writing: { label: string; title: string; intro: string; items: Work[]; all: string; read: string };
   education: {

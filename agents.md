@@ -84,7 +84,7 @@ Le reste de `design.md` s'applique toujours :
 
 - Les déclencheurs situés sous une section épinglée doivent tenir compte de son espace : les pins ont un `refreshPriority` plus élevé. L'activité des canvases WebGL est pilotée par `IntersectionObserver`, pas par des positions de scroll.
 - **Parcours** : rien n'est imposé par le scroll. Le visiteur choisit le poste à lire (clic) ; panneau collant sur desktop, accordéon sur mobile.
-- **Savoir-faire** : chaque compétence liste les rôles et périodes où elle a été appliquée (d'après LinkedIn) et indique si elle est toujours d'actualité.
+- **Savoir-faire** : ne répète pas le Parcours. Une grille de stack (technologies et pratiques, marquées « aujourd'hui » ou « précédemment » d'après LinkedIn) et 3 à 4 convictions courtes, tirées des écrits du propriétaire (articles Medium, résumé LinkedIn) et validées par lui.
 
 ## Images
 

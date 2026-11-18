@@ -181,32 +181,49 @@ function skills(c: Content) {
     <div class="container">
       ${label('04', s.label)}
       <h2 class="skills__title js-lines">${esc(s.title)}</h2>
-      <ul class="skills__list">
-        ${s.items
-          .map(
-            (it, i) => `
-          <li class="skill">
-            <button class="skill__head" aria-expanded="false">
-              <span class="skill__idx">${pad(i + 1)}</span>
-              <span class="skill__name">${esc(it.name)}</span>
-              <span class="skill__status${it.current ? ' is-current' : ''}"><span class="skill__dot" aria-hidden="true"></span>${esc(it.status)}</span>
-              <span class="skill__plus" aria-hidden="true"></span>
-            </button>
-            <div class="skill__body">
-              <div class="skill__inner">
-                <p class="skill__text">${esc(it.text)}</p>
-                <div class="skill__applied">
-                  <p class="mini-label">${esc(s.appliedLabel)}</p>
-                  <ul>
-                    ${it.applied.map((a) => `<li><span>${esc(a.role)}</span><span>${esc(a.period)}</span></li>`).join('')}
-                  </ul>
-                </div>
-              </div>
-            </div>
+
+      <div class="stack">
+        <div class="stack__head">
+          <h3 class="mini-label">${esc(s.stackTitle)}</h3>
+          <p class="stack__legend">
+            <span><span class="stack__dot is-now" aria-hidden="true"></span>${esc(s.legendNow)}</span>
+            <span><span class="stack__dot" aria-hidden="true"></span>${esc(s.legendBefore)}</span>
+          </p>
+        </div>
+        <div class="stack__grid">
+          ${s.stack
+            .map(
+              (g) => `
+          <div class="stack__group">
+            <h4 class="stack__name">${esc(g.name)}</h4>
+            <ul class="stack__items">
+              ${g.items
+                .map(
+                  (it) => `<li class="stack__item${it.now ? ' is-now' : ''}"><span class="stack__dot${it.now ? ' is-now' : ''}" aria-hidden="true"></span>${esc(it.name)}<span class="visually-hidden"> (${esc(it.now ? s.legendNow : s.legendBefore)})</span></li>`,
+                )
+                .join('')}
+            </ul>
+          </div>`,
+            )
+            .join('')}
+        </div>
+      </div>
+
+      <div class="convictions">
+        <h3 class="mini-label">${esc(s.convictionsTitle)}</h3>
+        <ol class="convictions__list">
+          ${s.convictions
+            .map(
+              (cv, i) => `
+          <li class="conviction">
+            <span class="conviction__idx">${pad(i + 1)}</span>
+            <p class="conviction__title">${esc(cv.title)}</p>
+            <p class="conviction__text">${esc(cv.text)}</p>
           </li>`,
-          )
-          .join('')}
-      </ul>
+            )
+            .join('')}
+        </ol>
+      </div>
     </div>
   </section>`;
 }

@@ -86,23 +86,6 @@ export function bindNav(lenis: Lenis, labels: { menu: string; close: string }, s
   });
 }
 
-/* ---------------- Skills accordion ---------------- */
-export function bindSkills(signal: AbortSignal) {
-  document.querySelectorAll<HTMLElement>('.skill').forEach((skill) => {
-    const head = skill.querySelector<HTMLButtonElement>('.skill__head')!;
-    const body = skill.querySelector<HTMLElement>('.skill__body')!;
-    const toggle = (force?: boolean) => {
-      const isOpen = force ?? !skill.classList.contains('is-open');
-      if (isOpen === skill.classList.contains('is-open')) return;
-      skill.classList.toggle('is-open', isOpen);
-      head.setAttribute('aria-expanded', String(isOpen));
-      gsap.to(body, { height: isOpen ? 'auto' : 0, duration: isOpen ? 1 : 0.8, ease: isOpen ? EASE : 'expo.inOut', overwrite: true, onComplete: () => ScrollTrigger.refresh() });
-      if (isOpen) gsap.fromTo(body.firstElementChild, { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, ease: EASE, delay: 0.1 });
-    };
-    head.addEventListener('click', () => toggle(), { signal });
-  });
-}
-
 /* ---------------- Recommendations slider ---------------- */
 export function bindRecos(reduced: boolean, signal: AbortSignal) {
   const section = document.querySelector<HTMLElement>('.recos');

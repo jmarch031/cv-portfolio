@@ -199,12 +199,16 @@ export function initScroll(liquids: Liquids) {
           });
         });
 
-        /* ---------- Skills: rows glide in from alternating sides ---------- */
-        gsap.utils.toArray<HTMLElement>('.skill').forEach((row, i) => {
-          gsap.fromTo(row.querySelector('.skill__name'),
-            // horizontal glide only where there is room for it
-            { xPercent: desktop ? (i % 2 ? 5 : -3) : 0, autoAlpha: 0.15 },
-            { xPercent: 0, autoAlpha: 1, ease: 'none', scrollTrigger: { trigger: row, start: 'top 98%', end: 'top 65%', scrub: true } });
+        /* ---------- Skills: stack groups rise, items follow; convictions arrive one by one ---------- */
+        gsap.utils.toArray<HTMLElement>('.stack__group').forEach((g, i) => {
+          const st = { trigger: '.stack__grid', start: 'top 85%' };
+          gsap.from(g.querySelector('.stack__name'), { y: 30, autoAlpha: 0, duration: DUR, ease: EASE, delay: i * 0.1, scrollTrigger: st });
+          gsap.from(g.querySelectorAll('.stack__item'), { y: 24, autoAlpha: 0, duration: 1, stagger: 0.06, ease: EASE, delay: 0.15 + i * 0.1, scrollTrigger: st });
+        });
+        ScrollTrigger.batch('.conviction', {
+          start: 'top 88%',
+          once: true,
+          onEnter: (batch) => gsap.from(batch, { y: 60, autoAlpha: 0, duration: DUR, stagger: 0.12, ease: EASE }),
         });
 
         /* ---------- Journey: rows rise in; selection is the reader's (see bindJourney) ---------- */

@@ -23,7 +23,9 @@ describe('renderMain', () => {
     expect(document.querySelectorAll('.act')).toHaveLength(fr.story.acts.length);
     expect(document.querySelectorAll('.job')).toHaveLength(fr.journey.jobs.length);
     expect(document.querySelectorAll('.panel-item')).toHaveLength(fr.journey.jobs.length);
-    expect(document.querySelectorAll('.skill')).toHaveLength(fr.skills.items.length);
+    expect(document.querySelectorAll('.stack__group')).toHaveLength(fr.skills.stack.length);
+    expect(document.querySelectorAll('.stack__item')).toHaveLength(fr.skills.stack.flatMap((g) => g.items).length);
+    expect(document.querySelectorAll('.conviction')).toHaveLength(fr.skills.convictions.length);
     expect(document.querySelectorAll('.reco')).toHaveLength(recos.length);
     expect(document.querySelectorAll('.work')).toHaveLength(fr.writing.items.length);
     expect(document.querySelectorAll('a.work__link')).toHaveLength(fr.writing.items.filter((w) => w.href).length);
