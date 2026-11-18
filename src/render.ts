@@ -24,11 +24,16 @@ const pad = (n: number) => String(n).padStart(2, '0');
 const roll = (text: string) =>
   `<span class="rl"><span class="rl__a">${esc(text)}</span><span class="rl__b" aria-hidden="true">${esc(text)}</span></span>`;
 
-/** Section label; as the section's heading when it has no other title. */
-const label = (idx: string, text: string, heading = false) => {
-  const tag = heading ? 'h2' : 'div';
-  return `<${tag} class="label"><span class="label__idx">${idx}</span><span class="label__text">${esc(text)}</span></${tag}>`;
-};
+/**
+ * Type hierarchy, the same in every section:
+ *   label (01 — Section)  >  h2 section title  >  h3 sub-part (01.1 …)  >  small muted meta.
+ */
+const label = (idx: string, text: string) =>
+  `<div class="label"><span class="label__idx">${idx}</span><span class="label__text">${esc(text)}</span></div>`;
+
+/** Sub-part of a section, numbered after it (04.1, 04.2 …). */
+const sub = (idx: string, text: string, cls = '') =>
+  `<h3 class="subhead${cls ? ` ${cls}` : ''}"><span class="subhead__idx">${idx}</span>${esc(text)}</h3>`;
 
 const LINKEDIN = 'https://www.linkedin.com/in/julien-marchand-0256186a';
 const MEDIUM = 'https://medium.com/@julienmarchand_83183';
@@ -135,20 +140,20 @@ function statement(c: Content) {
   <section class="statement section" id="statement">
     ${glow('left')}
     <div class="container">
-      ${label('01', s.label, true)}
+      ${label('01', s.label)}
       <div class="statement__top">
-        <p class="statement__text js-words">${esc(s.text)}</p>
+        <h2 class="statement__text js-words">${esc(s.text)}</h2>
         <figure class="portrait">
           <div class="portrait__frame"><img class="portrait__img" src="${asset('portrait.webp')}" srcset="${asset('portrait-400.webp')} 400w, ${asset('portrait.webp')} 800w" sizes="(max-width: 760px) 70vw, 340px" width="800" height="800" alt="${esc(s.portraitAlt)}" decoding="async" /></div>
         </figure>
       </div>
       <div class="statement__cols">
         <div class="statement__col js-rise">
-          <h3 class="statement__h">${esc(s.todayTitle)}</h3>
+          ${sub('01.1', s.todayTitle)}
           <p class="js-lines">${esc(s.today)}</p>
         </div>
         <div class="statement__col js-rise">
-          <h3 class="statement__h">${esc(s.mattersTitle)}</h3>
+          ${sub('01.2', s.mattersTitle)}
           <p class="js-lines">${esc(s.matters)}</p>
         </div>
       </div>
@@ -193,7 +198,8 @@ function numbers(c: Content) {
   <section class="numbers section" id="numbers">
     ${glow('right')}
     <div class="container">
-      ${label('03', c.numbers.label, true)}
+      ${label('03', c.numbers.label)}
+      <h2 class="section-title js-lines">${esc(c.numbers.title)}</h2>
       <div class="numbers__grid">
         ${c.numbers.stats
           .map(
@@ -217,10 +223,10 @@ function skills(c: Content) {
     ${glow('right')}
     <div class="container">
       ${label('04', s.label)}
-      <h2 class="skills__title js-lines">${esc(s.title)}</h2>
+      <h2 class="section-title skills__title js-lines">${esc(s.title)}</h2>
 
       <div class="techs">
-        <h3 class="mini-label">${esc(s.techTitle)}</h3>
+        ${sub('04.1', s.techTitle)}
         <div class="marquees">
           ${[s.tech.slice(0, 2), s.tech.slice(2, 4), s.tech.slice(4)]
             .map((groups, row) => {
@@ -252,7 +258,7 @@ function skills(c: Content) {
 
       <div class="wall">
         <div class="wall__head">
-          <h3 class="mini-label">${esc(s.practicesTitle)}</h3>
+          ${sub('04.2', s.practicesTitle)}
           <p class="wall__legend">
             <span class="wall__key is-now">Aa</span>${esc(s.legendNow)}
             <span class="wall__key">Aa</span>${esc(s.legendBefore)}
@@ -269,7 +275,7 @@ function skills(c: Content) {
       </div>
 
       <div class="convictions">
-        <h3 class="mini-label">${esc(s.convictionsTitle)}</h3>
+        ${sub('04.3', s.convictionsTitle)}
         <ol class="convictions__list">
           ${s.convictions
             .map(
@@ -307,7 +313,7 @@ function journey(c: Content) {
     ${glow('right glow--low')}
     <div class="container">
       ${label('05', s.label)}
-      <h2 class="journey__title js-lines">${esc(s.title)}</h2>
+      <h2 class="section-title journey__title js-lines">${esc(s.title)}</h2>
       <p class="journey__hint js-rise"><span aria-hidden="true">↓</span> ${esc(s.hint)}</p>
       <div class="journey__grid">
         <ol class="jobs">
@@ -355,7 +361,7 @@ function writing(c: Content) {
     <div class="container">
       ${label('06', w.label)}
       <div class="writing__head">
-        <h2 class="writing__title js-lines">${esc(w.title)}</h2>
+        <h2 class="section-title writing__title js-lines">${esc(w.title)}</h2>
         <p class="writing__intro js-rise">${esc(w.intro)}</p>
       </div>
       <ul class="works">
@@ -398,7 +404,7 @@ function education(c: Content) {
     ${glow('right')}
     <div class="container">
       ${label('07', e.label)}
-      <h2 class="education__title js-lines">${esc(e.title)}</h2>
+      <h2 class="section-title education__title js-lines">${esc(e.title)}</h2>
       <div class="edu-timeline">
         ${e.schools
           .map((s) => {
@@ -433,11 +439,11 @@ function education(c: Content) {
       </div>
       <div class="education__extra">
         <div class="js-rise">
-          <p class="mini-label">${esc(e.certTitle)}</p>
+          ${sub('07.1', e.certTitle)}
           <p class="education__cert">${esc(e.cert)}</p>
         </div>
         <div class="js-rise">
-          <p class="mini-label">${esc(e.langTitle)}</p>
+          ${sub('07.2', e.langTitle)}
           <ul class="langs">${e.langs.map((l) => `<li><span>${esc(l.name)}</span><span>${esc(l.level)}</span></li>`).join('')}</ul>
         </div>
       </div>
@@ -455,7 +461,8 @@ function recommendations(c: Content, recos: Recommendation[], lang: Lang) {
   <section class="recos section" id="recommendations">
     ${glow('left')}
     <div class="container">
-      ${label('08', r.label, true)}
+      ${label('08', r.label)}
+      <h2 class="section-title js-lines">${esc(r.title)}</h2>
       <div class="recos__stage">
         ${recos
           .map(

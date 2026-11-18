@@ -85,7 +85,7 @@ export interface Content {
   hero: { lines: string[]; caption: string; scroll: string; contact: string; cv: string };
   statement: { label: string; portraitAlt: string; text: string; today: string; todayTitle: string; matters: string; mattersTitle: string };
   story: { label: string; title: string; acts: Act[] };
-  numbers: { label: string; stats: Stat[] };
+  numbers: { label: string; title: string; stats: Stat[] };
   skills: {
     label: string;
     title: string;
@@ -110,6 +110,6 @@ export interface Content {
     langTitle: string;
     langs: { name: string; level: string }[];
   };
-  recos: { label: string; original: string; readMore: string; readLess: string; prev: string; next: string };
+  recos: { label: string; title: string; original: string; readMore: string; readLess: string; prev: string; next: string };
   contact: { label: string; lines: string[]; email: string; cv: string; copy: string; copied: string; location: string; rights: string; top: string };
 }
