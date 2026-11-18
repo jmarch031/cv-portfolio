@@ -28,12 +28,7 @@ describe('renderMain', () => {
     // the marquee repeats its list once; only the first copy is exposed
     expect(document.querySelectorAll('.marquee__list:not([aria-hidden]) .tech')).toHaveLength(tools.length);
     expect(document.querySelectorAll('.marquee__list:not([aria-hidden]) .tech__logo[style*="data:image/svg+xml"]')).toHaveLength(tools.filter((t) => t.logo).length);
-    // practices: current ones come first, then the earlier ones
-    const wall = Array.from(document.querySelectorAll('.wall__item'));
-    expect(wall).toHaveLength(fr.skills.practices.length);
-    const firstPast = wall.findIndex((li) => !li.classList.contains('is-now'));
-    expect(wall.slice(firstPast).every((li) => !li.classList.contains('is-now'))).toBe(true);
-    expect(firstPast).toBe(fr.skills.practices.filter((p) => p.now).length);
+    expect(document.querySelectorAll('.wall__item')).toHaveLength(fr.skills.practices.length);
     expect(document.querySelectorAll('.conviction')).toHaveLength(fr.skills.convictions.length);
     expect(document.querySelectorAll('.reco')).toHaveLength(recos.length);
     expect(document.querySelectorAll('.work')).toHaveLength(fr.writing.items.length);

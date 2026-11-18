@@ -38,12 +38,6 @@ export const en: Content = {
     label: 'Hello',
     portraitAlt: 'Portrait of Julien Marchand',
     text: "I'm Julien. For over ten years I've been writing software, leading teams, and turning ideas into products that work.",
-    todayTitle: 'Today',
-    today:
-      "After several years in management, I've chosen to get back to what I enjoy most: writing code and solving technical challenges. I'm interested in software architecture, modern development practices, and how AI is changing the way we build products.",
-    mattersTitle: 'What matters',
-    matters:
-      'Building useful software, learning every day, working with great people, and enjoying what I do. Management gave me a broader perspective on engineering: collaboration, and the people behind the technology.',
   },
   story: {
     label: 'Story',
@@ -60,7 +54,7 @@ export const en: Content = {
         numeral: '02',
         title: 'Grow teams',
         years: '2021 — 2026',
-        text: "Lead, then Software Engineering Manager: up to 30 engineers across 5 Feature Teams, moving Decathlon's global WMS from a legacy AS400 to a modern platform.",
+        text: "Lead, then Software Engineering Manager: hiring, growing and leading the teams moving Decathlon's global WMS from a legacy AS400 to a modern platform.",
         tags: ['Technical leadership', 'Management', 'WMS', 'Quality Engineering', 'AI'],
       },
       {
@@ -87,8 +81,6 @@ export const en: Content = {
     title: 'What I work with, and how.',
     techTitle: 'Technologies',
     practicesTitle: 'Practices',
-    legendNow: 'Today',
-    legendBefore: 'Previously',
     hint: 'Hover or tap a practice to learn more.',
     tech: [
       {
@@ -144,13 +136,10 @@ export const en: Content = {
       },
     ],
     practices: [
-      { name: 'AI-assisted development', sub: 'BMAD', now: true, period: 'Every day, and spread across teams since 2022' },
-      { name: 'Software architecture', now: true, period: '2021 → 2022 · 2026 → today' },
-      { name: 'DevOps', now: true, period: 'CI/CD with GitHub Actions: building, testing and deploying images' },
-      { name: 'Agile', sub: 'Scrum · Kanban', now: true, period: 'Scrum Master from 2016 to 2020, PSM I certified' },
-      { name: 'Quality Engineering', now: false, period: '2021 → 2026' },
-      { name: 'DORA metrics', now: false, period: '2022 → 2026' },
-      { name: 'Strangler Pattern', now: false, period: 'WMS modernisation, 2022 → 2026' },
+      { name: 'AI-assisted development', sub: 'BMAD', period: 'Every day, and spread across teams since 2022' },
+      { name: 'Software architecture', period: '2021 → 2022 · 2026 → today' },
+      { name: 'DevOps', period: 'CI/CD with GitHub Actions: building, testing and deploying images' },
+      { name: 'Agile', sub: 'Scrum · Kanban', period: 'Scrum Master from 2016 to 2020, PSM I certified' },
     ],
     convictionsTitle: 'Convictions',
     convictions: [
@@ -165,10 +154,6 @@ export const en: Content = {
       {
         title: 'AI speeds things up; engineers stay in control.',
         text: 'I use AI-assisted development every day and help teams adopt it. But I stay in control of what ships: I understand, review and own every line.',
-      },
-      {
-        title: 'Good teams before good software.',
-        text: 'Trust, ownership, collaboration: that is what management taught me, and I bring it with me into the code.',
       },
     ],
   },
@@ -196,7 +181,7 @@ export const en: Content = {
         role: 'Software Engineering Manager',
         company: 'Decathlon Digital',
         place: 'Lille',
-        headline: 'Up to 30 engineers · the global WMS, from AS400 to a modern platform',
+        headline: "Decathlon's global WMS, from AS400 to a modern platform",
         text: 'Built, recruited, and led engineering teams, with a focus on trust, ownership, collaboration, and continuous growth.',
         figures: [{ value: '30', label: 'engineers at peak' }, { value: '5', label: 'Feature Teams' }],
         points: ["Led up to 30 engineers across 5 Feature Teams to modernize Decathlon's global Warehouse Management System, moving from a legacy AS400 system to a modern platform using the Strangler Pattern", 'Restructured the organization into autonomous, product-oriented Feature Teams supported by a transverse Ops & QE squad', 'Shifted the culture from traditional QA to Quality Engineering (test automation) and tracked delivery performance with DORA metrics', 'Previously led a 5-engineer Feature Team responsible for a strategic Business Intelligence application', 'Contributed to the adoption of AI-assisted development through experimentation, knowledge sharing, and continuous learning'],
@@ -333,6 +318,7 @@ export const en: Content = {
       { years: '2013 — 2014', from: 2013, to: 2014, name: 'California State University San Marcos', degree: 'Exchange year, Computer Science', note: 'A year in California that validated my 4th year at EPITECH.' },
       { years: '2009 — 2010', from: 2009, to: 2010, name: 'Institut Informatique et Entreprise', degree: 'DUT, Computer Science', note: 'First degree in computer science.' },
     ],
+    degreesTitle: 'Degrees',
     certTitle: 'Certification',
     cert: 'Professional Scrum Master I (PSM I)',
     langTitle: 'Languages',

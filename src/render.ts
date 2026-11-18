@@ -51,7 +51,6 @@ const navLinks = (c: Content): [string, string][] => [
   ['#contact', c.nav.contact],
 ];
 
-const glow = (variant: string) => `<div class="glow glow--${variant}" aria-hidden="true"></div>`;
 
 export function renderHeader(c: Content, lang: Lang, theme: 'dark' | 'light') {
   const links = navLinks(c);
@@ -84,9 +83,7 @@ export function renderMain(c: Content, recos: Recommendation[], lang: Lang = 'fr
   return [
     hero(c), statement(c), story(c), numbers(c),
     band(c.story.acts.map((a) => a.title)),
-    skills(c), journey(c),
-    band([...new Set(c.intro.roles)]),
-    writing(c), education(c), recommendations(c, recos, lang), contact(c), floatingCta(c),
+    skills(c), journey(c), writing(c), education(c), recommendations(c, recos, lang), contact(c), floatingCta(c),
   ].join('');
 }
 
@@ -138,7 +135,6 @@ function statement(c: Content) {
   const s = c.statement;
   return `
   <section class="statement section" id="statement">
-    ${glow('left')}
     <div class="container">
       ${label('01', s.label)}
       <div class="statement__top">
@@ -146,16 +142,6 @@ function statement(c: Content) {
         <figure class="portrait">
           <div class="portrait__frame"><img class="portrait__img" src="${asset('portrait.webp')}" srcset="${asset('portrait-400.webp')} 400w, ${asset('portrait.webp')} 800w" sizes="(max-width: 760px) 70vw, 340px" width="800" height="800" alt="${esc(s.portraitAlt)}" decoding="async" /></div>
         </figure>
-      </div>
-      <div class="statement__cols">
-        <div class="statement__col js-rise">
-          ${sub('01.1', s.todayTitle)}
-          <p class="js-lines">${esc(s.today)}</p>
-        </div>
-        <div class="statement__col js-rise">
-          ${sub('01.2', s.mattersTitle)}
-          <p class="js-lines">${esc(s.matters)}</p>
-        </div>
       </div>
     </div>
   </section>`;
@@ -196,7 +182,6 @@ function story(c: Content) {
 function numbers(c: Content) {
   return `
   <section class="numbers section" id="numbers">
-    ${glow('right')}
     <div class="container">
       ${label('03', c.numbers.label)}
       <h2 class="section-title js-lines">${esc(c.numbers.title)}</h2>
@@ -220,7 +205,6 @@ function skills(c: Content) {
   const s = c.skills;
   return `
   <section class="skills section" id="skills">
-    ${glow('right')}
     <div class="container">
       ${label('04', s.label)}
       <h2 class="section-title skills__title js-lines">${esc(s.title)}</h2>
@@ -259,15 +243,11 @@ function skills(c: Content) {
       <div class="wall">
         <div class="wall__head">
           ${sub('04.2', s.practicesTitle)}
-          <p class="wall__legend">
-            <span class="wall__key is-now">Aa</span>${esc(s.legendNow)}
-            <span class="wall__key">Aa</span>${esc(s.legendBefore)}
-          </p>
         </div>
         <ul class="wall__words">
-          ${[...s.practices.filter((p) => p.now), ...s.practices.filter((p) => !p.now)]
+          ${s.practices
             .map(
-              (it) => `<li class="wall__item${it.now ? ' is-now' : ''}"><button class="wall__word" type="button" data-name="${esc(it.name)}" data-meta="${esc(it.period)}">${esc(it.name)}${it.sub ? `<span class="wall__sub">${esc(it.sub)}</span>` : ''}<span class="visually-hidden"> (${esc(it.now ? s.legendNow : s.legendBefore)}, ${esc(it.period)})</span></button></li>`,
+              (it) => `<li class="wall__item"><button class="wall__word" type="button" data-name="${esc(it.name)}" data-meta="${esc(it.period)}">${esc(it.name)}${it.sub ? `<span class="wall__sub">${esc(it.sub)}</span>` : ''}<span class="visually-hidden"> (${esc(it.period)})</span></button></li>`,
             )
             .join('')}
         </ul>
@@ -309,8 +289,6 @@ function journey(c: Content) {
   const s = c.journey;
   return `
   <section class="journey section" id="journey">
-    ${glow('left')}
-    ${glow('right glow--low')}
     <div class="container">
       ${label('05', s.label)}
       <h2 class="section-title journey__title js-lines">${esc(s.title)}</h2>
@@ -357,7 +335,6 @@ function writing(c: Content) {
   const w = c.writing;
   return `
   <section class="writing section" id="writing">
-    ${glow('left')}
     <div class="container">
       ${label('06', w.label)}
       <div class="writing__head">
@@ -401,50 +378,34 @@ function education(c: Content) {
   const e = c.education;
   return `
   <section class="education section" id="education">
-    ${glow('right')}
     <div class="container">
       ${label('07', e.label)}
       <h2 class="section-title education__title js-lines">${esc(e.title)}</h2>
-      <div class="edu-timeline">
-        ${e.schools
-          .map((s) => {
-            const min = Math.min(...e.schools.map((x) => x.from));
-            const max = Math.max(...e.schools.map((x) => x.to));
-            const left = ((s.from - min) / (max - min)) * 100;
-            const width = ((s.to - s.from) / (max - min)) * 100;
-            return `
-          <div class="school js-rise">
-            <div class="school__info">
-              <p class="school__years">${esc(s.years)}</p>
-              <h3 class="school__name">${esc(s.name)}</h3>
-              <p class="school__degree">${esc(s.degree)}</p>
-              <p class="school__note">${esc(s.note)}</p>
-            </div>
-            <div class="school__track" aria-hidden="true">
-              <span class="school__bar" style="left:${left.toFixed(2)}%;width:${width.toFixed(2)}%"></span>
-            </div>
-          </div>`;
-          })
-          .join('')}
-        <div class="edu-axis" aria-hidden="true">
-          <span></span>
-          <div class="edu-axis__years">
-            ${(() => {
-              const min = Math.min(...e.schools.map((x) => x.from));
-              const max = Math.max(...e.schools.map((x) => x.to));
-              return Array.from({ length: max - min + 1 }, (_, k) => `<span style="left:${((k / (max - min)) * 100).toFixed(2)}%">${min + k}</span>`).join('');
-            })()}
-          </div>
-        </div>
-      </div>
-      <div class="education__extra">
+      <div class="education__grid">
         <div class="js-rise">
-          ${sub('07.1', e.certTitle)}
+          ${sub('07.1', e.degreesTitle)}
+          <ul class="degrees">
+            ${e.schools
+              .map(
+                (s) => `
+            <li class="degree">
+              <span class="degree__years">${esc(s.years)}</span>
+              <span class="degree__main">
+                <span class="degree__name">${esc(s.name)}</span>
+                <span class="degree__what">${esc(s.degree)} · ${esc(s.note)}</span>
+              </span>
+            </li>`,
+              )
+              .join('')}
+          </ul>
+        </div>
+        <div class="js-rise">
+          ${sub('07.2', e.certTitle)}
           <p class="education__cert">${esc(e.cert)}</p>
-        </div>
-        <div class="js-rise">
-          ${sub('07.2', e.langTitle)}
-          <ul class="langs">${e.langs.map((l) => `<li><span>${esc(l.name)}</span><span>${esc(l.level)}</span></li>`).join('')}</ul>
+          <div class="education__langs">
+            ${sub('07.3', e.langTitle)}
+            <ul class="langs">${e.langs.map((l) => `<li><span>${esc(l.name)}</span><span>${esc(l.level)}</span></li>`).join('')}</ul>
+          </div>
         </div>
       </div>
     </div>
@@ -459,7 +420,6 @@ function recommendations(c: Content, recos: Recommendation[], lang: Lang) {
   if (!recos.length) return '';
   return `
   <section class="recos section" id="recommendations">
-    ${glow('left')}
     <div class="container">
       ${label('08', r.label)}
       <h2 class="section-title js-lines">${esc(r.title)}</h2>

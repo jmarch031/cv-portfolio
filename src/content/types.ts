@@ -10,7 +10,7 @@ export interface Act {
   tags: string[];
 }
 
-/** One technology or practice; `now` = part of the current role (LinkedIn). */
+/** One tool, shown with its official mark. */
 export interface TechItem {
   name: string;
   /** Key of the official mark in src/content/logos.ts (none: the name is set as a wordmark) */
@@ -26,7 +26,6 @@ export interface Practice {
   name: string;
   /** Small aside next to the name (e.g. the flavours of Agile) */
   sub?: string;
-  now: boolean;
   /** Context or period, shown on hover / tap */
   period: string;
 }
@@ -83,7 +82,7 @@ export interface Content {
   nav: { story: string; skills: string; journey: string; education: string; contact: string; writing: string; menu: string; close: string; toLight: string; toDark: string; recos: string; cta: string; progress: string };
   intro: { roles: string[]; caption: string; skip: string };
   hero: { lines: string[]; caption: string; scroll: string; contact: string; cv: string };
-  statement: { label: string; portraitAlt: string; text: string; today: string; todayTitle: string; matters: string; mattersTitle: string };
+  statement: { label: string; portraitAlt: string; text: string };
   story: { label: string; title: string; acts: Act[] };
   numbers: { label: string; title: string; stats: Stat[] };
   skills: {
@@ -91,8 +90,6 @@ export interface Content {
     title: string;
     techTitle: string;
     practicesTitle: string;
-    legendNow: string;
-    legendBefore: string;
     hint: string;
     tech: TechGroup[];
     practices: Practice[];
@@ -105,6 +102,7 @@ export interface Content {
     label: string;
     title: string;
     schools: School[];
+    degreesTitle: string;
     certTitle: string;
     cert: string;
     langTitle: string;
