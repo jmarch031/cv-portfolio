@@ -124,15 +124,15 @@ export const fr: Content = {
     convictions: [
       {
         title: 'Comprendre le pourquoi, soigner le comment.',
-        text: "L'ingénierie, ce n'est pas qu'une affaire de code. Avant d'écrire une ligne, je cherche à comprendre le besoin. Ensuite, je prends le temps de bien faire.",
+        text: "L'ingénierie, ce n'est pas qu'une affaire de code. Avant d'écrire une ligne, je cherche à comprendre le besoin. Ensuite, je prends le temps de bien faire : ce qu'on construit correctement dès le premier jour est ce qui permet d'aller vite ensuite.",
       },
       {
         title: "La qualité est l'affaire de toute l'équipe.",
         text: "Ce n'est pas une étape de validation en fin de course, mais une responsabilité partagée, intégrée dès la conception et soutenue par l'automatisation.",
       },
       {
-        title: 'La vraie vitesse se construit dès le premier jour.',
-        text: "Négocier avec demain coûte cher. Ce qu'on construit correctement aujourd'hui est ce qui permet d'aller vite ensuite.",
+        title: "L'IA accélère, l'ingénieur reste aux commandes.",
+        text: "J'utilise le développement assisté par l'IA au quotidien et je le diffuse dans les équipes. Mais je reste maître de ce qui est livré : je comprends, je relis et j'assume chaque ligne.",
       },
       {
         title: 'De bonnes équipes avant de bons logiciels.',

@@ -124,15 +124,15 @@ export const en: Content = {
     convictions: [
       {
         title: 'Understand the why, craft the how.',
-        text: 'Engineering is more than just code. Before writing a line, I try to understand the need. Then I take the time to do it right.',
+        text: 'Engineering is more than just code. Before writing a line, I try to understand the need. Then I take the time to do it right: what you build right from day one is what lets you go fast later.',
       },
       {
         title: "Quality is the whole team's job.",
         text: 'Not a validation step at the end, but a shared responsibility, built in from design and backed by automation.',
       },
       {
-        title: 'Real speed is built from day one.',
-        text: 'Negotiating with tomorrow is expensive. What you build right today is what lets you go fast later.',
+        title: 'AI speeds things up; engineers stay in control.',
+        text: 'I use AI-assisted development every day and help teams adopt it. But I stay in control of what ships: I understand, review and own every line.',
       },
       {
         title: 'Good teams before good software.',
