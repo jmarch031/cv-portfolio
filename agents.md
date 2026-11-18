@@ -19,7 +19,8 @@ Le portfolio est hébergé sur **GitHub Pages** (`https://jmarch031.github.io/cv
 
 - le site doit rester **statique** (HTML, CSS, JavaScript côté client), sans backend ;
 - le build Vite utilise `base: '/cv-portfolio/'` (voir `vite.config.ts`) : les ressources doivent passer par Vite ou être référencées en chemins relatifs ;
-- la branche `main` est publiée automatiquement par `.github/workflows/deploy.yml` (`npm run build` → `dist/`).
+- la branche `main` est publiée automatiquement par `.github/workflows/deploy.yml` (`npm run build` → `dist/`) ;
+- `npm run build` pré-rend la page par défaut (français, thème sombre) dans `dist/index.html` (`src/prerender.ts` + `scripts/prerender.mjs`) : moteurs de recherche et aperçus de liens lisent tout le texte, puis le script re-rend la page normalement. L'anglais a son adresse : `?lang=en` (balises `hreflang`).
 
 ## Stack
 
@@ -39,6 +40,7 @@ src/content/logos.ts             Logos officiels des technologies (tracés monoc
 src/data/recommendations.json    Recommandations LinkedIn (texte original FR + extrait verbatim)
 src/render.ts                    Gabarits HTML des sections (texte échappé via esc())
 src/main.ts                      Orchestration : rendu, Lenis, intro, animations, changement de langue
+src/prerender.ts, scripts/prerender.mjs   Pré-rendu au build
 src/motion/intro.ts              Intro : les rôles de la carrière défilent, puis la Hero s'ouvre
 src/motion/scroll.ts             Toutes les animations ScrollTrigger (dans un gsap.context)
 src/motion/interactions.ts       Curseur, pilules magnétiques, navigation, compétences, recommandations
@@ -53,7 +55,7 @@ Sections, dans l'ordre : Hero « Retour au code. » → Bonjour (présentation) 
 
 - **Ne rien inventer.** Les sources de vérité sont l'export LinkedIn (`Julien Marchand Profile.pdf`, à remplacer par chaque nouvel export, et à copier dans `public/cv-julien-marchand.pdf`). Les articles Medium et les projets perso viennent du propriétaire du site. Le bot de trading est décrit d'après son dépôt (`jmarch031/btc-bot`) : **ne pas mettre de lien vers ce dépôt** ni de chiffres de performance. Les reformulations et traductions sont permises, pas les faits nouveaux (chiffres, dates, missions, clients, technologies).
 - Précision du propriétaire (prime sur LinkedIn) : CI/CD est d'actualité (pipelines GitHub Actions de build, test et déploiement d'images, maintenus par l'équipe).
-- Précision du propriétaire (prime sur LinkedIn) : sa stack actuelle comprend aussi Gravitee, Docker, Google Cloud, GitHub Actions et Datadog ; ses pratiques, DevOps, Agile (Scrum, Kanban) et le développement assisté par l'IA avec le framework BMAD.
+- Précision du propriétaire (prime sur LinkedIn) : ses outils actuels sont Java, Spring Boot, ReactJS, Kafka, Kafbat, Cloud SQL, CloudBeaver, DBeaver, Google Cloud, Artifact Registry, Docker, Kubernetes, GitHub, GitHub Actions, Gravitee, Vault, Wiz, SonarQube, Datadog, GitHub Copilot et Jira ; ses pratiques, DevOps, Agile (Scrum, Kanban) et le développement assisté par l'IA avec le framework BMAD. Les outils ne montrent que l'actuel (pas de « précédemment »).
 - Précision du propriétaire (prime sur LinkedIn) : California State University San Marcos était une **année d'échange** validant la 4ᵉ année d'EPITECH, pas un diplôme distinct.
 - Les chiffres de « En chiffres » doivent se déduire des dates et du texte LinkedIn (ex. 12 ans depuis l'alternance de 2014, 7 ans chez Decathlon Digital) et être recalculés à chaque nouvel export.
 - Toute modification de texte se fait dans `src/content/fr.ts` **et** `src/content/en.ts` (un test vérifie qu'ils ont la même structure, les mêmes entreprises et les mêmes années).
@@ -86,9 +88,11 @@ Le reste de `design.md` s'applique toujours :
 - Un dégradé `background-clip: text` ne traverse pas les enfants transformés : sur un texte découpé par SplitText, appliquer le dégradé lettre par lettre.
 
 - Les déclencheurs situés sous une section épinglée doivent tenir compte de son espace : les pins ont un `refreshPriority` plus élevé. L'activité des canvases WebGL est pilotée par `IntersectionObserver`, pas par des positions de scroll.
-- **Parcours** : rien n'est imposé par le scroll. Le visiteur choisit le poste à lire (clic) ; panneau collant sur desktop, accordéon sur mobile.
-- **Savoir-faire** : ne répète pas le Parcours. Trois blocs : les **technologies** (grille de logos officiels, « aujourd'hui » puis « précédemment »), les **pratiques** (mur typographique, le détail s'affiche au survol ou au toucher) et 3 à 4 **convictions** courtes, tirées des écrits du propriétaire (articles Medium, résumé LinkedIn) et validées par lui.
-- Logos : tracés officiels monochromes dans `src/content/logos.ts` (Simple Icons, CC0 ; Devicon, MIT, pour Java ; dépôt officiel `gravitee-io/gravitee-api-management` pour Gravitee). Ils servent de masque CSS : ils prennent la couleur du texte, et la lumière iridescente au survol, jamais les couleurs de marque.
+- **Parcours** : rien n'est imposé par le scroll. Le visiteur choisit le poste à lire (clic) ; panneau collant sur desktop, accordéon sur mobile, où les postes d'avant Decathlon Digital se replient derrière « Voir le début de carrière ».
+- **Intro** : jouée en entier une fois par session (`sessionStorage`), puis réduite à l'ouverture de la Hero ; « Passer » (clic ou Échap) pendant la première.
+- **Repères** : barre de progression de lecture en haut de l'en-tête, section courante mise en lumière dans le menu, raccourci « Me contacter » flottant entre la Hero et le Contact. Chaque section a un titre `h2` (le libellé fait office de titre quand il n'y en a pas d'autre).
+- **Savoir-faire** : ne répète pas le Parcours. Trois blocs : les **outils** (grille de logos officiels, groupés par catégorie, uniquement l'actuel), les **pratiques** (mur typographique, le détail s'affiche au survol ou au toucher) et 3 à 4 **convictions** courtes, tirées des écrits du propriétaire (articles Medium, résumé LinkedIn) et validées par lui.
+- Logos : tracés officiels monochromes dans `src/content/logos.ts` (Simple Icons, CC0 ; Devicon, MIT, pour Java ; dépôts officiels `gravitee-io/gravitee-api-management`, `kafbat/kafka-ui` et `dbeaver/cloudbeaver` pour Gravitee, Kafbat et CloudBeaver). Cloud SQL et Artifact Registry portent la marque Google Cloud ; Wiz, faute de source accessible, est composé en mot-symbole (`logo` absent). Ils servent de masque CSS : ils prennent la couleur du texte, et la lumière iridescente au survol, jamais les couleurs de marque.
 
 ## Images
 

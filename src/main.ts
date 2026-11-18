@@ -11,7 +11,7 @@ import { renderHeader, renderMain, renderSheet } from './render';
 import { AMBER, OXBLOOD, SAGE, TAN, createLiquid } from './motion/shader';
 import { playIntro } from './motion/intro';
 import { initScroll } from './motion/scroll';
-import { bindJourney, bindMagnetic, bindNav, bindRecos, bindWall, bindWorks, initCursor } from './motion/interactions';
+import { bindContact, bindJourney, bindMagnetic, bindNav, bindRecos, bindWall, bindWorks, initCursor } from './motion/interactions';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,6 +19,9 @@ const CONTENT: Record<Lang, Content> = { fr, en };
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function initialLang(): Lang {
+  // ?lang=en is the shareable English address (hreflang)
+  const fromUrl = new URLSearchParams(location.search).get('lang');
+  if (fromUrl === 'fr' || fromUrl === 'en') return fromUrl;
   try {
     const saved = localStorage.getItem('lang');
     if (saved === 'fr' || saved === 'en') return saved;
@@ -85,6 +88,7 @@ function boot() {
       bindWorks(abort.signal);
       bindWall(abort.signal);
       bindJourney(abort.signal);
+      bindContact(abort.signal);
       bindMagnetic(abort.signal);
     });
     header.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach((b) =>
@@ -143,6 +147,9 @@ function boot() {
         abort = new AbortController();
         lang = next;
         try { localStorage.setItem('lang', lang); } catch { /* ignore */ }
+        const url = new URL(location.href);
+        if (lang === 'en') url.searchParams.set('lang', 'en'); else url.searchParams.delete('lang');
+        history.replaceState(null, '', url);
         render();
         bindAll();
 
@@ -165,10 +172,14 @@ function boot() {
     lenis.scrollTo((e as CustomEvent<number>).detail, { duration: 1.4, easing: (t) => 1 - Math.pow(1 - t, 4) });
   });
 
+  let seen = false;
+  try { seen = sessionStorage.getItem('intro') === '1'; sessionStorage.setItem('intro', '1'); } catch { /* storage unavailable */ }
   playIntro({
     roles: CONTENT[lang].intro.roles,
     caption: CONTENT[lang].intro.caption,
     reduced,
+    short: seen,
+    skipLabel: CONTENT[lang].intro.skip,
     onReveal: () => {
       lenis.start();
       bindAll();

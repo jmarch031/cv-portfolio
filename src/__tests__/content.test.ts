@@ -21,8 +21,10 @@ describe('content', () => {
       expect(en.journey.jobs[i].dates.match(/\d{4}/g)).toEqual(job.dates.match(/\d{4}/g));
     });
     expect(en.education.schools.map((s) => s.years)).toEqual(fr.education.schools.map((s) => s.years));
-    // same technologies and practices flagged "now" in both languages
-    const nowFlags = (c: typeof fr) => [...c.skills.tech, ...c.skills.practices].map((i) => i.now);
+    // same technologies, and the same practices flagged "now", in both languages
+    const logos = (c: typeof fr) => c.skills.tech.flatMap((g) => g.items.map((t) => t.logo ?? t.name));
+    expect(logos(en)).toEqual(logos(fr));
+    const nowFlags = (c: typeof fr) => c.skills.practices.map((i) => i.now);
     expect(nowFlags(en)).toEqual(nowFlags(fr));
     expect(fr.skills.convictions.length).toBeGreaterThanOrEqual(3);
     expect(fr.skills.convictions.length).toBeLessThanOrEqual(4);

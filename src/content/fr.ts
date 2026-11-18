@@ -18,15 +18,21 @@ export const fr: Content = {
     close: 'Fermer',
     toLight: 'Clair',
     toDark: 'Sombre',
+    recos: 'Recommandations',
+    cta: 'Me contacter',
+    progress: 'Progression de lecture',
   },
   intro: {
     roles: ['Software Engineer Intern', 'Software Engineer Apprentice', 'Software Engineer', 'Scrum Master', 'Lead Software Engineer', 'Software Engineering Manager'],
     caption: 'Julien Marchand — 2011 → 2026',
+    skip: 'Passer',
   },
   hero: {
     lines: ['Retour', 'au code.'],
     caption: 'Julien Marchand — Lead Software Engineer chez Decathlon Digital, Lille',
     scroll: 'DÉFILER · DÉFILER · DÉFILER ·',
+    contact: 'Me contacter',
+    cv: 'CV (PDF)',
   },
   statement: {
     label: 'Bonjour',
@@ -84,20 +90,57 @@ export const fr: Content = {
     legendBefore: 'Précédemment',
     hint: 'Survolez ou touchez une pratique pour en savoir plus.',
     tech: [
-      { name: 'Java', logo: 'java', now: true },
-      { name: 'Spring Boot', logo: 'springboot', now: true },
-      { name: 'Kafka', logo: 'kafka', now: true },
-      { name: 'Gravitee', logo: 'gravitee', now: true },
-      { name: 'ReactJS', logo: 'react', now: true },
-      { name: 'Docker', logo: 'docker', now: true },
-      { name: 'Kubernetes', logo: 'kubernetes', now: true },
-      { name: 'Google Cloud', logo: 'googlecloud', now: true },
-      { name: 'GitHub', logo: 'github', now: true },
-      { name: 'GitHub Actions', logo: 'githubactions', now: true },
-      { name: 'Datadog', logo: 'datadog', now: true },
-      { name: 'PHP', logo: 'php', now: false },
-      { name: 'Laravel', logo: 'laravel', now: false },
-      { name: 'Rancher', logo: 'rancher', now: false },
+      {
+        name: 'Langages & frameworks',
+        items: [
+          { name: 'Java', logo: 'java' },
+          { name: 'Spring Boot', logo: 'springboot' },
+          { name: 'ReactJS', logo: 'react' },
+        ],
+      },
+      {
+        name: 'Data & messaging',
+        items: [
+          { name: 'Kafka', logo: 'kafka' },
+          { name: 'Kafbat', logo: 'kafbat' },
+          { name: 'Cloud SQL', logo: 'googlecloud' },
+          { name: 'CloudBeaver', logo: 'cloudbeaver' },
+          { name: 'DBeaver', logo: 'dbeaver' },
+        ],
+      },
+      {
+        name: 'Cloud & delivery',
+        items: [
+          { name: 'Google Cloud', logo: 'googlecloud' },
+          { name: 'Artifact Registry', logo: 'googlecloud' },
+          { name: 'Docker', logo: 'docker' },
+          { name: 'Kubernetes', logo: 'kubernetes' },
+          { name: 'GitHub', logo: 'github' },
+          { name: 'GitHub Actions', logo: 'githubactions' },
+        ],
+      },
+      {
+        name: 'API & sécurité',
+        items: [
+          { name: 'Gravitee', logo: 'gravitee' },
+          { name: 'Vault', logo: 'vault' },
+          { name: 'Wiz' },
+        ],
+      },
+      {
+        name: 'Qualité & observabilité',
+        items: [
+          { name: 'SonarQube', logo: 'sonarqube' },
+          { name: 'Datadog', logo: 'datadog' },
+        ],
+      },
+      {
+        name: 'Outils',
+        items: [
+          { name: 'GitHub Copilot', logo: 'githubcopilot' },
+          { name: 'Jira', logo: 'jira' },
+        ],
+      },
     ],
     practices: [
       { name: 'Développement assisté par l’IA', sub: 'BMAD', now: true, period: 'Au quotidien, et diffusé dans les équipes depuis 2022' },
@@ -132,6 +175,8 @@ export const fr: Content = {
     label: 'Parcours',
     title: 'Huit postes, une constante : construire.',
     hint: 'Sélectionnez un poste pour voir le détail',
+    more: 'Voir le début de carrière',
+    less: 'Masquer le début de carrière',
     jobs: [
       {
         dates: 'Oct 2026 — Aujourd’hui',
@@ -299,6 +344,8 @@ export const fr: Content = {
     lines: ['Construisons', "quelque chose", "d'utile."],
     email: 'jmarch031@gmail.com',
     cv: 'CV (PDF)',
+    copy: 'Copier l’e-mail',
+    copied: 'E-mail copié',
     location: 'Lille, Hauts-de-France',
     rights: '© 2026 Julien Marchand',
     top: 'Haut de page ↑',

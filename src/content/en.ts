@@ -18,15 +18,21 @@ export const en: Content = {
     close: 'Close',
     toLight: 'Light',
     toDark: 'Dark',
+    recos: 'Recommendations',
+    cta: 'Get in touch',
+    progress: 'Reading progress',
   },
   intro: {
     roles: ['Software Engineer Intern', 'Software Engineer Apprentice', 'Software Engineer', 'Scrum Master', 'Lead Software Engineer', 'Software Engineering Manager'],
     caption: 'Julien Marchand — 2011 → 2026',
+    skip: 'Skip',
   },
   hero: {
     lines: ['Back', 'to code.'],
     caption: 'Julien Marchand — Lead Software Engineer at Decathlon Digital, Lille',
     scroll: 'SCROLL DOWN · SCROLL DOWN · SCROLL DOWN ·',
+    contact: 'Get in touch',
+    cv: 'Resume (PDF)',
   },
   statement: {
     label: 'Hello',
@@ -84,20 +90,57 @@ export const en: Content = {
     legendBefore: 'Previously',
     hint: 'Hover or tap a practice to learn more.',
     tech: [
-      { name: 'Java', logo: 'java', now: true },
-      { name: 'Spring Boot', logo: 'springboot', now: true },
-      { name: 'Kafka', logo: 'kafka', now: true },
-      { name: 'Gravitee', logo: 'gravitee', now: true },
-      { name: 'ReactJS', logo: 'react', now: true },
-      { name: 'Docker', logo: 'docker', now: true },
-      { name: 'Kubernetes', logo: 'kubernetes', now: true },
-      { name: 'Google Cloud', logo: 'googlecloud', now: true },
-      { name: 'GitHub', logo: 'github', now: true },
-      { name: 'GitHub Actions', logo: 'githubactions', now: true },
-      { name: 'Datadog', logo: 'datadog', now: true },
-      { name: 'PHP', logo: 'php', now: false },
-      { name: 'Laravel', logo: 'laravel', now: false },
-      { name: 'Rancher', logo: 'rancher', now: false },
+      {
+        name: 'Languages & frameworks',
+        items: [
+          { name: 'Java', logo: 'java' },
+          { name: 'Spring Boot', logo: 'springboot' },
+          { name: 'ReactJS', logo: 'react' },
+        ],
+      },
+      {
+        name: 'Data & messaging',
+        items: [
+          { name: 'Kafka', logo: 'kafka' },
+          { name: 'Kafbat', logo: 'kafbat' },
+          { name: 'Cloud SQL', logo: 'googlecloud' },
+          { name: 'CloudBeaver', logo: 'cloudbeaver' },
+          { name: 'DBeaver', logo: 'dbeaver' },
+        ],
+      },
+      {
+        name: 'Cloud & delivery',
+        items: [
+          { name: 'Google Cloud', logo: 'googlecloud' },
+          { name: 'Artifact Registry', logo: 'googlecloud' },
+          { name: 'Docker', logo: 'docker' },
+          { name: 'Kubernetes', logo: 'kubernetes' },
+          { name: 'GitHub', logo: 'github' },
+          { name: 'GitHub Actions', logo: 'githubactions' },
+        ],
+      },
+      {
+        name: 'API & security',
+        items: [
+          { name: 'Gravitee', logo: 'gravitee' },
+          { name: 'Vault', logo: 'vault' },
+          { name: 'Wiz' },
+        ],
+      },
+      {
+        name: 'Quality & observability',
+        items: [
+          { name: 'SonarQube', logo: 'sonarqube' },
+          { name: 'Datadog', logo: 'datadog' },
+        ],
+      },
+      {
+        name: 'Tooling',
+        items: [
+          { name: 'GitHub Copilot', logo: 'githubcopilot' },
+          { name: 'Jira', logo: 'jira' },
+        ],
+      },
     ],
     practices: [
       { name: 'AI-assisted development', sub: 'BMAD', now: true, period: 'Every day, and spread across teams since 2022' },
@@ -132,6 +175,8 @@ export const en: Content = {
     label: 'Journey',
     title: 'Eight roles, one constant: building.',
     hint: 'Select a role to see the details',
+    more: 'Show early career',
+    less: 'Hide early career',
     jobs: [
       {
         dates: 'Oct 2026 — Present',
@@ -299,6 +344,8 @@ export const en: Content = {
     lines: ["Let's build", 'something', 'useful.'],
     email: 'jmarch031@gmail.com',
     cv: 'Resume (PDF)',
+    copy: 'Copy email',
+    copied: 'Email copied',
     location: 'Lille, France',
     rights: '© 2026 Julien Marchand',
     top: 'Back to top ↑',
