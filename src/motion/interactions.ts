@@ -216,3 +216,41 @@ export function bindJourney(signal: AbortSignal) {
 
   jobs.forEach((job, i) => job.querySelector('.job__head')?.addEventListener('click', () => select(i), { signal }));
 }
+
+/* ---------------- Stack wall: hover / focus / tap reveals when it was used ---------------- */
+export function bindWall(signal: AbortSignal) {
+  const list = document.querySelector<HTMLElement>('.wall__words');
+  const caption = document.querySelector<HTMLElement>('.wall__caption');
+  if (!list || !caption) return;
+  const words = Array.from(list.querySelectorAll<HTMLButtonElement>('.wall__word'));
+  let current: HTMLButtonElement | null = null;
+
+  const show = (w: HTMLButtonElement | null) => {
+    if (w === current) return;
+    current?.classList.remove('is-on');
+    current = w;
+    list.classList.toggle('is-hovering', !!w);
+    caption.classList.toggle('is-on', !!w);
+    if (!w) { caption.textContent = caption.dataset.hint ?? ''; return; }
+    w.classList.add('is-on');
+    const name = document.createElement('b');
+    name.textContent = w.childNodes[0]?.textContent ?? '';
+    caption.replaceChildren(name, document.createTextNode(` — ${w.dataset.meta ?? ''}`));
+    gsap.fromTo(caption, { y: 8, autoAlpha: 0.4 }, { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' });
+  };
+
+  // a tap focuses the button before the click: only keyboard focus should reveal on its own
+  let pointerDown = false;
+  words.forEach((w) => {
+    w.addEventListener('pointerdown', () => { pointerDown = true; }, { signal });
+    w.addEventListener('pointerenter', (e) => { if ((e as PointerEvent).pointerType === 'mouse') show(w); }, { signal });
+    w.addEventListener('focus', () => { if (!pointerDown) show(w); }, { signal });
+    w.addEventListener('click', () => {
+      pointerDown = false;
+      // on touch, tapping the active word again hides it
+      show(current === w && !finePointer() ? null : w);
+    }, { signal });
+  });
+  list.addEventListener('pointerleave', (e) => { if ((e as PointerEvent).pointerType === 'mouse') show(null); }, { signal });
+  list.addEventListener('focusout', (e) => { if (!list.contains((e as FocusEvent).relatedTarget as Node)) show(null); }, { signal });
+}

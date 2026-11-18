@@ -182,31 +182,23 @@ function skills(c: Content) {
       ${label('04', s.label)}
       <h2 class="skills__title js-lines">${esc(s.title)}</h2>
 
-      <div class="stack">
-        <div class="stack__head">
+      <div class="wall">
+        <div class="wall__head">
           <h3 class="mini-label">${esc(s.stackTitle)}</h3>
-          <p class="stack__legend">
-            <span><span class="stack__dot is-now" aria-hidden="true"></span>${esc(s.legendNow)}</span>
-            <span><span class="stack__dot" aria-hidden="true"></span>${esc(s.legendBefore)}</span>
+          <p class="wall__legend">
+            <span class="wall__key is-now">Aa</span>${esc(s.legendNow)}
+            <span class="wall__key">Aa</span>${esc(s.legendBefore)}
           </p>
         </div>
-        <div class="stack__grid">
-          ${s.stack
+        <ul class="wall__words">
+          ${[true, false]
+            .flatMap((now) => s.stack.flatMap((g) => g.items.filter((it) => it.now === now).map((it) => ({ ...it, group: g.name }))))
             .map(
-              (g) => `
-          <div class="stack__group">
-            <h4 class="stack__name">${esc(g.name)}</h4>
-            <ul class="stack__items">
-              ${g.items
-                .map(
-                  (it) => `<li class="stack__item${it.now ? ' is-now' : ''}"><span class="stack__dot${it.now ? ' is-now' : ''}" aria-hidden="true"></span>${esc(it.name)}<span class="visually-hidden"> (${esc(it.now ? s.legendNow : s.legendBefore)})</span></li>`,
-                )
-                .join('')}
-            </ul>
-          </div>`,
+              (it) => `<li class="wall__item${it.now ? ' is-now' : ''}"><button class="wall__word" type="button" data-meta="${esc(`${it.group} · ${it.period}`)}">${esc(it.name)}<span class="visually-hidden"> (${esc(it.now ? s.legendNow : s.legendBefore)}, ${esc(it.period)})</span></button></li>`,
             )
             .join('')}
-        </div>
+        </ul>
+        <p class="wall__caption" aria-live="polite" data-hint="${esc(s.hint)}">${esc(s.hint)}</p>
       </div>
 
       <div class="convictions">

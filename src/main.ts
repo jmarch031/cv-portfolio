@@ -11,7 +11,7 @@ import { renderHeader, renderMain, renderSheet } from './render';
 import { AMBER, OXBLOOD, SAGE, TAN, createLiquid } from './motion/shader';
 import { playIntro } from './motion/intro';
 import { initScroll } from './motion/scroll';
-import { bindJourney, bindMagnetic, bindNav, bindRecos, bindWorks, initCursor } from './motion/interactions';
+import { bindJourney, bindMagnetic, bindNav, bindRecos, bindWall, bindWorks, initCursor } from './motion/interactions';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -83,6 +83,7 @@ function boot() {
       bindNav(lenis, { menu: c.nav.menu, close: c.nav.close }, abort.signal);
       bindRecos(reduced, abort.signal);
       bindWorks(abort.signal);
+      bindWall(abort.signal);
       bindJourney(abort.signal);
       bindMagnetic(abort.signal);
     });

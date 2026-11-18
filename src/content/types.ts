@@ -12,6 +12,8 @@ export interface Act {
 export interface StackItem {
   name: string;
   now: boolean;
+  /** When it was used, from the LinkedIn export (shown on hover / tap) */
+  period: string;
 }
 
 export interface StackGroup {
@@ -78,6 +80,7 @@ export interface Content {
     stackTitle: string;
     legendNow: string;
     legendBefore: string;
+    hint: string;
     stack: StackGroup[];
     convictionsTitle: string;
     convictions: Conviction[];

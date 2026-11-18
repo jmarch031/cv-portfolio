@@ -200,11 +200,14 @@ export function initScroll(liquids: Liquids) {
         });
 
         /* ---------- Skills: stack groups rise, items follow; convictions arrive one by one ---------- */
-        gsap.utils.toArray<HTMLElement>('.stack__group').forEach((g, i) => {
-          const st = { trigger: '.stack__grid', start: 'top 85%' };
-          gsap.from(g.querySelector('.stack__name'), { y: 30, autoAlpha: 0, duration: DUR, ease: EASE, delay: i * 0.1, scrollTrigger: st });
-          gsap.from(g.querySelectorAll('.stack__item'), { y: 24, autoAlpha: 0, duration: 1, stagger: 0.06, ease: EASE, delay: 0.15 + i * 0.1, scrollTrigger: st });
-        });
+        // the wall lights up word by word as it scrolls into view
+        const words = gsap.utils.toArray<HTMLElement>('.wall__item');
+        if (words.length) {
+          gsap.fromTo(words, { autoAlpha: 0.08, y: 24 }, {
+            autoAlpha: 1, y: 0, stagger: 0.08, ease: 'none',
+            scrollTrigger: { trigger: '.wall__words', start: 'top 88%', end: 'bottom 55%', scrub: true },
+          });
+        }
         ScrollTrigger.batch('.conviction', {
           start: 'top 88%',
           once: true,

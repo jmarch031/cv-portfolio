@@ -816,20 +816,34 @@ ul, ol { list-style: none; }
 /* =====================================================================
    Skills: stack grid + convictions
    ===================================================================== */
-.stack { border-top: 1px solid var(--line); padding-top: 28px; }
-.stack__head { display: flex; justify-content: space-between; align-items: baseline; gap: 28px; flex-wrap: wrap; margin-bottom: 28px; }
-.stack__head .mini-label { margin: 0; }
-.stack__legend { display: flex; gap: 22px; font-size: var(--text-caption); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
-.stack__legend > span { display: inline-flex; align-items: center; gap: 8px; }
-.stack__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
-.stack__group { padding: 0 28px 0 0; }
-.stack__group + .stack__group { padding-left: 28px; border-left: 1px solid var(--line); }
-.stack__name { font-size: var(--text-caption); font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
-.stack__items { display: grid; gap: 12px; }
-.stack__item { display: flex; align-items: center; gap: 12px; font-size: var(--text-body); line-height: 1.25; color: var(--muted); }
-.stack__item.is-now { color: var(--fg); }
-.stack__dot { flex: none; width: 8px; height: 8px; border-radius: 50%; border: 1px solid currentColor; opacity: 0.7; }
-.stack__dot.is-now { border: 0; opacity: 1; background: var(--iri); }
+.wall { border-top: 1px solid var(--line); padding-top: 28px; }
+.wall__head { display: flex; justify-content: space-between; align-items: baseline; gap: 28px; flex-wrap: wrap; margin-bottom: 40px; }
+.wall__head .mini-label { margin: 0; }
+.wall__legend { display: flex; align-items: baseline; gap: 10px; font-size: var(--text-caption); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.wall__key { font-size: 20px; font-weight: 400; letter-spacing: -0.02em; text-transform: none; color: transparent; -webkit-text-stroke: 1px var(--muted); }
+.wall__key.is-now { color: var(--fg); -webkit-text-stroke: 0; }
+.wall__key + .wall__key, .wall__legend .wall__key:nth-of-type(2) { margin-left: 18px; }
+.wall__words { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.32em; row-gap: 0.06em; font-size: clamp(30px, 5.2vw, 78px); line-height: 1.08; letter-spacing: -0.04em; }
+.wall__item { display: inline-flex; align-items: baseline; }
+.wall__item:not(:last-child)::after { content: '·'; margin-left: 0.32em; font-weight: 300; color: var(--muted); opacity: 0.5; }
+.wall__word {
+  font: inherit; letter-spacing: inherit; text-align: left; padding: 0; cursor: default;
+  font-weight: 400; color: transparent; -webkit-text-stroke: 1px var(--muted);
+  transition: color 0.6s var(--ease), -webkit-text-stroke-color 0.6s var(--ease), opacity 0.6s var(--ease);
+}
+.wall__item.is-now .wall__word { font-weight: 400; color: var(--fg); -webkit-text-stroke: 0; }
+.wall__word:focus-visible { outline: 1px solid currentColor; outline-offset: 6px; }
+.wall__word.is-on,
+.wall__item.is-now .wall__word.is-on {
+  -webkit-text-stroke: 0; color: transparent;
+  background-image: var(--iri); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.wall__words.is-hovering .wall__word:not(.is-on) { opacity: 0.35; }
+.wall__caption { margin-top: 34px; min-height: 1.5em; font-size: var(--text-caption); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.wall__caption.is-on { color: var(--fg); }
+.wall__caption b { font-weight: 400; background-image: var(--iri); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+@media (pointer: coarse) { .wall__word { cursor: pointer; } }
+@media (max-width: 480px) { .wall__words { font-size: clamp(28px, 9vw, 40px); } }
 
 .convictions { margin-top: var(--section-gap); border-top: 1px solid var(--line); padding-top: 28px; }
 .convictions__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px 64px; margin-top: 34px; }
@@ -839,17 +853,9 @@ ul, ol { list-style: none; }
 .conviction__text { margin-top: 14px; font-size: var(--text-body-sm); line-height: 1.58; color: var(--soft); max-width: 36em; }
 .conviction:hover .conviction__title { background-image: var(--iri); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
-@media (max-width: 960px) {
-  .stack__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
-  .stack__group:nth-child(3) { padding-left: 0; border-left: 0; }
-}
 @media (max-width: 760px) {
   .convictions__list { grid-template-columns: 1fr; gap: 40px; }
 }
 @media (max-width: 480px) {
-  .stack__grid { grid-template-columns: 1fr; row-gap: 32px; }
-  .stack__group, .stack__group + .stack__group { padding: 0; border-left: 0; }
-  .stack__group + .stack__group { padding-top: 28px; border-top: 1px solid var(--line); }
-  .stack__item { font-size: var(--text-body-sm); }
   .conviction { grid-template-columns: 36px minmax(0, 1fr); }
 }
