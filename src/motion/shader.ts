@@ -116,6 +116,10 @@ export interface LiquidOptions {
   lens: [number, number, number];
   scale?: number;
   reduced: boolean;
+  /** Buffer size relative to the canvas (default 0.5, phones 0.34) */
+  resolution?: number;
+  /** Activity driven by the caller instead of the canvas visibility */
+  manual?: boolean;
 }
 
 export interface Liquid {
@@ -181,7 +185,7 @@ export function createLiquid(opts: LiquidOptions): Liquid {
   // Soft by nature: render below native resolution. Phones and tablets get a
   // lighter version (smaller buffer, single glass sample, 30 fps).
   const lowPower = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 800;
-  const SCALE = lowPower ? 0.34 : 0.5;
+  const SCALE = (opts.resolution ?? 0.5) * (lowPower ? 0.68 : 1);
   gl.uniform1f(u('uQuality'), lowPower ? 0 : 1);
   const resize = () => {
     const w = Math.max(1, Math.floor(canvas.clientWidth * SCALE));
@@ -233,7 +237,7 @@ export function createLiquid(opts: LiquidOptions): Liquid {
     if (active) loop();
   };
   // Render only while the canvas is on screen (independent of scroll math)
-  new IntersectionObserver((entries) => setActive(entries[entries.length - 1].isIntersecting), { rootMargin: '10% 0px' }).observe(canvas);
+  if (!opts.manual) new IntersectionObserver((entries) => setActive(entries[entries.length - 1].isIntersecting), { rootMargin: '10% 0px' }).observe(canvas);
 
   return {
     canvas,

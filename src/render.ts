@@ -76,7 +76,26 @@ export function renderSheet(c: Content) {
 }
 
 export function renderMain(c: Content, recos: Recommendation[], lang: Lang = 'fr') {
-  return [hero(c), statement(c), story(c), numbers(c), skills(c), journey(c), writing(c), education(c), recommendations(c, recos, lang), contact(c), floatingCta(c)].join('');
+  return [
+    hero(c), statement(c), story(c), numbers(c),
+    band(c.story.acts.map((a) => a.title)),
+    skills(c), journey(c),
+    band([...new Set(c.intro.roles)]),
+    writing(c), education(c), recommendations(c, recos, lang), contact(c), floatingCta(c),
+  ].join('');
+}
+
+/** A breath between dense sections: two lines of giant type drifting in opposite directions with the scroll. */
+function band(words: string[]) {
+  const line = (outline: boolean) => {
+    const text = words.map((w) => `<span>${esc(w)}</span><span class="band__dot">·</span>`).join('');
+    return `<p class="band__line${outline ? ' band__line--outline' : ''}">${text}${text}${text}</p>`;
+  };
+  return `
+  <div class="band" aria-hidden="true">
+    ${line(false)}
+    ${line(true)}
+  </div>`;
 }
 
 /** Contact shortcut, shown once the hero is passed and hidden again at the contact section. */
@@ -202,25 +221,33 @@ function skills(c: Content) {
 
       <div class="techs">
         <h3 class="mini-label">${esc(s.techTitle)}</h3>
-        ${s.tech
-          .map(
-            (g) => `
-        <div class="techs__group">
-          <p class="techs__name">${esc(g.name)}</p>
-          <ul class="techs__grid">
-            ${g.items
-              .map((it) => {
-                // the mark is a mask: it takes the text colour, and the iridescent light on hover
-                const mark = it.logo
-                  ? `<span class="tech__logo" aria-hidden="true" style="--logo:url('data:image/svg+xml,${encodeURIComponent(logoSvg(it.logo))}')"></span>`
-                  : `<span class="tech__logo tech__logo--word" aria-hidden="true">${esc(it.name.toLowerCase())}</span>`;
-                return `<li class="tech">${mark}<span class="tech__name">${esc(it.name)}</span></li>`;
-              })
-              .join('')}
-          </ul>
-        </div>`,
-          )
-          .join('')}
+        <div class="marquees">
+          ${[s.tech.slice(0, 2), s.tech.slice(2, 4), s.tech.slice(4)]
+            .map((groups, row) => {
+              const items = groups
+                .map(
+                  (g) => `<li class="mq__group">${esc(g.name)}</li>${g.items
+                    .map((it) => {
+                      // the mark is a mask: it takes the text colour, and the iridescent light on hover
+                      const mark = it.logo
+                        ? `<span class="tech__logo" aria-hidden="true" style="--logo:url('data:image/svg+xml,${encodeURIComponent(logoSvg(it.logo))}')"></span>`
+                        : `<span class="tech__logo tech__logo--word" aria-hidden="true">${esc(it.name.toLowerCase())}</span>`;
+                      return `<li class="tech">${mark}<span class="tech__name">${esc(it.name)}</span></li>`;
+                    })
+                    .join('')}`,
+                )
+                .join('');
+              // the list is repeated once so the loop has no seam; only the first copy is read out
+              return `
+          <div class="marquee" data-dir="${row % 2 ? 1 : -1}">
+            <div class="marquee__track">
+              <ul class="marquee__list">${items}</ul>
+              <ul class="marquee__list" aria-hidden="true">${items}</ul>
+            </div>
+          </div>`;
+            })
+            .join('')}
+        </div>
       </div>
 
       <div class="wall">
@@ -248,8 +275,8 @@ function skills(c: Content) {
             .map(
               (cv, i) => `
           <li class="conviction">
-            <span class="conviction__idx">${pad(i + 1)}</span>
-            <p class="conviction__title">${esc(cv.title)}</p>
+            <span class="conviction__idx">${pad(i + 1)} / ${pad(s.convictions.length)}</span>
+            <p class="conviction__title js-words">${esc(cv.title)}</p>
             <p class="conviction__text">${esc(cv.text)}</p>
           </li>`,
             )
@@ -292,6 +319,7 @@ function journey(c: Content) {
                 <span class="job__dates">${esc(j.dates)}</span>
                 <span class="job__role">${esc(j.role)}</span>
                 <span class="job__company">${esc(j.company)}</span>
+                <span class="job__headline">${esc(j.headline)}</span>
                 <span class="job__mark" aria-hidden="true"></span>
               </button>
               <div class="job__detail" id="job-detail-${i}"><div class="job-detail">${jobDetail(j)}</div></div>
@@ -354,6 +382,10 @@ function writing(c: Content) {
       </ul>
       <div class="writing__cta">
         <a href="${MEDIUM}" target="_blank" rel="noopener" class="pill magnetic">${roll(w.all)}</a>
+        <div class="writing__nav">
+          <button class="pill writing__btn" type="button" data-dir="-1" aria-label="${esc(w.prev)}">←</button>
+          <button class="pill writing__btn" type="button" data-dir="1" aria-label="${esc(w.next)}">→</button>
+        </div>
       </div>
     </div>
   </section>`;

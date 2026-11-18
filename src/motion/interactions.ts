@@ -14,10 +14,20 @@ export function initCursor() {
   document.body.appendChild(cursor);
   const xTo = gsap.quickTo(cursor, 'x', { duration: 0.45, ease: 'power3' });
   const yTo = gsap.quickTo(cursor, 'y', { duration: 0.45, ease: 'power3' });
+  // a wide, soft light trails the pointer, like a lamp carried across the page
+  const light = document.createElement('div');
+  light.className = 'cursor-light';
+  light.setAttribute('aria-hidden', 'true');
+  document.body.prepend(light);
+  const lxTo = gsap.quickTo(light, 'x', { duration: 2.2, ease: 'power3' });
+  const lyTo = gsap.quickTo(light, 'y', { duration: 2.2, ease: 'power3' });
   window.addEventListener('pointermove', (e) => {
     cursor.classList.add('is-on');
+    light.classList.add('is-on');
     xTo(e.clientX);
     yTo(e.clientY);
+    lxTo(e.clientX);
+    lyTo(e.clientY);
   });
   document.documentElement.addEventListener('pointerleave', () => cursor.classList.remove('is-on'));
   document.addEventListener('pointerover', (e) => {
@@ -227,6 +237,39 @@ export function bindRecos(reduced: boolean, signal: AbortSignal) {
 
 /* ---------------- Writing: spotlight follows the cursor in the hovered row ---------------- */
 export function bindWorks(signal: AbortSignal) {
+  const row = document.querySelector<HTMLElement>('.works');
+  if (row) {
+    // arrows: one card at a time
+    document.querySelectorAll<HTMLButtonElement>('.writing__btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const card = row.querySelector<HTMLElement>('.work');
+        const step = (card?.offsetWidth ?? 320) + parseFloat(getComputedStyle(row).columnGap || '0');
+        row.scrollBy({ left: Number(btn.dataset.dir) * step, behavior: 'smooth' });
+      }, { signal });
+    });
+    // mouse drag (touch scrolls natively); a drag never counts as a click on a card
+    let startX = 0;
+    let startLeft = 0;
+    let moved = false;
+    let down = false;
+    row.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      down = true; moved = false; startX = e.clientX; startLeft = row.scrollLeft;
+    }, { signal });
+    window.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (!moved && Math.abs(dx) > 6) { moved = true; row.classList.add('is-dragging'); }
+      if (moved) row.scrollLeft = startLeft - dx;
+    }, { signal });
+    window.addEventListener('pointerup', () => {
+      if (!down) return;
+      down = false;
+      row.classList.remove('is-dragging');
+    }, { signal });
+    row.addEventListener('click', (e) => { if (moved) { e.preventDefault(); moved = false; } }, { capture: true, signal });
+    row.addEventListener('dragstart', (e) => e.preventDefault(), { signal });
+  }
   if (!finePointer()) return;
   document.querySelectorAll<HTMLElement>('.work__link').forEach((link) => {
     link.addEventListener('pointermove', (e) => {
@@ -346,4 +389,39 @@ export function bindWall(signal: AbortSignal) {
   });
   list.addEventListener('pointerleave', (e) => { if ((e as PointerEvent).pointerType === 'mouse') show(null); }, { signal });
   list.addEventListener('focusout', (e) => { if (!list.contains((e as FocusEvent).relatedTarget as Node)) show(null); }, { signal });
+}
+
+/* ---------------- Tools: looping bands, sped up by the scroll, paused on hover ---------------- */
+export function bindMarquees(reduced: boolean, signal: AbortSignal) {
+  if (reduced) return;
+  const tweens = Array.from(document.querySelectorAll<HTMLElement>('.marquee')).map((row) => {
+    const dir = Number(row.dataset.dir) || -1;
+    const track = row.querySelector<HTMLElement>('.marquee__track')!;
+    // half the track is one full copy of the list: about 60px per second
+    const duration = track.scrollWidth / 2 / 60;
+    const tween = dir < 0
+      ? gsap.fromTo(track, { xPercent: 0 }, { xPercent: -50, duration, ease: 'none', repeat: -1 })
+      : gsap.fromTo(track, { xPercent: -50 }, { xPercent: 0, duration, ease: 'none', repeat: -1 });
+    if (finePointer()) {
+      row.addEventListener('pointerenter', () => gsap.to(tween, { timeScale: 0, duration: 0.8, ease: 'power2.out', overwrite: true }), { signal });
+      row.addEventListener('pointerleave', () => gsap.to(tween, { timeScale: 1, duration: 0.8, ease: 'power2.in', overwrite: true }), { signal });
+    }
+    return { row, tween };
+  });
+  if (!tweens.length) return;
+  // the scroll gives them a push, then they settle back
+  ScrollTrigger.create({
+    trigger: '.marquees',
+    start: 'top bottom',
+    end: 'bottom top',
+    onUpdate: (self) => {
+      const boost = 1 + Math.min(Math.abs(self.getVelocity()) / 300, 5);
+      tweens.forEach(({ row, tween }) => {
+        if (row.matches(':hover')) return;
+        gsap.to(tween, { timeScale: boost, duration: 0.2, overwrite: true, onComplete: () => { gsap.to(tween, { timeScale: 1, duration: 1.2, ease: 'power2.out' }); } });
+      });
+    },
+    onToggle: (self) => tweens.forEach(({ tween }) => (self.isActive ? tween.play() : tween.pause())),
+  });
+  signal.addEventListener('abort', () => tweens.forEach(({ tween }) => tween.kill()));
 }
