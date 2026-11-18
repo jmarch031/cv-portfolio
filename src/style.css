@@ -995,3 +995,25 @@ body.is-loading .cta-float { display: none; }
 /* Journey: one line per role says what mattered */
 .job__headline { display: block; margin-top: 10px; font-size: var(--text-body-sm); line-height: 1.4; color: var(--muted); transition: color 0.8s var(--ease); }
 .job.is-active .job__headline, .job:hover .job__headline { color: var(--soft); }
+
+/* =====================================================================
+   Type hierarchy — one system for every section
+   1. label      01 — Section name: small caps, numbered, ruled
+   2. h2         the section title: large, light
+   3. h3 subhead 04.1 Sub-part: mid-size, sentence case, numbered
+   4. meta       dates, categories, hints: small caps, muted
+   Content set large (convictions, practices) stays below the section title.
+   ===================================================================== */
+.label { font-weight: 400; }
+.label__text { color: var(--fg); }
+.label__idx { background-image: var(--iri); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.section-title { font-size: var(--text-heading); font-weight: 300; line-height: 1.1; letter-spacing: -0.035em; max-width: 16ch; margin-bottom: clamp(40px, 5vw, 64px); }
+.writing__head .section-title { margin-bottom: 0; }
+.subhead { display: flex; align-items: baseline; gap: 14px; margin: 0 0 28px; font-size: clamp(22px, 2.1vw, 30px); font-weight: 400; line-height: 1.2; letter-spacing: -0.02em; text-transform: none; color: var(--fg); }
+.subhead__idx { font-size: var(--text-caption); font-weight: 400; letter-spacing: 0.08em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.wall__head .subhead { margin: 0; }
+.statement__col .subhead { font-size: clamp(20px, 1.6vw, 24px); margin-bottom: 16px; }
+.education__extra .subhead { font-size: clamp(20px, 1.6vw, 24px); margin-bottom: 16px; }
+.conviction__title { font-size: clamp(34px, 4.4vw, 64px); }
+.wall__words { font-size: clamp(28px, 3.6vw, 54px); }
+.convictions .conviction:first-child { min-height: 64vh; min-height: 64svh; align-content: start; padding-top: 24px; }

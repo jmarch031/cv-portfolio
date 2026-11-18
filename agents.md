@@ -75,6 +75,17 @@ Le reste de `design.md` s'applique toujours :
 - grands titres en graisse **300 ou 400** uniquement ;
 - toute nouvelle couleur passe par les tokens `--sage`, `--amber`, `--oxblood` et `--iri` (dont une variante plus soutenue pour le thème clair, pour le contraste).
 
+## Hiérarchie typographique
+
+Une seule hiérarchie, identique dans chaque section (ne pas en inventer d'autre) :
+
+1. **Libellé de section** (`label()`) : numéro iridescent + nom en petites capitales, filet. Toujours suivi d'un titre.
+2. **Titre de section** (`h2.section-title`, ou le texte de « Bonjour ») : grand, graisse 300. Un seul par section.
+3. **Sous-partie** (`sub()`, `h3.subhead`) : numérotée d'après la section (04.1, 04.2…), taille moyenne, en minuscules.
+4. **Mentions** (dates, catégories, consignes, légendes) : petites capitales grises.
+
+Le contenu mis en grand (convictions, pratiques, citations) reste plus petit que le titre de section. Seules l'Histoire (scène épinglée) et le Contact (final) affichent plus grand.
+
 ## Animations
 
 - Courbe signature `cubic-bezier(0.19, 1, 0.22, 1)` (≈ `expo.out` dans GSAP), durées longues (0,8 à 1,6 s) : les éléments glissent, ils ne claquent pas.

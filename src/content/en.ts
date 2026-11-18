@@ -74,6 +74,7 @@ export const en: Content = {
   },
   numbers: {
     label: 'In numbers',
+    title: 'Twelve years, in a few figures.',
     stats: [
       { value: 12, label: 'years in the craft', detail: 'Since my 2014 apprenticeship' },
       { value: 8, prefix: '~', label: 'years at Decathlon Digital', detail: '7 years 10 months, 4 roles' },
@@ -342,7 +343,8 @@ export const en: Content = {
     ],
   },
   recos: {
-    label: 'Kind words',
+    label: 'Recommendations',
+    title: 'In their words.',
     original: 'LinkedIn recommendation, translated from French',
     readMore: 'Read in full',
     readLess: 'Show less',

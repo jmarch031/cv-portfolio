@@ -74,6 +74,7 @@ export const fr: Content = {
   },
   numbers: {
     label: 'En chiffres',
+    title: 'Douze ans, en quelques repères.',
     stats: [
       { value: 12, label: 'ans de métier', detail: 'Depuis l’alternance en 2014' },
       { value: 8, prefix: '~', label: 'ans chez Decathlon Digital', detail: '7 ans 10 mois, 4 postes' },
@@ -342,7 +343,8 @@ export const fr: Content = {
     ],
   },
   recos: {
-    label: 'Ils en parlent',
+    label: 'Recommandations',
+    title: 'Ils en parlent.',
     original: 'Recommandation LinkedIn',
     readMore: 'Lire en entier',
     readLess: 'Réduire',
