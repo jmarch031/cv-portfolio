@@ -287,11 +287,6 @@ export function initScroll(liquids: Liquids) {
           onEnter: (batch) => gsap.from(batch, { y: 60, autoAlpha: 0, duration: DUR, stagger: 0.1, ease: EASE }),
         });
 
-        /* ---------- Education: the timeline bars draw themselves ---------- */
-        gsap.utils.toArray<HTMLElement>('.school__bar').forEach((bar) => {
-          gsap.from(bar, { scaleX: 0, duration: 1.6, ease: EASE, scrollTrigger: { trigger: bar, start: 'top 85%' } });
-        });
-
         /* ---------- Contact: lines converge, letters rise ---------- */
         gsap.utils.toArray<HTMLElement>('.contact__line').forEach((line, i) => {
           const { chars } = SplitText.create(line, { type: 'chars', mask: 'chars', charsClass: 'char' });
@@ -324,14 +319,5 @@ export function initScroll(liquids: Liquids) {
       },
     );
 
-    /* ---------- Light leaks drift through their section ---------- */
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      gsap.utils.toArray<HTMLElement>('.glow').forEach((g, i) => {
-        gsap.fromTo(g, { yPercent: 60, xPercent: i % 2 ? 10 : -10, rotate: -40 }, {
-          yPercent: -80, xPercent: i % 2 ? -12 : 14, rotate: -22, ease: 'none',
-          scrollTrigger: { trigger: g.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
-        });
-      });
-    }
   });
 }

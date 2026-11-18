@@ -24,8 +24,7 @@ describe('content', () => {
     // same technologies, and the same practices flagged "now", in both languages
     const logos = (c: typeof fr) => c.skills.tech.flatMap((g) => g.items.map((t) => t.logo ?? t.name));
     expect(logos(en)).toEqual(logos(fr));
-    const nowFlags = (c: typeof fr) => c.skills.practices.map((i) => i.now);
-    expect(nowFlags(en)).toEqual(nowFlags(fr));
+    expect(en.skills.practices.length).toBe(fr.skills.practices.length);
     expect(fr.skills.convictions.length).toBeGreaterThanOrEqual(3);
     expect(fr.skills.convictions.length).toBeLessThanOrEqual(4);
   });

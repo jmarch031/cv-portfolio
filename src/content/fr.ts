@@ -38,12 +38,6 @@ export const fr: Content = {
     label: 'Bonjour',
     portraitAlt: 'Portrait de Julien Marchand',
     text: "Je suis Julien. Depuis plus de dix ans, j'écris du logiciel, je mène des équipes, et je transforme des idées en produits qui fonctionnent.",
-    todayTitle: "Aujourd'hui",
-    today:
-      "Après plusieurs années de management, je suis revenu à ce que j'aime le plus : écrire du code et résoudre des problèmes techniques. Je m'intéresse à l'architecture logicielle, aux pratiques de développement modernes et à la façon dont l'IA change notre manière de construire des produits.",
-    mattersTitle: 'Ce qui compte',
-    matters:
-      "Construire des logiciels utiles, apprendre chaque jour, travailler avec des gens formidables et prendre plaisir à ce que je fais. Le management m'a appris à regarder l'ingénierie plus largement : la collaboration, et les personnes derrière la technique.",
   },
   story: {
     label: 'Histoire',
@@ -60,7 +54,7 @@ export const fr: Content = {
         numeral: '02',
         title: 'Faire grandir',
         years: '2021 — 2026',
-        text: "Lead, puis Software Engineering Manager : jusqu'à 30 ingénieurs en 5 Feature Teams pour faire passer le WMS mondial de Decathlon d'un legacy AS400 à une plateforme moderne.",
+        text: "Lead, puis Software Engineering Manager : recruter, faire grandir et mener les équipes qui font passer le WMS mondial de Decathlon d'un legacy AS400 à une plateforme moderne.",
         tags: ['Leadership technique', 'Management', 'WMS', 'Quality Engineering', 'IA'],
       },
       {
@@ -87,8 +81,6 @@ export const fr: Content = {
     title: 'Avec quoi, et comment je travaille.',
     techTitle: 'Technologies',
     practicesTitle: 'Pratiques',
-    legendNow: 'Aujourd’hui',
-    legendBefore: 'Précédemment',
     hint: 'Survolez ou touchez une pratique pour en savoir plus.',
     tech: [
       {
@@ -144,13 +136,10 @@ export const fr: Content = {
       },
     ],
     practices: [
-      { name: 'Développement assisté par l’IA', sub: 'BMAD', now: true, period: 'Au quotidien, et diffusé dans les équipes depuis 2022' },
-      { name: 'Architecture logicielle', now: true, period: '2021 → 2022 · 2026 → aujourd’hui' },
-      { name: 'DevOps', now: true, period: 'CI/CD avec GitHub Actions : build, test et déploiement d’images' },
-      { name: 'Agile', sub: 'Scrum · Kanban', now: true, period: 'Scrum Master de 2016 à 2020, certifié PSM I' },
-      { name: 'Quality Engineering', now: false, period: '2021 → 2026' },
-      { name: 'Métriques DORA', now: false, period: '2022 → 2026' },
-      { name: 'Strangler Pattern', now: false, period: 'Modernisation du WMS, 2022 → 2026' },
+      { name: 'Développement assisté par l’IA', sub: 'BMAD', period: 'Au quotidien, et diffusé dans les équipes depuis 2022' },
+      { name: 'Architecture logicielle', period: '2021 → 2022 · 2026 → aujourd’hui' },
+      { name: 'DevOps', period: 'CI/CD avec GitHub Actions : build, test et déploiement d’images' },
+      { name: 'Agile', sub: 'Scrum · Kanban', period: 'Scrum Master de 2016 à 2020, certifié PSM I' },
     ],
     convictionsTitle: 'Convictions',
     convictions: [
@@ -165,10 +154,6 @@ export const fr: Content = {
       {
         title: "L'IA accélère, l'ingénieur reste aux commandes.",
         text: "J'utilise le développement assisté par l'IA au quotidien et je le diffuse dans les équipes. Mais je reste maître de ce qui est livré : je comprends, je relis et j'assume chaque ligne.",
-      },
-      {
-        title: 'De bonnes équipes avant de bons logiciels.',
-        text: "Confiance, ownership, collaboration : c'est ce que le management m'a appris, et je l'emmène avec moi dans le code.",
       },
     ],
   },
@@ -196,7 +181,7 @@ export const fr: Content = {
         role: 'Software Engineering Manager',
         company: 'Decathlon Digital',
         place: 'Lille',
-        headline: "Jusqu'à 30 ingénieurs · le WMS mondial, de l'AS400 à une plateforme moderne",
+        headline: "Le WMS mondial de Decathlon, de l'AS400 à une plateforme moderne",
         text: "Construction, recrutement et management d'équipes d'ingénierie, autour de la confiance, de l'ownership, de la collaboration et de la croissance continue.",
         figures: [{ value: '30', label: 'ingénieurs au maximum' }, { value: '5', label: 'Feature Teams' }],
         points: ["Jusqu'à 30 ingénieurs répartis en 5 Feature Teams pour moderniser le Warehouse Management System mondial de Decathlon, d'un legacy AS400 vers une plateforme moderne via le Strangler Pattern", 'Réorganisation en Feature Teams autonomes orientées produit, soutenues par une squad transverse Ops & QE', "Passage d'une QA traditionnelle au Quality Engineering (automatisation des tests) et suivi de la performance de delivery avec les métriques DORA", "Auparavant, lead d'une Feature Team de 5 ingénieurs sur une application stratégique de Business Intelligence", "Adoption de pratiques de développement assistées par l'IA : expérimentation, partage, apprentissage continu"],
@@ -333,6 +318,7 @@ export const fr: Content = {
       { years: '2013 — 2014', from: 2013, to: 2014, name: 'California State University San Marcos', degree: 'Année d’échange, Informatique', note: 'Une année en Californie, qui a validé ma 4ᵉ année d’EPITECH.' },
       { years: '2009 — 2010', from: 2009, to: 2010, name: 'Institut Informatique et Entreprise', degree: 'DUT, Informatique', note: 'Premier diplôme en informatique.' },
     ],
+    degreesTitle: 'Diplômes',
     certTitle: 'Certification',
     cert: 'Professional Scrum Master I (PSM I)',
     langTitle: 'Langues',
