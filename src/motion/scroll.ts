@@ -48,10 +48,10 @@ export function initScroll(liquids: Liquids) {
     const updateAmbient = () => ambient.setActive(!cover.hero && !cover.story && !cover.contact);
     const statement = document.querySelector<HTMLElement>('.statement');
     const onHero = (self: ScrollTrigger) => { cover.hero = self.isActive; updateAmbient(); };
-    // once the hero has fully left (its pin is over), the statement no longer has to hide it
+    // the hero stays under the statement after its pin: only once it has left the screen can the statement turn see-through
     if (statement) {
       const clear = (self: ScrollTrigger) => statement.classList.toggle('is-clear', self.isActive);
-      ScrollTrigger.create({ trigger: statement, start: 'top -15%', end: 'max', onToggle: clear, onRefresh: clear });
+      ScrollTrigger.create({ trigger: '.hero', start: 'bottom top', end: 'max', onToggle: clear, onRefresh: clear });
     }
     const onStory = (self: ScrollTrigger) => { cover.story = self.isActive; updateAmbient(); };
     const onContact = (self: ScrollTrigger) => { cover.contact = self.isActive; updateAmbient(); };
