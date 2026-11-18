@@ -931,7 +931,8 @@ body.is-loading .cta-float { display: none; }
 .ambient::after { content: ''; position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 50%, color-mix(in srgb, var(--bg) 55%, transparent) 0%, transparent 70%); }
 :root[data-theme='light'] .ambient { opacity: 0.5; }
 /* the statement only hides the hero while it slides over it */
-.statement.is-clear { background-color: transparent; }
+.statement { transition: none; }
+.statement.is-clear { background-color: transparent; transition: background-color 1s var(--ease); }
 
 .cursor-light {
   position: fixed; left: 0; top: 0; z-index: 0; pointer-events: none;
